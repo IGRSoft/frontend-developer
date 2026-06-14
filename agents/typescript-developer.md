@@ -44,15 +44,15 @@ Default stage mapping: **DV** (type-layer implementation), **DR** support (typin
 | Standard (ES) decorators | TS 5.0 | experimental decorators (`experimentalDecorators`) |
 | `using` / `await using` (explicit resource management) | TS 5.2 | manual `try/finally` cleanup |
 | `NoInfer<T>` utility | TS 5.4 | hand-rolled inference-blocking wrapper |
-| `${configDir}` in tsconfig, `module: "preserve"` | TS 5.5 *(verify)* | relative paths; `module: "esnext"` |
-| Isolated declarations (`--isolatedDeclarations`) | TS 5.5 *(verify)* | full type-checker `.d.ts` emit |
+| `${configDir}` in tsconfig, `module: "preserve"` | TS 5.5 | relative paths; `module: "esnext"` |
+| Isolated declarations (`--isolatedDeclarations`) | TS 5.5 | full type-checker `.d.ts` emit |
 | `satisfies` operator | TS 4.9 | explicit annotation + widening care |
 
 > Requires TypeScript 5.2 `using` / 5.0 `const` type params. Fallback: `try/finally` cleanup and `as const` on TS 4.9. Canonical: _shared/version-feature-matrix.md
 
 For ES2024 runtime features used in typed code (`Object.groupBy`, `Promise.withResolvers`), carry the JS marker too:
 
-> Requires `Object.groupBy` / `Promise.withResolvers` (ES2024; verify runtime support). Fallback: manual `Map` grouping and an explicit promise executor. Canonical: _shared/version-feature-matrix.md
+> Requires `Object.groupBy` / `Promise.withResolvers` (ES2024, Baseline 2024; verify older runtimes). Fallback: manual `Map` grouping and an explicit promise executor. Canonical: _shared/version-feature-matrix.md
 
 ## Tooling Mandates
 

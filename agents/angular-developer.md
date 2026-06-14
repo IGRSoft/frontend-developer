@@ -37,18 +37,19 @@ Default stage mapping: **DV** (implementation), **DR** support, **SR** context (
 
 ## Angular 18+ Feature Guidance
 
-`Angular 18+` is the target baseline. Adopt signals and standalone APIs with a version marker and a fallback per `skill: angular-signals` and `skills/_shared/version-feature-matrix.md`. **Verify against Context7 or Ref** — signal input/output/model and zoneless landed across 17.1–18; confirm the project's exact minor.
+`Angular 18+` is the target baseline (Angular 20+ is current; zoneless is the default in new apps since 21). Adopt signals and standalone APIs with a version marker and a fallback per `skill: angular-signals` and `skills/_shared/version-feature-matrix.md`. **Verify against Context7 or Ref** — the reactivity primitives graduated to stable in Angular 20 and signal-based forms only stabilized in 22; confirm the project's exact minor.
 
 | Feature | Min version | Fallback |
 |---|---|---|
-| Signals (`signal`/`computed`/`effect`) | Angular 16 (stable 17+) | RxJS `BehaviorSubject` + `async` pipe |
-| `input()`/`output()`/`model()` signal APIs | Angular 17.1–18 *(verify)* | `@Input()`/`@Output()` decorators |
-| Standalone components (no NgModule) | Angular 15+ (default 17+) | declare in an `NgModule` |
+| Signals (`signal`/`computed`/`effect`/`linkedSignal`) | stable in Angular 20 (`signal()` since 16) | RxJS `BehaviorSubject` + `async` pipe |
+| `input()`/`output()`/`model()` signal APIs | stable in Angular 20 | `@Input()`/`@Output()` decorators |
+| Standalone components (no NgModule) | Angular 15+ (default since 19) | declare in an `NgModule` |
 | New control flow (`@if`/`@for`/`@switch`) | Angular 17 | `*ngIf`/`*ngFor`/`*ngSwitch` |
 | Deferred loading (`@defer`) | Angular 17 | manual lazy-load / `loadChildren` |
-| Zoneless change detection | Angular 18 experimental *(verify)* | Zone.js change detection (default) |
+| Signal-based forms | Angular 22 stable (experimental 21) *(verify — newly stabilized)* | reactive forms (`FormGroup`/`FormControl`) |
+| Zoneless change detection | Angular 20.2 stable; default in new apps since 21 | Zone.js change detection |
 
-> Requires Angular 18+ signals and standalone components. Fallback: Angular 15 RxJS `BehaviorSubject` + `async` pipe and NgModule declarations. Canonical: _shared/version-feature-matrix.md
+> Requires Angular 20+ signals and standalone components (zoneless stable 20.2, default since 21). Fallback: Angular 15 RxJS `BehaviorSubject` + `async` pipe and NgModule declarations. Canonical: _shared/version-feature-matrix.md
 
 ## Tooling Mandates
 

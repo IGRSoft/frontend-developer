@@ -23,6 +23,7 @@ below carry topic depth and link back here — they never restate this table.
 | 3.0 | Composition API, `<script setup>`, Proxy-based reactivity, fragments/teleport |
 | 3.4 | `defineModel()` two-way binding macro; faster parser |
 | 3.5 | reactive props destructure (compile-time), `useId()`, `useTemplateRef()`, lower memory |
+| 3.6 (beta) | Vapor mode (compiler-only, no VDOM) — verify before relying on it |
 
 Feature landings shift between minor releases — verify against the project's
 `vue` version and the canonical
@@ -31,7 +32,7 @@ Feature landings shift between minor releases — verify against the project's
 > Requires Vue 3.5 reactive props destructure / `useId`. Fallback: `toRefs(props)` and manual ids on Vue 3.4. Canonical: _shared/version-feature-matrix.md
 
 **Stack in one line:** Vue 3.5 + `<script setup>` Composition API (Options API
-only for legacy), **Pinia** for shared state, Vite/Nuxt 3 for the build, Vue
+only for legacy), **Pinia** for shared state, Vite/Nuxt 3+ (Nuxt 4 current) for the build, Vue
 Router for routing. TypeScript-first ([ts-typing](../../typescript/ts-typing/SKILL.md)).
 
 ## Skill Selection Guide

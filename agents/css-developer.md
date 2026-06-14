@@ -40,15 +40,15 @@ Modern CSS is the target baseline, anchored to [Baseline](https://web.dev/baseli
 
 | Feature | Baseline anchor | Fallback |
 |---|---|---|
-| Container queries (`@container`, `cqi`/`cqw`) | Baseline 2023 *(verify older targets)* | viewport media queries; JS `ResizeObserver` |
-| `:has()` relational selector | Baseline 2023 *(verify)* | a wrapper class toggled in JS |
-| Cascade layers (`@layer`) | Baseline 2022 | source ordering + specificity discipline |
-| Subgrid (`grid-template-*: subgrid`) | Baseline 2023 *(verify)* | nested grids with shared track sizes |
-| Native nesting (`&`) | Baseline 2023 *(verify)* | Sass / PostCSS nesting plugin |
-| `color-mix()` / relative color | Baseline 2023+ *(verify)* | precomputed token values / Sass color fns |
-| `@property` (typed custom props) | Baseline 2024 *(verify)* | untyped `--var` + JS-driven transitions |
+| Container queries (`@container`, `cqi`/`cqw`) | Baseline 2023 (widely available; verify legacy targets) | viewport media queries; JS `ResizeObserver` |
+| `:has()` relational selector | Baseline 2023 (widely available) | a wrapper class toggled in JS |
+| Cascade layers (`@layer`) | Baseline 2022 (widely available) | source ordering + specificity discipline |
+| Subgrid (`grid-template-*: subgrid`) | Baseline 2023 (widely available) | nested grids with shared track sizes |
+| Native nesting (`&`) | Baseline 2023 (widely available) | Sass / PostCSS nesting plugin |
+| `color-mix()` / relative color | `color-mix()` Baseline 2023; relative color Baseline 2024 *(verify)* | precomputed token values / Sass color fns |
+| `@property` (typed custom props) | Baseline 2024 | untyped `--var` + JS-driven transitions |
 
-> Requires container queries and `:has()` (Baseline 2023; verify older-browser targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
+> Requires container queries and `:has()` (Baseline 2023, now widely available; verify legacy targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
 
 Prefer runtime feature detection over version sniffing: `@supports (selector(:has(*)))`, `@supports (container-type: inline-size)`.
 

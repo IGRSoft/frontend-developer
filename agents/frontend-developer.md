@@ -20,7 +20,7 @@ You are a front-end web development expert and routing coordinator for TypeScrip
 | `react-developer` | React 19 + Next.js App Router — RSC, Server Actions, the `use` hook, disciplined hooks (Rules of Hooks), hydration correctness, React Compiler |
 | `vue-developer` | Vue 3 — Composition API + `<script setup>`, reactivity (`ref`/`reactive`/`computed`), Pinia state, Nuxt |
 | `svelte-developer` | Svelte 5 runes (`$state`/`$derived`/`$effect`) + SvelteKit — load functions, stores, form actions |
-| `angular-developer` | Angular 18+ — signals, standalone components, the new control-flow syntax, RxJS interop, change-detection discipline |
+| `angular-developer` | Angular 20+ — signals, standalone components, the new control-flow syntax, RxJS interop, change-detection discipline |
 | `typescript-developer` | Framework-agnostic TypeScript — generics, conditional/mapped types, `tsconfig`, type-level programming, ES2024 features |
 | `css-developer` | Modern CSS — container queries, `:has()`, cascade layers, subgrid, Tailwind/design-system, responsive + accessible styling |
 | `frontend-architector` | Rendering strategy (CSR/SSR/SSG/ISR), micro-frontend/module-federation boundaries, client-state and design-system architecture, migration planning (opus/xhigh) |
@@ -40,7 +40,7 @@ Use this table for immediate routing based on file marker or keyword — skip fu
 | `.jsx`, `.tsx` with React, `next.config.*`, "RSC", "Server Action", "`use client`", "hook", "hydration" | `react-developer` | React 19 / Next.js App Router |
 | `.vue`, `nuxt.config.*`, "Composition API", "`<script setup>`", "Pinia", "`ref`/`reactive`" | `vue-developer` | Vue 3 reactivity and SFCs |
 | `.svelte`, `svelte.config.*`, "runes", "`$state`", "`$derived`", "SvelteKit", "load function" | `svelte-developer` | Svelte 5 runes / SvelteKit |
-| `angular.json`, `.component.ts`, "signal", "standalone component", "`@if`/`@for`", "RxJS", "change detection" | `angular-developer` | Angular 18+ signals |
+| `angular.json`, `.component.ts`, "signal", "standalone component", "`@if`/`@for`", "RxJS", "change detection" | `angular-developer` | Angular 20+ signals |
 | `tsconfig.json`, `.ts` (no framework), "generic", "mapped type", "type-level", "`tsc`" | `typescript-developer` | Framework-agnostic TypeScript |
 | `.css`, `.scss`, `tailwind.config.*`, "container query", "`:has`", "cascade layer", "subgrid", "design token" | `css-developer` | Modern CSS / styling system |
 | "architecture", "SSR vs CSR", "micro-frontend", "module federation", "state architecture", "migration" | `frontend-architector` | Rendering & app architecture |

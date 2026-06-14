@@ -51,7 +51,7 @@ This is the canonical routing table for the plugin. Leaf agents reference it; th
 | React 19 / Next.js App Router — RSC, Server Actions, the `use` hook, hooks discipline | `frontend-developer:react-developer` |
 | Vue 3 — Composition API, `<script setup>`, Pinia, reactivity | `frontend-developer:vue-developer` |
 | Svelte 5 / SvelteKit — runes, stores, load functions | `frontend-developer:svelte-developer` |
-| Angular 18+ — signals, standalone components, RxJS interop | `frontend-developer:angular-developer` |
+| Angular 20+ — signals, standalone components, RxJS interop | `frontend-developer:angular-developer` |
 | TypeScript types, generics, `tsconfig`, type-level work (framework-agnostic) | `frontend-developer:typescript-developer` |
 | CSS, modern layout, Tailwind/design-system, responsive + accessible styling | `frontend-developer:css-developer` |
 | Cross-framework, plain HTML/CSS/TS, framework selection, ambiguous web work | `frontend-developer:frontend-developer` (router; handles directly) |

@@ -64,11 +64,11 @@ CSP is the defense-in-depth layer that contains an XSS that slips past escaping.
 | Block `eval`/`new Function` | omit `'unsafe-eval'` |
 | Block data exfiltration / unexpected fetch targets | `connect-src`, `default-src` allow-lists |
 | Stop the page being framed (clickjacking) | `frame-ancestors 'self'` (preferred over the legacy `X-Frame-Options`) |
-| Force DOM-sink injection through a policy | `require-trusted-types-for 'script'` + `trusted-types` (Chromium) |
+| Force DOM-sink injection through a policy | `require-trusted-types-for 'script'` + `trusted-types` (Baseline 2026 — verify Firefox/Safari minimums) |
 
 A per-request **nonce** is the modern way to allow your own scripts under a strict CSP — frameworks expose it (`next.config` + middleware nonce, Nuxt `useHead`, Angular `ngCspNonce`). Never fall back to `'unsafe-inline'` to make a third-party widget work; nonce or hash it.
 
-> Requires `require-trusted-types-for` / `trusted-types` (Chromium-based browsers; not yet in Firefox/Safari). Fallback: rely on sanitization + strict `script-src` nonce policy; treat Trusted Types as a progressive-enhancement backstop, not the only control. Canonical: _shared/version-feature-matrix.md
+> Requires `require-trusted-types-for` / `trusted-types` (Baseline 2026 — newly cross-browser; verify Firefox/Safari minimums). Fallback: rely on sanitization + strict `script-src` nonce policy; treat Trusted Types as a progressive-enhancement backstop, not the only control. Canonical: _shared/version-feature-matrix.md
 
 Full CSP directive reference, nonce wiring per framework, Subresource Integrity (SRI) for third-party scripts, and Trusted Types policy authoring: [references/csp-and-secrets.md](references/csp-and-secrets.md).
 

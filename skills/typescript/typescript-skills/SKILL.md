@@ -26,7 +26,7 @@ table.
 | 5.0 | `const` type parameters; ES standard decorators; `--moduleResolution bundler` |
 | 5.2 | `using`/`await using` explicit resource management (Symbol.dispose) |
 | 5.4 | `NoInfer<T>`; preserved narrowing in closures following last assignment |
-| 5.5 | inferred type predicates; `${configDir}` in tsconfig; `--isolatedDeclarations` *(verify)* |
+| 5.5 | inferred type predicates; `${configDir}` in tsconfig; `--isolatedDeclarations` |
 
 Compiler minutiae shift between minor releases — for anything you pin in CI,
 verify against the project's `typescript` dependency and the canonical

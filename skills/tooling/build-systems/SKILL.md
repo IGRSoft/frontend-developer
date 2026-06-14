@@ -31,8 +31,8 @@ Use this skill when:
 | **esbuild** (direct) | Build scripts, simple bundling, transpile-only steps. Powers Vite dev under the hood. |
 | **Rollup** (direct) | Publishing a library (clean ESM/CJS output, smallest bundles). Vite uses it for production. |
 
-> Requires Vite 6 Environment API (multi-environment dev/build). Fallback: Vite 5 single-environment dev server. Canonical: _shared/version-feature-matrix.md
-> Requires Turbopack dev stability (Next.js 15). Fallback: webpack dev server (`next dev` without `--turbopack`). Canonical: _shared/version-feature-matrix.md
+> Requires the Vite Environment API (Vite 6+; verify — still RC in Vite 8) for multi-environment dev/build. Fallback: Vite 5 single-environment dev server. Canonical: _shared/version-feature-matrix.md
+> Requires Turbopack (Next.js dev stable since 15; default bundler for dev+build in Next.js 16). Fallback: webpack dev server (`next dev` without `--turbopack`). Canonical: _shared/version-feature-matrix.md
 
 ## Vite config essentials
 

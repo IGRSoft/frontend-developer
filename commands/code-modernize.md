@@ -71,9 +71,9 @@ Before building the ledger, establish the *current* idiom and the dependency ord
 | `angular-standalone` | `@NgModule`, `declarations: [...]`, non-standalone components | one NgModule's components → `standalone: true` + explicit `imports` |
 | `svelte5` | `$:` reactive statements, `export let` props, Svelte 4 in `package.json` | one component → `$state`/`$derived`/`$props` runes |
 
-The marker → framework map is canonical in `skill: language-detection`. Use `skill: version-feature-matrix` to confirm the framework version supports the target idiom (React 19 for the modern `use`/RSC patterns, Vue 3, Angular 18+ for standalone-by-default + signals, Svelte 5 for runes). Build the dependency graph (who imports whom) and order the ledger leaf-first.
+The marker → framework map is canonical in `skill: language-detection`. Use `skill: version-feature-matrix` to confirm the framework version supports the target idiom (React 19 for the modern `use`/RSC patterns, Vue 3, Angular 19+ for standalone-by-default and 20+ for stable signals, Svelte 5 for runes). Build the dependency graph (who imports whom) and order the ledger leaf-first.
 
-> Requires the modern idiom (React 19+ / Vue 3+ / Angular 18+ / Svelte 5+). Fallback: keep the legacy idiom on the pre-version toolchain; do not migrate code that the installed framework version cannot run. Canonical: _shared/version-feature-matrix.md
+> Requires the modern idiom (React 19+ / Vue 3+ / Angular 19+ / Svelte 5+). Fallback: keep the legacy idiom on the pre-version toolchain; do not migrate code that the installed framework version cannot run. Canonical: _shared/version-feature-matrix.md
 
 ## The Migration Ledger
 
@@ -122,7 +122,7 @@ Version gate: Vue 3.x; the Vue 2 → 3 migration build helps interop (`skill: ve
 
 ### `--target angular-standalone`
 
-Version gate: Angular 15+ for standalone, 18+ for standalone-by-default + signals (`skill: version-feature-matrix`).
+Version gate: Angular 15+ for standalone, 19+ for standalone-by-default, 20+ for stable signals (`skill: version-feature-matrix`).
 
 | Order | Step | Kind | Notes |
 |-------|------|------|-------|

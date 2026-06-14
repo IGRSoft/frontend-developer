@@ -39,10 +39,13 @@ the fallback column. Canonical minimums live in
 | Signal queries (`viewChild`/`contentChild` as signals) | Angular 17.2+ | `@ViewChild`/`@ContentChild` decorators |
 | New control flow (`@if`/`@for`/`@switch`) | Angular 17+ | `*ngIf`/`*ngFor`/`*ngSwitch` |
 | `@defer` deferred loading | Angular 17+ | `loadChildren` / manual lazy import |
-| Standalone components default | Angular 15+ (default 17+) | declare in an `NgModule` |
-| Zoneless change detection | Angular 18 experimental *(verify)* | Zone.js (default) |
+| Standalone components default | Angular 15+ (default since 19) | declare in an `NgModule` |
+| Signal-based forms | Angular 22 stable (experimental 21) *(verify — newly stabilized)* | reactive forms (`FormGroup`/`FormControl`) |
+| Zoneless change detection | Angular 20.2 stable; default in new apps since 21 | Zone.js (default) |
 
-> Requires Angular 18+ signals and standalone components. Fallback: Angular 15 RxJS `BehaviorSubject` + `async` pipe and NgModule declarations. Canonical: _shared/version-feature-matrix.md
+The primitives are **stable in Angular 20**; the versions above are historical floors.
+
+> Requires Angular 20+ stable signals and standalone components (zoneless stable 20.2, default since 21). Fallback: Angular 15 RxJS `BehaviorSubject` + `async` pipe and NgModule declarations. Canonical: _shared/version-feature-matrix.md
 
 ## signal / computed / effect
 

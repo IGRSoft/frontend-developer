@@ -53,7 +53,7 @@ const Row = memo(function Row({ item }: { item: Item }) { /* ... */ });
 **Rule:** memoize when a measurement shows wasted work. `useMemo`/`useCallback`
 have their own cost; over-memoizing cheap components is net-negative.
 
-> Requires the React Compiler for automatic memoization (React 19-era, opt-in). With it enabled, remove most manual `useMemo`/`useCallback`/`memo`. Fallback: manual memoization on React 18. Canonical: _shared/version-feature-matrix.md
+> Requires the React Compiler for automatic memoization (1.0 stable, opt-in). With it enabled, remove most manual `useMemo`/`useCallback`/`memo`. Fallback: manual memoization. Canonical: _shared/version-feature-matrix.md
 
 ## Keep render-time work cheap
 

@@ -132,7 +132,7 @@ const props = defineProps<Props>()
 
 Prefer the CLI when present: `npx ng generate component <name> --standalone --inline-style=false`. Otherwise write a standalone component (`standalone: true`, typed `@Input()`/`input()` per version) + template + spec. The Angular CLI emits the spec and (with config) the story.
 
-> Requires standalone components (Angular 15+; standalone-by-default 18+). Fallback: declare in an NgModule on older Angular. Canonical: _shared/version-feature-matrix.md
+> Requires standalone components (Angular 15+; standalone-by-default 19+). Fallback: declare in an NgModule on older Angular. Canonical: _shared/version-feature-matrix.md
 
 ### Test (Vitest + Testing Library shape)
 

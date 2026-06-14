@@ -37,7 +37,7 @@ lower, use the fallback column. Canonical minimums live in the
 | `using` / `await using` (explicit resource management) | TS 5.2+ | manual `try/finally` cleanup |
 | `NoInfer<T>` | TS 5.4+ | hand-rolled inference-blocking wrapper type |
 | inferred type predicates | TS 5.5+ | hand-written `x is T` predicate function |
-| `${configDir}` in tsconfig / `module: "preserve"` | TS 5.5+ *(verify)* | relative paths; `module: "esnext"` |
+| `${configDir}` in tsconfig / `module: "preserve"` | TS 5.5+ | relative paths; `module: "esnext"` |
 
 > Requires `using` explicit resource management (TypeScript 5.2+). Fallback: manual `try/finally` cleanup on TS 4.9–5.1. Canonical: _shared/version-feature-matrix.md
 
