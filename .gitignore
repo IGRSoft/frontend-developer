@@ -1,0 +1,3 @@
+# Worktask pipeline artifacts — never commit
+.context/
+.claude/

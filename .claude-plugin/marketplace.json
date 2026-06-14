@@ -1,0 +1,97 @@
+{
+  "name": "frontend-developer",
+  "owner": {
+    "name": "IGRSoft",
+    "email": "support@igrsoft.com"
+  },
+  "metadata": {
+    "description": "Web front-end development toolkit with specialized agents for React, Vue, Svelte, Angular, TypeScript, and modern CSS.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "frontend-developer",
+      "description": "Web front-end toolkit: React/Next, Vue/Nuxt, Svelte, Angular, TypeScript, modern CSS/Tailwind. Includes framework-aware commands, modern-standards skills, build-system and diagnostics tooling, accessibility and secure-coding guidance, and utility agents for code fixes, test generation, performance, accessibility, security, and dependency management.",
+      "source": "./",
+      "strict": true,
+      "category": "development",
+      "keywords": [
+        "react",
+        "nextjs",
+        "vue",
+        "svelte",
+        "angular",
+        "typescript",
+        "tailwind",
+        "vite",
+        "playwright",
+        "vitest",
+        "wcag",
+        "accessibility",
+        "core-web-vitals",
+        "workflow-integration"
+      ],
+      "skills": [
+        "./skills",
+        "./skills/_shared/secure-coding",
+        "./skills/_shared/workflow-integration",
+        "./skills/typescript/typescript-skills",
+        "./skills/typescript/modern-typescript",
+        "./skills/typescript/ts-typing",
+        "./skills/typescript/ts-config",
+        "./skills/react/react-skills",
+        "./skills/react/modern-react",
+        "./skills/react/react-state",
+        "./skills/react/react-performance",
+        "./skills/vue/vue-skills",
+        "./skills/vue/vue-composition",
+        "./skills/vue/vue-state",
+        "./skills/svelte/svelte-skills",
+        "./skills/svelte/svelte-runes",
+        "./skills/svelte/sveltekit",
+        "./skills/angular/angular-skills",
+        "./skills/angular/angular-signals",
+        "./skills/angular/angular-rxjs",
+        "./skills/styling/styling-skills",
+        "./skills/styling/modern-css",
+        "./skills/styling/tailwind-design-system",
+        "./skills/styling/responsive-accessible-css",
+        "./skills/tooling/tooling-skills",
+        "./skills/tooling/build-systems",
+        "./skills/tooling/fe-diagnostics",
+        "./skills/tooling/bundling-optimization",
+        "./skills/quality/quality-skills",
+        "./skills/quality/accessibility-patterns",
+        "./skills/quality/web-performance",
+        "./skills/quality/fe-testing"
+      ],
+      "agents": [
+        "./agents/frontend-developer.md",
+        "./agents/react-developer.md",
+        "./agents/vue-developer.md",
+        "./agents/svelte-developer.md",
+        "./agents/angular-developer.md",
+        "./agents/typescript-developer.md",
+        "./agents/css-developer.md",
+        "./agents/frontend-architector.md",
+        "./agents/fe-test-generator.md",
+        "./agents/fe-performance-engineer.md",
+        "./agents/fe-accessibility-auditor.md",
+        "./agents/fe-security-auditor.md",
+        "./agents/fe-code-fixer.md",
+        "./agents/fe-dependency-manager.md"
+      ],
+      "commands": [
+        "./commands/code-review.md",
+        "./commands/build-test.md",
+        "./commands/generate-tests.md",
+        "./commands/a11y-audit.md",
+        "./commands/lint-fix.md",
+        "./commands/profile-performance.md",
+        "./commands/code-modernize.md",
+        "./commands/deps-audit.md",
+        "./commands/component-scaffold.md"
+      ]
+    }
+  ]
+}
