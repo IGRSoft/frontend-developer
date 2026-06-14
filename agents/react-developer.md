@@ -49,7 +49,7 @@ Default stage mapping: **DV** (implementation), **DR** support (respond to techn
 | Document metadata in components | `<title>`/`<meta>` rendered in-tree | `next/head` / framework head API |
 | React Compiler (auto-memoization, 1.0 stable) | Drop most manual `useMemo`/`useCallback` | manual `useMemo`/`useCallback`/`React.memo` |
 
-> Requires React Server Components and Server Actions (React 19 + Next.js 15 App Router). Fallback: client components with route loaders / API routes. Canonical: _shared/version-feature-matrix.md
+> Requires React Server Components and Server Actions (React 19 + Next.js 15+ App Router). Fallback: client components with route loaders / API routes. Canonical: _shared/version-feature-matrix.md
 
 State the RSC/Client boundary and any `"use server"`/`"use client"` directive in `development-N.md` so DR can verify the data/secret boundary. For Next.js async request APIs (`cookies()`/`headers()`/`params` as Promises in Next 15), carry the version marker:
 
