@@ -1,0 +1,70 @@
+{
+  "name": "frontend-developer",
+  "description": "Web front-end toolkit: React/Next, Vue/Nuxt, Svelte, Angular, TypeScript, modern CSS/Tailwind. Full igrsoft 11-stage workflow integration (PL→AR→TL→DV→DR→SR→QA→DC→RE→FN→ST); UI evidence via web_adapter screenshots + Lighthouse/axe; scoped Bash allowlists; qualified Task() delegation; plugin-scoped audit/checkpoint hooks.",
+  "version": "1.0.0",
+  "author": {
+    "name": "IGRSoft",
+    "email": "support@igrsoft.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "nextjs",
+    "vue",
+    "svelte",
+    "angular",
+    "typescript",
+    "tailwind",
+    "vite",
+    "webpack",
+    "playwright",
+    "vitest",
+    "wcag",
+    "accessibility",
+    "core-web-vitals",
+    "workflow-integration",
+    "dr-stage",
+    "security-review",
+    "hooks",
+    "qualified-agent-refs"
+  ],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|TaskUpdate|TaskCreate",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/audit-tooluse.sh",
+            "args": [
+              "--kind",
+              "tool"
+            ],
+            "continueOnBlock": true
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/audit-subagent.sh",
+            "continueOnBlock": true
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/precompact-checkpoint.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
