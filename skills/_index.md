@@ -14,7 +14,7 @@ Angular, Styling, Tooling, Quality, and shared cross-cutting patterns).
 | [react/](react/react-skills/SKILL.md) | [`react-skills/SKILL.md`](react/react-skills/SKILL.md) | 1 + 3 leaves | React 19 RSC/Actions/`use`, hooks, client state, render performance |
 | [vue/](vue/vue-skills/SKILL.md) | [`vue-skills/SKILL.md`](vue/vue-skills/SKILL.md) | 1 + 2 leaves | Vue 3.5 Composition API, `<script setup>`, Pinia state |
 | [svelte/](svelte/svelte-skills/SKILL.md) | [`svelte-skills/SKILL.md`](svelte/svelte-skills/SKILL.md) | 1 + 2 leaves | Svelte 5 runes, SvelteKit routing/load/actions |
-| [angular/](angular/angular-skills/SKILL.md) | [`angular-skills/SKILL.md`](angular/angular-skills/SKILL.md) | 1 + 2 leaves | Angular 18+ signals, standalone components, control flow, RxJS interop |
+| [angular/](angular/angular-skills/SKILL.md) | [`angular-skills/SKILL.md`](angular/angular-skills/SKILL.md) | 1 + 2 leaves | Angular 20+ signals, standalone components, control flow, RxJS interop |
 | [styling/](styling/styling-skills/SKILL.md) | [`styling-skills/SKILL.md`](styling/styling-skills/SKILL.md) | 1 + 3 leaves | Modern CSS, Tailwind design systems, responsive + accessible CSS |
 | [tooling/](tooling/tooling-skills/SKILL.md) | [`tooling-skills/SKILL.md`](tooling/tooling-skills/SKILL.md) | 1 + 3 leaves | Vite/build systems, diagnostics, bundle optimization |
 | [quality/](quality/quality-skills/SKILL.md) | [`quality-skills/SKILL.md`](quality/quality-skills/SKILL.md) | 1 + 3 leaves | Testing, accessibility patterns, Core Web Vitals performance |

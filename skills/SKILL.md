@@ -19,7 +19,7 @@ language, modern CSS/styling, the build tooling that bundles and ships them, and
 the quality disciplines (testing, accessibility, performance) every UI must pass.
 The emphasis is on **version specificity**: every framework feature carries a
 version marker and a fallback path, so guidance stays correct whether you target
-React 19 or 18, Vue 3.5 or 3.4, Svelte 5 runes or Svelte 4, Angular 18+ signals
+React 19 or 18, Vue 3.5 or 3.4, Svelte 5 runes or Svelte 4, Angular 20+ signals
 or NgModule-era code, ES2024 or ES2022. When a framework or browser-support claim
 matters, verify it against the project's `package.json` and the canonical
 [`_shared/version-feature-matrix.md`](_shared/version-feature-matrix.md) rather
@@ -33,7 +33,7 @@ than trusting memory.
 | [React](#react) | [`react/react-skills/SKILL.md`](react/react-skills/SKILL.md) | 1 + 3 leaves | React 19 RSC/Actions/`use`, hooks, state, render performance |
 | [Vue](#vue) | [`vue/vue-skills/SKILL.md`](vue/vue-skills/SKILL.md) | 1 + 2 leaves | Vue 3.5 Composition API, `<script setup>`, Pinia state |
 | [Svelte](#svelte) | [`svelte/svelte-skills/SKILL.md`](svelte/svelte-skills/SKILL.md) | 1 + 2 leaves | Svelte 5 runes, SvelteKit routing/load/actions |
-| [Angular](#angular) | [`angular/angular-skills/SKILL.md`](angular/angular-skills/SKILL.md) | 1 + 2 leaves | Angular 18+ signals, standalone, control flow, RxJS interop |
+| [Angular](#angular) | [`angular/angular-skills/SKILL.md`](angular/angular-skills/SKILL.md) | 1 + 2 leaves | Angular 20+ signals, standalone, control flow, RxJS interop |
 | [Styling](#styling) | [`styling/styling-skills/SKILL.md`](styling/styling-skills/SKILL.md) | 1 + 3 leaves | Modern CSS, Tailwind design systems, responsive + accessible CSS |
 | [Tooling](#tooling) | [`tooling/tooling-skills/SKILL.md`](tooling/tooling-skills/SKILL.md) | 1 + 3 leaves | Vite/build systems, diagnostics, bundle optimization |
 | [Quality](#quality) | [`quality/quality-skills/SKILL.md`](quality/quality-skills/SKILL.md) | 1 + 3 leaves | Testing, accessibility patterns, Core Web Vitals |
@@ -55,7 +55,7 @@ than trusting memory.
 | Structuring Pinia stores | [vue/vue-state/SKILL.md](vue/vue-state/SKILL.md) |
 | Migrating to or writing Svelte 5 runes | [svelte/svelte-runes/SKILL.md](svelte/svelte-runes/SKILL.md) |
 | Building SvelteKit routes, `load`, form actions | [svelte/sveltekit/SKILL.md](svelte/sveltekit/SKILL.md) |
-| Adopting Angular 18+ signals + standalone components | [angular/angular-signals/SKILL.md](angular/angular-signals/SKILL.md) |
+| Adopting Angular 20+ signals + standalone components | [angular/angular-signals/SKILL.md](angular/angular-signals/SKILL.md) |
 | Bridging RxJS and signals | [angular/angular-rxjs/SKILL.md](angular/angular-rxjs/SKILL.md) |
 | Using container queries, `:has()`, cascade layers, subgrid | [styling/modern-css/SKILL.md](styling/modern-css/SKILL.md) |
 | Building a Tailwind design-token system | [styling/tailwind-design-system/SKILL.md](styling/tailwind-design-system/SKILL.md) |
@@ -90,8 +90,8 @@ verify against the project's `package.json` before relying on a feature.
 | React | 19 (+ Next.js 15 App Router) |
 | Vue | 3.5 (+ Nuxt 3) |
 | Svelte | 5 (+ SvelteKit) |
-| Angular | 18+ |
-| TypeScript | 5.x |
+| Angular | 20+ |
+| TypeScript | 6.x |
 | ECMAScript | ES2024 (verify runtime) |
 | CSS | Baseline 2023-24 |
 

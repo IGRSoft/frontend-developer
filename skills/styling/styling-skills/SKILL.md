@@ -29,7 +29,7 @@ Browser support shifts; for any feature you ship, verify against
 [caniuse.com](https://caniuse.com) / [Baseline](https://web.dev/baseline) and link the
 canonical [version-feature-matrix](${CLAUDE_SKILL_DIR}/_shared/version-feature-matrix.md).
 
-> Requires container queries and `:has()` (Baseline 2023; verify older-browser targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
+> Requires container queries and `:has()` (Baseline 2023, now widely available; verify legacy targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
 
 **Approach in one line:** layout with fl/grid + container queries; isolate
 specificity with `@layer`; drive spacing/color/type from design tokens (custom

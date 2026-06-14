@@ -25,10 +25,10 @@ back here and does not duplicate it.
 | Rollup | build | library-grade bundler underneath Vite's production build |
 
 Pin tool versions in the lockfile, never in prose. Version-gated tool features
-(Vite 6 Environment API, Turbopack dev stability) link the canonical
+(Vite Environment API, Turbopack dev stability) link the canonical
 [version-feature-matrix](${CLAUDE_SKILL_DIR}/_shared/version-feature-matrix.md).
 
-> Requires Vite 6 Environment API. Fallback: Vite 5 single-environment dev/build. Canonical: _shared/version-feature-matrix.md
+> Requires the Vite Environment API (Vite 6+; verify — still RC in Vite 8). Fallback: Vite 5 single-environment dev/build. Canonical: _shared/version-feature-matrix.md
 
 ## Skill Selection Guide
 

@@ -33,15 +33,15 @@ always confirm against [caniuse.com](https://caniuse.com) for your real audience
 
 | Feature | Baseline anchor | Pre-support fallback |
 |---------|-----------------|----------------------|
-| Container queries (`@container`, `cqi`/`cqw`) | Baseline 2023 | viewport media queries; JS `ResizeObserver` |
-| `:has()` relational selector | Baseline 2023 *(verify Firefox/older)* | a wrapper class toggled in JS |
-| Cascade layers (`@layer`) | Baseline 2022 | source ordering + specificity discipline |
-| Subgrid (`grid-template-*: subgrid`) | Baseline 2023 *(verify)* | nested explicit grids with shared track sizes |
-| Native nesting (`&`) | Baseline 2023 *(verify)* | Sass / PostCSS nesting plugin |
-| `@property` (typed custom properties) | Baseline 2024 *(verify)* | untyped `--var` + JS-driven transitions |
-| `color-mix()` / relative color | Baseline 2023+ *(verify)* | precomputed tokens / Sass color functions |
+| Container queries (`@container`, `cqi`/`cqw`) | Baseline 2023 (widely available) | viewport media queries; JS `ResizeObserver` |
+| `:has()` relational selector | Baseline 2023 (widely available) | a wrapper class toggled in JS |
+| Cascade layers (`@layer`) | Baseline 2022 (widely available) | source ordering + specificity discipline |
+| Subgrid (`grid-template-*: subgrid`) | Baseline 2023 (widely available) | nested explicit grids with shared track sizes |
+| Native nesting (`&`) | Baseline 2023 (widely available) | Sass / PostCSS nesting plugin |
+| `@property` (typed custom properties) | Baseline 2024 | untyped `--var` + JS-driven transitions |
+| `color-mix()` / relative color | `color-mix()` Baseline 2023; relative color Baseline 2024 *(verify)* | precomputed tokens / Sass color functions |
 
-> Requires container queries and `:has()` (Baseline 2023; verify older-browser targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
+> Requires container queries and `:has()` (Baseline 2023, now widely available; verify legacy targets). Fallback: viewport media queries and a JS-toggled wrapper class. Canonical: _shared/version-feature-matrix.md
 
 ## Container Queries — size by container, not viewport
 
@@ -59,7 +59,7 @@ always confirm against [caniuse.com](https://caniuse.com) for your real audience
 container. This makes a component **portable** — it adapts wherever it is placed,
 not just at fixed viewport breakpoints.
 
-> Requires container queries (`@container`, Baseline 2023). Fallback: viewport `@media` queries or a `ResizeObserver`-driven class. Canonical: _shared/version-feature-matrix.md
+> Requires container queries (`@container`, Baseline 2023, widely available). Fallback: viewport `@media` queries or a `ResizeObserver`-driven class. Canonical: _shared/version-feature-matrix.md
 
 ## `:has()` — relational selection without JS
 
@@ -76,7 +76,7 @@ Behind feature detection:
 @supports selector(:has(*)) { /* enhanced rules */ }
 ```
 
-> Requires `:has()` (Baseline 2023; verify older Firefox). Fallback: toggle a wrapper class in JS based on the same condition. Canonical: _shared/version-feature-matrix.md
+> Requires `:has()` (Baseline 2023, widely available). Fallback: toggle a wrapper class in JS based on the same condition. Canonical: _shared/version-feature-matrix.md
 
 ## Cascade Layers — predictable specificity
 
@@ -103,7 +103,7 @@ without `!important`. Third-party CSS can be wrapped: `@import "vendor.css" laye
 /* card's children now align to the parent's 3 columns — e.g. ragged card content lines up */
 ```
 
-> Requires subgrid (Baseline 2023; verify). Fallback: nested explicit grids that repeat the parent's track sizes (kept in sync manually). Canonical: _shared/version-feature-matrix.md
+> Requires subgrid (Baseline 2023, widely available). Fallback: nested explicit grids that repeat the parent's track sizes (kept in sync manually). Canonical: _shared/version-feature-matrix.md
 
 ## Native nesting (&)
 
@@ -119,7 +119,7 @@ without `!important`. Third-party CSS can be wrapped: `@import "vendor.css" laye
 The `&` is required in many positions for correct parsing; prefer explicit `&` to
 avoid ambiguity with type selectors.
 
-> Requires native CSS nesting (Baseline 2023; verify). Fallback: Sass or the PostCSS nesting plugin. Canonical: _shared/version-feature-matrix.md
+> Requires native CSS nesting (Baseline 2023, widely available). Fallback: Sass or the PostCSS nesting plugin. Canonical: _shared/version-feature-matrix.md
 
 ## Feature-detect, then enhance
 

@@ -37,21 +37,22 @@ Default stage mapping: **DV** (implementation), **DR** support, **SR** context (
 
 ## Vue 3 Feature Guidance
 
-`Vue 3` (with Nuxt 3) is the target baseline. Adopt newer minor-version features with a version marker and a fallback per `skill: vue-composition` and `skills/_shared/version-feature-matrix.md`. **Verify against Context7 or Ref** before relying on a recent macro — Vue 3.4/3.5 added compiler macros incrementally.
+`Vue 3` (with Nuxt 3+; Nuxt 4 is current) is the target baseline. Adopt newer minor-version features with a version marker and a fallback per `skill: vue-composition` and `skills/_shared/version-feature-matrix.md`. **Verify against Context7 or Ref** before relying on a recent macro — Vue 3.4/3.5 added compiler macros incrementally, and Vapor mode ships in the 3.6 beta line (verify before relying on it).
 
 | Feature | Min version | Fallback |
 |---|---|---|
 | `<script setup>` + Composition API | Vue 3.0 | Options API / `setup()` |
 | `defineModel()` two-way binding macro | Vue 3.4+ | `modelValue` prop + `update:modelValue` emit |
-| Reactive props destructure (compile-time) | Vue 3.5 *(verify)* | `toRefs(props)` / access `props.x` |
-| `useId()` / `useTemplateRef()` | Vue 3.5 *(verify)* | manual `ref` + generated ids |
+| Reactive props destructure (compile-time, stable) | Vue 3.5 | `toRefs(props)` / access `props.x` |
+| `useId()` / `useTemplateRef()` | Vue 3.5 | manual `ref` + generated ids |
 | Generic components (`<script setup generic="T">`) | Vue 3.3+ | non-generic component; cast at call site |
+| Vapor mode (compiler-only, no VDOM) | Vue 3.6 *(verify — 3.6 in beta)* | standard VDOM components |
 
-> Requires Vue 3.5 reactive props destructure / `useId`. Fallback: `toRefs(props)` and manual ids on Vue 3.4. Canonical: _shared/version-feature-matrix.md
+> Requires Vue 3.5 reactive props destructure / `useId` (stable). Fallback: `toRefs(props)` and manual ids on Vue 3.4. Canonical: _shared/version-feature-matrix.md
 
 For Nuxt server/runtime features, carry the matching marker:
 
-> Requires Nuxt 3 route rules / Nitro server routes. Fallback: Nuxt 2 `serverMiddleware` and per-page config. Canonical: _shared/version-feature-matrix.md
+> Requires Nuxt 3+ route rules / Nitro server routes (Nuxt 4 current). Fallback: Nuxt 2 `serverMiddleware` and per-page config. Canonical: _shared/version-feature-matrix.md
 
 ## Tooling Mandates
 

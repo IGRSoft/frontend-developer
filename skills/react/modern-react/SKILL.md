@@ -38,7 +38,7 @@ Canonical minimums live in the
 | `useOptimistic` | React 19 | local optimistic `useState`, reconcile on response |
 | `ref` as a prop (no `forwardRef`) | React 19 | `forwardRef(...)` |
 | Document metadata (`<title>`/`<meta>` in JSX) | React 19 | `next/head` / `react-helmet` |
-| React Compiler (auto-memoization) | React 19-era, opt-in | manual `useMemo`/`useCallback`/`React.memo` |
+| React Compiler (auto-memoization) | React Compiler 1.0 (stable, opt-in) | manual `useMemo`/`useCallback`/`React.memo` |
 | Concurrent (`useTransition`/`useDeferredValue`/`<Suspense>`) | React 18+ | synchronous renders; manual debounce |
 
 > Requires the `use` hook and Server Actions (React 19). Fallback: `useContext` + API routes on React 18. Canonical: _shared/version-feature-matrix.md
@@ -124,7 +124,7 @@ Query) or manual state.
 With the React Compiler enabled (Babel/SWC plugin), the compiler inserts
 memoization automatically — remove most manual `useMemo`/`useCallback`/`memo`.
 
-> Requires the React Compiler (React 19-era, opt-in). Fallback: keep manual `useMemo`/`useCallback`/`React.memo` on React 18. Canonical: _shared/version-feature-matrix.md
+> Requires the React Compiler (1.0 stable, opt-in; React 17+, best on React 19). Fallback: keep manual `useMemo`/`useCallback`/`React.memo`. Canonical: _shared/version-feature-matrix.md
 
 **Rule:** don't add manual memoization "just in case" in a Compiler project; keep
 it only for measured hot paths the compiler can't reach (see

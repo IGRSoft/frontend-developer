@@ -23,7 +23,7 @@ below carry topic depth and link back here — they never restate this table.
 |---------|---------------------|
 | 18 | Concurrent rendering, `useTransition`/`useDeferredValue`, Suspense for data, automatic batching |
 | 19 | RSC, Server Actions (`"use server"`), `use(promise/context)`, `useActionState`/`useFormStatus`/`useOptimistic`, `ref` as prop, document metadata |
-| 19-era | React Compiler (opt-in auto-memoization) replaces most manual `useMemo`/`useCallback` |
+| Compiler 1.0 | React Compiler (stable, opt-in auto-memoization) replaces most manual `useMemo`/`useCallback` |
 
 Framework feature landings shift between minor releases — verify against the
 project's `react`/`next` versions and the canonical
