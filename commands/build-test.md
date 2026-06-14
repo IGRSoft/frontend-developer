@@ -64,7 +64,7 @@ Scan `path` and apply the **first** match top-down. The marker → framework →
 | Priority | Lockfile | Package manager | Install command |
 |----------|----------|-----------------|-----------------|
 | 1 | `pnpm-lock.yaml` | pnpm | `pnpm install --frozen-lockfile` |
-| 2 | `yarn.lock` | Yarn | `yarn install --immutable` |
+| 2 | `yarn.lock` | Yarn | `yarn install --immutable` (berry) / `yarn install --frozen-lockfile` (classic) |
 | 3 | `bun.lockb` | Bun | `bun install --frozen-lockfile` |
 | 4 | `package-lock.json` | npm | `npm ci` |
 | 5 | `package.json` (no lockfile) | npm (fallback) | `npm install` (warn: no lockfile — non-reproducible) |

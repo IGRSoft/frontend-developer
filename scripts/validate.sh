@@ -495,7 +495,7 @@ VERSION_MATRIX="skills/_shared/version-feature-matrix.md"
 if [[ ! -f "${VERSION_MATRIX}" ]]; then
 	err "${VERSION_MATRIX}" "canonical version-feature matrix missing" "create ${VERSION_MATRIX}"
 else
-	if ! grep -rqlE 'version-feature-matrix' skills 2>/dev/null; then
+	if ! grep -rqlE 'version-feature-matrix' skills --exclude='version-feature-matrix.md' 2>/dev/null; then
 		warn "skills" "no skill links _shared/version-feature-matrix.md" "add version markers linking ${VERSION_MATRIX} to version-specific skills"
 	fi
 fi

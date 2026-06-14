@@ -31,11 +31,11 @@ Detect the package manager in use from the **lockfile** before acting — the lo
 |---|---|---|---|---|
 | **npm** | `package-lock.json` | `npm outdated` | `npm install <pkg>@<version> --save-exact` | `npm ci` |
 | **pnpm** | `pnpm-lock.yaml` | `pnpm outdated` | `pnpm update <pkg>@<version>` (or `pnpm add <pkg>@<version>`) | `pnpm install --frozen-lockfile` |
-| **yarn** | `yarn.lock` | `yarn outdated` (classic) / `yarn npm audit` | `yarn up <pkg>@<version>` (berry) / `yarn upgrade <pkg>@<version>` (classic) | `yarn install --immutable` |
+| **yarn** | `yarn.lock` | `yarn outdated` (classic) / `yarn npm audit` | `yarn up <pkg>@<version>` (berry) / `yarn upgrade <pkg>@<version>` (classic) | `yarn install --immutable` (berry) / `yarn install --frozen-lockfile` (classic) |
 
 - **npm** — `package-lock.json` is committed and authoritative; use `npm ci` in CI (it respects the lock and fails on drift). Bump a single dependency with an exact version; never hand-edit the lockfile.
 - **pnpm** — `pnpm-lock.yaml` is the source of truth; `pnpm install --frozen-lockfile` in CI. Respect the workspace protocol (`workspace:*`) for monorepo internal packages — do not rewrite those to registry versions.
-- **yarn** — distinguish classic (v1) from berry (v2+) by `.yarnrc.yml`/`yarnPath`; the upgrade verb differs. `--immutable` in CI. Don't commit a `.pnp.*` change as a side effect of an upgrade.
+- **yarn** — distinguish classic (v1) from berry (v2+) by `.yarnrc.yml`/`yarnPath`; the upgrade verb differs. Berry uses `--immutable` in CI; Classic uses `--frozen-lockfile`. Don't commit a `.pnp.*` change as a side effect of an upgrade.
 - **Engines & peers** — respect `engines.node`; resolve peer-dependency conflicts deliberately (a framework major like React 19 forces a peer cascade) — do not auto-`--force`/`--legacy-peer-deps` past a real incompatibility.
 
 ## Vulnerability & License Audit
