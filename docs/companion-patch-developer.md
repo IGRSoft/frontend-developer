@@ -1,5 +1,7 @@
 # Companion Patch — `developer.md` (web platform specialization)
 
+**Status (2026-07-22): applied upstream** — company-workflow's `agents/developer.md` now carries the frontend-developer Task grants and routing (see igrsoft v3.36.0). This document is retained as the historical patch spec.
+
 **Status:** self-contained patch artifact. This document is **not** an edit to any installed
 plugin cache. It describes the exact additions to apply to the **editable company-workflow
 source** of `agents/developer.md` so the igrsoft `developer` router recognizes web work and

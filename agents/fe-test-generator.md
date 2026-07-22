@@ -43,6 +43,7 @@ Verify exact framework versions and API surface against your toolchain via Conte
 - **Component** — a single component in isolation, rendered via Testing Library; assert on accessible roles/text the user sees, not implementation details (no testing internal state or private methods). Cover each prop branch, conditional render, and event handler.
 - **Integration** — interactions across a boundary: composed component trees, router transitions, form submission against a mocked fetch/MSW handler, store-connected components. Real implementations where safe; mock only the network/IO seam.
 - **End-to-end** — full user journeys in a real browser via Playwright/Cypress: critical paths (auth, checkout, primary CRUD), cross-page flows, and visual/interaction correctness. Keep E2E focused on journeys; push edge cases down to component tests.
+- **Multi-substate control sweep** — for screens that cycle one view through substates (form → submitting → error → success; wizard steps; capture → review → result), assert every primary control is visible + enabled in each substate and that transition/inverse controls restore the prior state. Follow `skill: fe-testing § Visible-Enabled Control Sweep`.
 - **Accessibility-in-test** — assert role/name/state with Testing Library's accessible queries; integrate `axe`/`jest-axe`/`@axe-core/playwright` assertions so a11y regressions fail the suite. Deep audits route to `frontend-developer:fe-accessibility-auditor`.
 - **Regression** — one focused test per fixed bug, named for the issue.
 
@@ -114,6 +115,10 @@ When invoked as a subagent, return a compressed summary, not full file contents 
 - Test count and the categories covered (component / integration / e2e / a11y-assert)
 - Coverage delta if measured; key gaps left for manual or E2E tests
 - Final run status (pass/fail) and any escalation
+
+### Output Budget (DV support)
+
+Never paste full generated test files into chat — Write them into the project's test tree and cite the path + case names in the return (the files are on disk). Final return ≤250 tok. Target ≤60 tool calls/run: re-run only the failed subset per § Test Execution Loop (step 3 — `vitest -t`, `jest -t`, `playwright -g`), never re-Read a file unchanged since your last Read, and keep narration lean. Full-suite regression is QA's, not DV's — § Test Execution Loop step 5 is skipped under DV.
 
 ## Skills References
 

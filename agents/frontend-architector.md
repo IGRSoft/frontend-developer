@@ -22,6 +22,16 @@ Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment
 5. **Guardrails** — never force a rendering-mode switch for a small change where the local structure still fits; preserve conventions; do not add a runtime or build dependency (a state library, a module-federation host, a meta-framework) unless the user accepts the trade-off or the codebase already uses it; prefer the smallest change; keep guidance framework- and version-specific; never break the public component/prop contract a design-system package exports without a semver-major plan.
 6. **Verification Checklist** — confirm the rendering strategy matches the data-freshness and SEO constraints; hydration boundaries, data-fetching seams, error/loading states, and test seams are covered; the client-state surface and design-system contract are stated; bundle/route-split impact is called out; migration risk is named; end with the pattern-specific review checklist.
 
+### Complexity Triage (0–50 scale)
+
+Read `metadata.complexity_score` when supplied. igrsoft's AR runs only at **Medium+** (≥ 11) — its Low-Complexity Gate answers Low-band picks itself. Called directly without a score, infer the band (single feature, screen, or component with clear constraints and no migration = Low).
+
+- **Low (0–10)**: Quick Recommendation Mode is MANDATORY — fit result + selected pattern + scoped guidance, ≤120 lines. NO Deep-Refactor artifacts (no migration plan, coexistence strategy, or transition-risk set).
+- **11–30 (Medium / Moderate)**: Quick Recommendation by default; enter Deep Refactor only on its own triggers (framework migrations, mixed rendering strategies, state-architecture overhauls, design-system-boundary changes).
+- **31+ (High / Critical)**: Deep Refactor deliverables warranted.
+
+Bands (igrsoft): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50 Critical. The mode triggers always outrank an inferred low score.
+
 ## Rendering Strategy Selection
 
 The first architectural decision is **where each route renders**. Pick per route, not per app — most real apps mix modes.
@@ -103,7 +113,7 @@ When analyzing an existing app, look for:
 | Server/API contract behind the rendering boundary | `backend-developer:*` (if installed); otherwise surface the API boundary to the orchestrator |
 | Framework / library / SSR documentation | Context7 or Ref MCP tools |
 
-## Workflow Stage Participation (igrsoft v3.17.0)
+## Workflow Stage Participation (igrsoft v3.36.0)
 
 See `_base/frontend-agent.md § Workflow Stage Participation` for the binding handoff contract.
 
@@ -118,8 +128,12 @@ See `_base/frontend-agent.md § Workflow Stage Participation` for the binding ha
 
 1. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and the active stage from `.context/state.json`.
 2. Run the Core Workflow (Fast Path → Quick Recommendation or Deep Refactor → Guardrails → Verification) to select the rendering strategy, state pattern, and design-system contract.
-3. Write the canonical AR artifact `analyzing-N.md` (`N = run_index` from `task.metadata.run_index`; e.g., `analyzing-0.md`) with `handoff:` frontmatter conforming to `skill: workflow-integration § Output Frontmatter Schema` — emit the frontmatter **unconditionally**, it is the merge input regardless of filename. Readers fall back to newest-glob (`analyzing-*.md`).
-4. Atomic-patch `state.json` (`stages.AR`, `handoffs[AR→…]`) per the handoff protocol; if the patch fails, log and proceed — the SubagentStop hook repairs from frontmatter.
+3. Write the canonical AR artifact `analyzing-N.md` (`N = run_index` from `task.metadata.run_index`; e.g., `analyzing-0.md`) with `handoff:` frontmatter conforming to `skill: workflow-integration § Handoff Frontmatter` — emit the frontmatter **unconditionally**, it is the merge input regardless of filename. Readers fall back to newest-glob (`analyzing-*.md`).
+4. Patch `state.json` (`stages.AR` + the `PL→AR` handoff edge): run `state-patch.sh --stage AR --prev PL` when its path is supplied (`task.metadata.state_patch_script`; ships under igrsoft `skills/worktask/scripts/`), else skip — do not hand-roll the merge; the SubagentStop hook repairs from frontmatter.
+
+### Output Budget (AR)
+
+`analyzing-N.md` ≤250 lines (≤120 in Quick Recommendation Mode / ≤150 at Low complexity — see § Complexity Triage); no full-file listings — pass anchors, not pasted bodies. Final return ≤250 tok.
 
 ## Output Formats
 

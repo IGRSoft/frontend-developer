@@ -98,13 +98,18 @@ ambiguous pure-JS/TS web work.
 
 ## Workflow Stage Participation
 
-Front-end agents participate in the igrsoft 11-stage workflow system (v3.17.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
+Front-end agents participate in the igrsoft 11-stage workflow system (v3.36.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
 
 ### Handoff Contract (BINDING)
 
 All cross-plugin invocations follow `skills/_shared/workflow-integration/SKILL.md`: plan-file resolution (`task.metadata.plan_file` → newest `.context/planning-*.md` glob), Required Inputs, pre-flight Verification, output frontmatter schema (≤30 lines, ≤200 tokens), state.json atomic write, and the per-stage required `metadata.*` matrix. See that skill for the per-stage recipes (DV, DR support, QA support) and the ≤500-token compressed return summary.
 
-**state.json patching is REQUIRED before returning.** Atomic-patch `.context/state.json` with `stages.<CODE>` and `handoffs[FROM→TO]` using read → merge → temp → fsync → rename (handoff-protocol `#atomic-write`). If the patch fails, log the error and proceed — the SubagentStop hook repairs from frontmatter. But **frontmatter emission is unconditional**: an artifact without `handoff:` YAML breaks the entire three-layer safety net (agent → orchestrator fallback → SubagentStop hook).
+**state.json patching is REQUIRED before returning** — but do NOT hand-roll a `jq` or manual read→merge→rename. Use igrsoft's single, lock-serialized implementation, or skip and let the safety-net layers repair the ledger from your frontmatter:
+
+- **Primary (script)**: when the dispatching prompt or `task.metadata.state_patch_script` supplies the path to igrsoft's `state-patch.sh` (it ships in the igrsoft plugin under `skills/worktask/scripts/`), run `bash <path>/state-patch.sh --stage <CODE> --prev <PREV>`. It parses this artifact's `handoff:` frontmatter and atomically merges `stages.<CODE>` plus the `<PREV>→<CODE>` handoff edge into `.context/state.json` — single implementation, lock-serialized, idempotent.
+- **Degrade (silent skip)**: if no script path was supplied, or `jq`/`state.json` is absent, skip — do NOT reconstruct the merge inline. The orchestrator's post-stage re-read (Layer 2) and igrsoft's SubagentStop `state-merge.sh` hook (Layer 3) repair the ledger from your frontmatter.
+
+**Frontmatter emission is therefore unconditional**: an artifact without `handoff:` YAML breaks the entire three-layer safety net (agent self-patch → orchestrator re-read → SubagentStop hook).
 
 **Artifact filenames use the numbered `<stage>-N.md` contract** (`N = run_index`, allocated by PL0 and propagated via `task.metadata.run_index`; e.g., `development-0.md`, `developer-review-0.md`) per `skill: workflow-integration § Artifact Filename Contract`. The basenames are canonical; only the `-N` suffix changes per run. Readers fall back to newest-glob (`<basename>-*.md`). **Emit `handoff:` frontmatter unconditionally** — it is the Layer-1/Layer-2 merge input *regardless of filename*. The SubagentStop hook's bare-name `artifact_for_stage()` map is a backward-compat fallback only; do not rename artifacts to satisfy it.
 
@@ -124,7 +129,12 @@ Primary stage. Implement features in React/Vue/Svelte/Angular/TypeScript/CSS und
   5. Record **Build Evidence** under `## tests-added → ### build-evidence`: toolchain + versions (e.g. `vite 5 / tsc 5.x`), `tsc --noEmit` → 0 errors, eslint/biome clean, bundle-size delta, and the test-transcript path under `.context/logs/`.
 
   If the manifest is absent at `SubagentStop` while the gate is armed, igrsoft's `dv-screenshot-gate.sh` blocks with `hookSpecificOutput.additionalContext` and re-dispatches. See `skill: workflow-integration § DV Screenshot Gate`.
+- **Live-drive verification (v3.36.0, `ui_visual_check`).** When `metadata.ui_visual_check: true`, statically produced evidence does NOT satisfy DV exit — component/unit tests and static renders (Storybook stories, an isolated component screenshot, a route screenshotted without interaction) verify structure, not runtime behavior: same-render update faults, control overflow, and broken state transitions pass all of those yet fail in a real browser. Before capturing: (1) build and serve (`npm run build` + `npm run preview`, or the dev server) and open the real route; (2) drive the app through EACH substate the acceptance criteria name (default, error, empty, loading, success, and every result/review state) via real interactions — clicks, typing, submissions through Playwright or Chrome MCP — never by mocking state or deep-linking a pre-baked state; (3) confirm each primary control is visible and enabled in that substate, THEN capture from the live-driven page. **Evidence freshness**: every manifest capture taken THIS run from the live-driven app — igrsoft QA direct-reads each image and flags byte-identical pairs, blank/error pages, wrong-route frames, and stale reused captures, re-opening DV.
 - **Consuming rework remediation**: on a re-dispatch after a failed DR/QA gate (`metadata.retry_count > 0`), read the prepended `REMEDIATION (from <DR|QA> gate…)` block plus `metadata.gate_from_stage` + `metadata.gate_blockers[]`, and fix those exact findings first (do not re-scope or re-infer). Keep the diff minimal; record per-blocker resolution in `.context/errors/<agent-basename>.md`. The orchestrator owns the injection — agents only consume it. See `skill: workflow-integration § Gate-Feedback Contract`.
+
+### Output Budget (DV)
+
+`development-N.md` ≤250 lines; no full-file listings — cite `path:line-range` or pass anchors, not pasted bodies (generated code lives in the repo, not the artifact). Final return ≤250 tok (inside the ≤500 template). Target ≤80 tool calls/run: batch multi-file edits into one edit pass, never re-Read a file unchanged since your last Read (trust the buffer), re-run only scoped tests (`vitest -t <name>`, `npm test -- -t <name>`, a single Playwright spec — failed subset first), and keep narration lean — no per-file play-by-play, no restating what the artifact already holds. **Build Evidence is exempt from every cap here**: the toolchain+versions line, the `tsc --noEmit` status, the eslint/biome status, the bundle-size delta, and the `.context/logs/` test-transcript path stay mandatory (§ DV Stage) — never trim them to save lines or tokens.
 
 ### DR Stage (Developer Review) — Provide Context
 
