@@ -43,6 +43,7 @@ Verify exact framework versions and API surface against your toolchain via Conte
 - **Component** — a single component in isolation, rendered via Testing Library; assert on accessible roles/text the user sees, not implementation details (no testing internal state or private methods). Cover each prop branch, conditional render, and event handler.
 - **Integration** — interactions across a boundary: composed component trees, router transitions, form submission against a mocked fetch/MSW handler, store-connected components. Real implementations where safe; mock only the network/IO seam.
 - **End-to-end** — full user journeys in a real browser via Playwright/Cypress: critical paths (auth, checkout, primary CRUD), cross-page flows, and visual/interaction correctness. Keep E2E focused on journeys; push edge cases down to component tests.
+- **Multi-substate control sweep** — for screens that cycle one view through substates (form → submitting → error → success; wizard steps; capture → review → result), assert every primary control is visible + enabled in each substate and that transition/inverse controls restore the prior state. Follow `skill: fe-testing § Visible-Enabled Control Sweep`.
 - **Accessibility-in-test** — assert role/name/state with Testing Library's accessible queries; integrate `axe`/`jest-axe`/`@axe-core/playwright` assertions so a11y regressions fail the suite. Deep audits route to `frontend-developer:fe-accessibility-auditor`.
 - **Regression** — one focused test per fixed bug, named for the issue.
 

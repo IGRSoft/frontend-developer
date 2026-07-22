@@ -107,6 +107,15 @@ test('checkout happy path', async ({ page }) => {
   wait on a condition/role instead. Use role/label locators for resilience.
 - Run against a production-like build for trustworthy results.
 
+#### Visible-Enabled Control Sweep (multi-substate screens)
+
+Screens that cycle one view through substates (form → submitting → error → success; wizard steps; capture → review → result) hide two defect classes that snapshot and unit tests miss: a control clipped, overlapped, or disabled in one substate, and a transition control that fails to return the prior state. For each substate the screen renders:
+
+1. Assert every primary control — queried by role (`getByRole`, per the query-priority ladder above) — is BOTH `toBeVisible()` AND `toBeEnabled()`, not merely present in the DOM.
+2. Assert every substate-transition control performs its transition AND its inverse returns the prior state — e.g. "Back"/"Retry" from the error substate returns the form substate.
+
+One sweep test or one per substate — every primary control asserted visible+enabled in every substate it appears. The E2E-side twin of the DV live-drive gate (`_shared/workflow-integration/SKILL.md § DV Screenshot Gate`).
+
 ## Coverage and the gate
 
 - **Coverage thresholds** are configured in the runner (`vitest --coverage`,
