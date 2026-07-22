@@ -1,6 +1,6 @@
 ---
 name: workflow-integration
-description: Guide for integrating with the igrsoft 11-stage workflow system (v3.17.0) from frontend-developer agents. Use when participating in structured workflow stages — DV, DR, SR, QA, RE — or producing handoff artifacts.
+description: Guide for integrating with the igrsoft 11-stage workflow system (v3.36.0) from frontend-developer agents. Use when participating in structured workflow stages — DV, DR, SR, QA, RE — or producing handoff artifacts.
 ---
 
 # Workflow Integration Guide
@@ -29,7 +29,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
 | FN | Finalization | project-manager | — |
 | ST | Stakeholder | stakeholder | — |
 
-## Worktask Triggers (v3.17.0)
+## Worktask Triggers (v3.36.0)
 
 Trigger prefixes select which stages run: `micro:` (plan→edit), `quick:` (PL→DV→DR→QA), `worktask:`/`fworktask:` (full 9-stage), `--secure`/`--full` (11-stage, adds SR + RE), `emergency:` (IR→DV→DR→QA→RE→FN). Full mapping: [references/stage-recipes.md § Worktask Triggers](references/stage-recipes.md).
 

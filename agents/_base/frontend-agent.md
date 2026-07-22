@@ -98,7 +98,7 @@ ambiguous pure-JS/TS web work.
 
 ## Workflow Stage Participation
 
-Front-end agents participate in the igrsoft 11-stage workflow system (v3.17.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
+Front-end agents participate in the igrsoft 11-stage workflow system (v3.36.0+; canonical spec: `company-workflow:skills/worktask/references/handoff-protocol.md`).
 
 ### Handoff Contract (BINDING)
 

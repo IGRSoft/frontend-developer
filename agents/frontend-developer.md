@@ -57,7 +57,7 @@ Use this table for immediate routing based on file marker or keyword — skip fu
 - **Plain HTML / CSS / TypeScript**: a static page, a vanilla-TS module, a Web Component, or a build/config file with no framework binding — implement directly under the inherited Constraints without delegating.
 - **Framework selection and tooling happy path**: choosing a framework for greenfield work, package-manager detection (lockfile → npm/pnpm/yarn), and single scoped build/test commands (`npm run build`, `npx vite build`, `npx tsc --noEmit`, `npx playwright test`) — run directly when no framework-specific design judgment is needed.
 
-## Workflow Collaboration (igrsoft v3.17.0)
+## Workflow Collaboration (igrsoft v3.36.0)
 
 See `skill: workflow-integration` for the complete 11-stage workflow guide and the binding handoff contract (also summarized in `_base/frontend-agent.md`).
 

@@ -103,7 +103,7 @@ When analyzing an existing app, look for:
 | Server/API contract behind the rendering boundary | `backend-developer:*` (if installed); otherwise surface the API boundary to the orchestrator |
 | Framework / library / SSR documentation | Context7 or Ref MCP tools |
 
-## Workflow Stage Participation (igrsoft v3.17.0)
+## Workflow Stage Participation (igrsoft v3.36.0)
 
 See `_base/frontend-agent.md § Workflow Stage Participation` for the binding handoff contract.
 
@@ -118,7 +118,7 @@ See `_base/frontend-agent.md § Workflow Stage Participation` for the binding ha
 
 1. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and the active stage from `.context/state.json`.
 2. Run the Core Workflow (Fast Path → Quick Recommendation or Deep Refactor → Guardrails → Verification) to select the rendering strategy, state pattern, and design-system contract.
-3. Write the canonical AR artifact `analyzing-N.md` (`N = run_index` from `task.metadata.run_index`; e.g., `analyzing-0.md`) with `handoff:` frontmatter conforming to `skill: workflow-integration § Output Frontmatter Schema` — emit the frontmatter **unconditionally**, it is the merge input regardless of filename. Readers fall back to newest-glob (`analyzing-*.md`).
+3. Write the canonical AR artifact `analyzing-N.md` (`N = run_index` from `task.metadata.run_index`; e.g., `analyzing-0.md`) with `handoff:` frontmatter conforming to `skill: workflow-integration § Handoff Frontmatter` — emit the frontmatter **unconditionally**, it is the merge input regardless of filename. Readers fall back to newest-glob (`analyzing-*.md`).
 4. Atomic-patch `state.json` (`stages.AR`, `handoffs[AR→…]`) per the handoff protocol; if the patch fails, log and proceed — the SubagentStop hook repairs from frontmatter.
 
 ## Output Formats

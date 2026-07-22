@@ -7,7 +7,7 @@ Claude Code plugin for **web front-end** development — React/Next.js, Vue/Nuxt
 | Field | Value |
 |-------|-------|
 | **Version** | 1.0.0 |
-| **igrsoft Compatibility** | v3.17.0 |
+| **igrsoft Compatibility** | v3.36.0 |
 | **claude-code min version** | 2.1.169 |
 
 ## Installation
