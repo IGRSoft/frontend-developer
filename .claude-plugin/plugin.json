@@ -1,7 +1,7 @@
 {
   "name": "frontend-developer",
   "description": "Web front-end toolkit: React/Next, Vue/Nuxt, Svelte, Angular, TypeScript, modern CSS/Tailwind. Full igrsoft 11-stage workflow integration (PL→AR→TL→DV→DR→SR→QA→DC→RE→FN→ST); UI evidence via web_adapter screenshots + Lighthouse/axe; scoped Bash allowlists; qualified Task() delegation; plugin-scoped audit/checkpoint hooks.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "IGRSoft",
     "email": "support@igrsoft.com"

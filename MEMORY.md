@@ -113,3 +113,42 @@ hooks/validator/`_base`/handoff from system-developer.
 9. **`scripts/validate.sh`** is the release gate: `ALLOWED_PREFIX_RE` includes `frontend-developer`
    (plus `backend-developer`/`apple-developer` forward-refs); the own-plugin existence branch keys on
    `frontend-developer`. Run before any release; `--strict` for CI.
+
+## Version History
+
+### 1.1.0 — 2026-07-22 igrsoft v3.36.0 Port
+
+Compatibility ported v3.17.0 → v3.36.0 (~13 refs across README, the agent stage-participation
+headers, the `workflow-integration` skill, and `stage-recipes.md`). The Dynamic Worktask Sizing
+table was already current (DR0 at every tier); the PL0 stamp note now also names
+`metadata.test_mode` and `metadata.ui_visual_check` — and, unlike the CLI sibling plugins,
+`ui_visual_check` **is applicable here** (web work is UI work). The frozen mechanism-landing markers
+(`v3.12.0` screenshot gate, `3.11.4` RMSE) are preserved, and the pre-existing architector
+anchor-cite drift (`§ Output Frontmatter Schema` → `§ Handoff Frontmatter`) is fixed.
+
+Native web port of igrsoft's ov151 visual track (the part the CLI siblings skip): a **live-drive
+provenance gate** (`ui_visual_check`) — when true, statically produced evidence does not satisfy DV
+exit; each substate the acceptance criteria name must be reached through real Playwright / Chrome-MCP
+interactions (not state injection or deep-linking) before capture, and every capture is taken this
+run (evidence freshness — igrsoft QA direct-reads each image and flags stale, duplicated, blank, or
+wrong-route frames, re-opening DV). Its E2E-side twin, the **Visible-Enabled Control Sweep**, asserts
+every primary control `toBeVisible()` AND `toBeEnabled()` in each substate and that transition
+controls round-trip (the inverse restores the prior state).
+
+Also ported: the **state-patch pointer form** (the manual `read → merge → temp → fsync → rename`
+atomic-write prose replaced by the two-mode `state-patch.sh --stage <CODE> --prev <PREV>` contract —
+run when supplied, else silently skip; Layers 2/3 repair from the unconditional `handoff:`
+frontmatter); benchmark-driven **Output Budgets** on DV (`_base`, with the five Build-Evidence lines
+exempt), AR, DV-support, and DR-support agents, plus a **Complexity Triage** gate on
+`frontend-architector` that self-limits scope at Low complexity. Repo-structure linters added:
+`section-lint.sh` (≤1000-char section cap, warn-only — baseline 179 sections over cap across 67
+files, burn-down tracked separately) and `desc-lint.sh` (three-tier frontmatter `description` brake:
+agents 400 / commands 250 / skills 500). The companion patch `docs/companion-patch-developer.md` is
+marked **applied upstream** (company-workflow's `agents/developer.md` now carries the
+frontend-developer Task grants and web routing).
+
+Follow-ups: the agent-description diet toward the ≤250 sibling-plugin ideal is eval-gated — eight
+agents exceed 250 (worst 369, `fe-test-generator`; brake 400) — pending evidence that shorter
+descriptions still route reliably. Skill descriptions' worst is 460 (`typescript-skills`) against the
+500 brake. There is no CI in this repo yet, so the linters run manually via `scripts/run-checks.sh`
+until a workflow lands.
