@@ -68,5 +68,9 @@ handoff:
   assert this) — supporting Lighthouse/axe rows count too.
 - Opt out only with `metadata.requires_screenshots: false` (non-UI changes, e.g. a pure
   tooling/config edit) — then this file is not required and the gate is skipped.
+- For a `ui_visual_check` row, state live-driven provenance in the `notes` column — which
+  interaction path reached the state (e.g. "typed invalid email → submitted → error") — or,
+  for a `cli-fallback`, the reason it could not be live-driven. Columns and frontmatter keys
+  are unchanged; provenance rides in `notes`.
 - See `workflow-integration/SKILL.md § DV Screenshot Gate` and the framework DV agents'
   "DV completion — screenshot manifest" notes.

@@ -51,6 +51,10 @@ Binding rules (the contract — keep these in mind even when the detail is exter
 
 The capture procedure, the manifest row format, and the RMSE design-diff join key (`design_ref`): see [references/screenshot-gate.md](references/screenshot-gate.md). Manifest format and example: [templates/dv-screenshots.md](templates/dv-screenshots.md).
 
+**Existence vs. provenance (`ui_visual_check`, v3.36.0).** Two flags gate visual evidence independently. `requires_screenshots` gates manifest **existence** — a `screenshots.md` must be present, and a `web-adapter` route capture remains a valid `source` for it. `ui_visual_check` gates evidence **provenance**: when true, an un-interacted route capture or a Storybook/isolated-component render is *incomplete* evidence — recapture from a live-driven session (drive each substate through real interactions, then capture) per `_base/frontend-agent.md § Live-drive verification`.
+
+**Evidence freshness.** Every manifest capture for a `ui_visual_check` row must be taken this run from the live-driven app. igrsoft QA direct-reads each image and flags byte-identical pairs, blank/error pages, wrong-route frames, and stale reused captures — a flagged capture re-opens DV.
+
 ## Stage Participation Overview
 
 Per-stage criteria each agent satisfies or pre-checks against (full tables in [references/stage-recipes.md](references/stage-recipes.md)):
