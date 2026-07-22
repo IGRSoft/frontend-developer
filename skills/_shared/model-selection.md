@@ -42,7 +42,7 @@ table in sync with it.
 | `angular-developer` | sonnet | high | 50 | → `opus` + `xhigh` for signals migration or zoneless change-detection design |
 | `typescript-developer` | sonnet | high | 50 | → `opus` + `xhigh` for advanced generic/type-level inference work |
 | `css-developer` | sonnet | high | 50 | — sonnet sufficient for styling/layout work |
-| `frontend-architector` | opus | xhigh | 60 | already top tier |
+| `frontend-architector` | opus | xhigh | 60 | already top tier; self-limits scope at Low complexity per § Complexity Triage |
 | `fe-test-generator` | sonnet | high | 50 | — sonnet sufficient for pattern work |
 | `fe-performance-engineer` | sonnet | high | 50 | → `opus` + `xhigh` for deep Core Web Vitals / bundle trace analysis (review-only: `disallowed-tools: Write, Edit`) |
 | `fe-accessibility-auditor` | sonnet | high | 50 | → `opus` + `xhigh` for auditing complex ARIA composite widgets (review-only: `disallowed-tools: Write, Edit`) |
