@@ -99,3 +99,7 @@ Front-end work is UI work, so DV defaults to **`requires_screenshots: true`** (m
 3. Records Build Evidence: toolchain + versions, `tsc --noEmit` → 0 errors, eslint/biome clean, bundle-size delta, and a test transcript path under `.context/logs/`.
 
 If the manifest is absent at `SubagentStop`, the igrsoft DV screenshot gate blocks and re-dispatches.
+
+## License
+
+Apache License 2.0 — see [LICENSE](LICENSE) for details.
