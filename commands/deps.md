@@ -1,9 +1,8 @@
 ---
-description: Audit, upgrade, or add npm dependencies for a web project — outdated report, CVE lookup, license inventory, and safe one-at-a-time upgrades with a build+test gate
+description: Audit npm dependencies for vulnerabilities and licenses, upgrade safely, or add a new package
 argument-hint: [audit|upgrade|add <package>] [--manager npm|pnpm|yarn|bun] [--prod]
 allowed-tools: Read, Edit, Glob, Grep, Bash, WebSearch, WebFetch
 estimated-cost:
-  band: medium
   min-tokens: 3000
   max-tokens: 18000
   model-distribution:
@@ -12,10 +11,20 @@ estimated-cost:
     opus: 10%
 ---
 
-# Dependency Audit & Upgrade
+# Dependency Lifecycle
 <!-- Updated: June 2026 -->
 
-Audit, upgrade, or add npm dependencies for a web project across the package managers this plugin supports: npm, pnpm, Yarn, and Bun. **Audit** produces an outdated-versions report, a CVE lookup, and a license inventory without changing a byte. **Upgrade** advances exactly one dependency at a time, pinning a concrete version and re-running the build and tests before touching the next. **Add** introduces a new pinned dependency to the right manifest.
+Audit, upgrade, or add npm dependencies for a web project across the package managers this plugin supports: npm, pnpm, Yarn, and Bun.
+
+Three subcommands select the operation from the first argument:
+
+- **`deps audit [scope]`** — outdated-versions report, CVE lookup, and license inventory. Read-only assessment; changes nothing. See **Audit** below.
+- **`deps upgrade <package>`** — advance exactly one dependency one step, pinning a concrete version and re-running the build and tests before touching the next. See **Upgrade** below.
+- **`deps add <package>`** — introduce a new pinned dependency into the right manifest. See **Add** below.
+
+**Dispatch**: parse the first token of `$ARGUMENTS`. If it is `audit`, run the Audit workflow with the remaining args as scope. If it is `upgrade`, run the Upgrade workflow with the next token as the target package. If it is `add`, run the Add workflow with the next token as the package to install. If the first token is none of the three (empty, a flag such as `--prod`, or a bare path), default to `audit` and treat the whole argument string as scope — never guess at a mutating mode. **Exception**: if `--upgrade` or `--add` appears anywhere in the arguments, do NOT fall through to `audit` — stop and emit the flag-form error (see Error Handling). A caller who named a mutating mode must never be told an audit was what they asked for.
+
+> **Tool discipline:** `audit` is read-only. This command's `allowed-tools` includes `Edit` because `upgrade` and `add` need to write manifests; the audit workflow MUST NOT modify any file — it only reports findings.
 
 [Extended thinking: Dependency changes are the highest-blast-radius edits in a web project — one transitive bump can break the build, drop a type, ship a CVE, or pull a tree-shake regression into the bundle. This command separates read-only assessment (audit) from mutation (upgrade/add) and forces upgrades through a one-dependency, pin, build-and-test-gated loop. Manager discovery is shared with `skill: language-detection`; CVE lookup uses the manager's native `audit` and cross-checks the osv.dev API; license inventory is best-effort and never blocks. Security findings are phrased in `igrsoft:security-review-process` vocabulary so they flow cleanly into an SR stage. The heavy reasoning — version-jump risk, breaking-change analysis, peer-dep resolution — is routed to `frontend-developer:fe-dependency-manager`; this command owns discovery, the gate loop, and reporting.]
 
@@ -37,16 +46,16 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Read-only audit of the current project (auto-detect the manager)
-/frontend-developer:deps-audit audit
+/frontend-developer:deps audit
 
 # Audit only production dependencies
-/frontend-developer:deps-audit audit --prod
+/frontend-developer:deps audit --prod
 
 # Upgrade a single dependency one step, with a build+test gate
-/frontend-developer:deps-audit upgrade react --manager pnpm
+/frontend-developer:deps upgrade react --manager pnpm
 
 # Add a new pinned dependency to the detected manifest
-/frontend-developer:deps-audit add zod
+/frontend-developer:deps add zod
 ```
 
 If no mode is given, default to `audit`.
@@ -222,13 +231,22 @@ A missing native `audit` (e.g. on older Bun) falls back to the osv.dev API via W
 - **Coupled peers:** {react-dom, @types/react — or none}
 - **Manifest edits:** {files changed}
 - **Build + Test gate:** PASS / FAIL ({failing stage})
-- **Next recommended:** {pkg} (run `/frontend-developer:deps-audit upgrade {pkg}`)
+- **Next recommended:** {pkg} (run `/frontend-developer:deps upgrade {pkg}`)
 
 ### Skipped
 - {tool}: {missing} — install hint printed above.
 ```
 
 ## Error Handling
+
+### Flag-form subcommand
+
+```
+Error: `--upgrade` / `--add` is not a supported flag. Mutating modes are selected by the
+first token only: `deps upgrade <package>` or `deps add <package>`.
+```
+Emitted instead of falling through to `audit`, so a mutation request is never silently
+answered with a read-only report.
 
 ### No manifest found
 ```
@@ -257,5 +275,5 @@ Print the install hint, skip that pass, continue. A missing native audit falls b
 - `skill: build-systems` — workspace/monorepo dependency idioms, peer-dep resolution.
 - `skill: secure-coding` — npm supply-chain and dependency-trust rules that gate a diff.
 - `/frontend-developer:build-test` — the build+test gate this command invokes after every upgrade/add.
-- `/frontend-developer:code-modernize` — when a major upgrade needs a framework-idiom migration (e.g. React 18→19 patterns).
+- `/frontend-developer:fix-modernize` — when a major upgrade needs a framework-idiom migration (e.g. React 18→19 patterns).
 - `igrsoft:security-review-process` — SR-stage vocabulary used for every vulnerability finding here.

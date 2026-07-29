@@ -45,7 +45,8 @@ Pin tool versions in the lockfile, never in prose. Version-gated tool features
 ```
 Tooling task?
 ├── Set up / pick a bundler → build-systems/SKILL.md
-│   ├── new app → Vite (esbuild dev + Rollup build)
+│   ├── new React/Vue/Svelte app → Vite (esbuild dev + Rollup build)
+│   ├── Angular → Angular CLI / @angular/build (ng build, ng serve)
 │   ├── Next.js → Turbopack dev / built-in build
 │   └── legacy / module federation → Webpack
 ├── Something is broken → fe-diagnostics/SKILL.md
@@ -75,8 +76,10 @@ These augment the inherited `_base/frontend-agent.md` Constraints and Tool Prior
   inline source content).
 - **Never guess CLI flags.** Use `<tool> --help` / Context7 / Ref — inherited Tool
   Priority.
-- **Reproducible builds:** the lockfile is authoritative; `npm ci` (not `npm install`)
-  in CI; do not float versions.
+- **Reproducible builds:** the lockfile is authoritative and decides which manager
+  owns the repo. In CI use that manager's frozen install (`npm ci`, `pnpm install
+  --frozen-lockfile`, `yarn install --immutable`) — never a resolving install, and
+  never a manager the lockfile does not name. Do not float versions.
 
 ## File Overview
 

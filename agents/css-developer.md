@@ -64,9 +64,9 @@ All build/lint/test operations go through the native toolchain via single scoped
 
 - **Build**: `npm run build` (or `pnpm`/`yarn`); for standalone CSS pipelines `npx postcss`, `npx tailwindcss -i <in> -o <out>`.
 - **Lint**: `npx stylelint "**/*.{css,scss}"` — zero errors; enforce token usage and property ordering where configured.
-- **Visual/regression test**: `npx playwright test <spec>` for visual snapshots of affected breakpoints/themes. Route generation to `frontend-developer:fe-test-generator`.
+- **Visual/regression test**: visual snapshots of affected breakpoints/themes in the project's **configured** browser runner (`npx playwright test <spec>` / `npx cypress run --spec <spec>`) — detect it, never introduce a second one. Route generation to `frontend-developer:fe-test-generator`.
 
-When a tool is missing, print the install hint (`npm i -D stylelint`, `npm i -D tailwindcss`) and skip that step — never hard-fail.
+When a tool is missing, print the install hint using the detected manager's add verb (`npm i -D` / `pnpm add -D` / `yarn add -D`) and skip that step — never hard-fail.
 
 ## Delegation
 

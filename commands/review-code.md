@@ -1,9 +1,8 @@
 ---
-description: Framework-aware code review for React, Vue, Svelte, Angular, TypeScript, and CSS — parallel per-framework reviewers plus an accessibility pass and a security pass, synthesized into a P0-P3 report
+description: Review code across React, Vue, Svelte, Angular, TypeScript, and CSS, synthesized into a P0-P3 report
 argument-hint: [scope: file/dir/PR#/branch — default: working changes] [--quick] [--fix] [--framework react|vue|svelte|angular]
 allowed-tools: Read, Glob, Grep, Bash, WebSearch, WebFetch
 estimated-cost:
-  band: medium
   min-tokens: 4000
   max-tokens: 28000
   model-distribution:
@@ -12,7 +11,7 @@ estimated-cost:
     opus: 10%
 ---
 
-# Framework-Aware Code Review
+# Code Review
 <!-- Updated: June 2026 -->
 
 Review web UI changes with the right specialist per framework, plus a dedicated accessibility pass and a dedicated security pass, then synthesize one deduplicated, prioritized P0-P3 report. Scope defaults to your working changes; reviewers run read-only and in parallel; `--fix` hands the blocking findings to the code fixer under a minimal-diff gate.
@@ -37,26 +36,26 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Review your current working changes (staged + unstaged)
-/frontend-developer:code-review
+/frontend-developer:review-code
 
 # Review a specific directory
-/frontend-developer:code-review src/components
+/frontend-developer:review-code src/components
 
 # Review a single file
-/frontend-developer:code-review src/App.tsx
+/frontend-developer:review-code src/App.tsx
 
 # Review a branch or PR against the base
-/frontend-developer:code-review feature/new-checkout
-/frontend-developer:code-review 142            # PR number
+/frontend-developer:review-code feature/new-checkout
+/frontend-developer:review-code 142            # PR number
 
 # Fast single-agent pass for quick feedback
-/frontend-developer:code-review src/ --quick
+/frontend-developer:review-code src/ --quick
 
 # Review, then auto-fix the P0/P1 findings
-/frontend-developer:code-review src/ --fix
+/frontend-developer:review-code src/ --fix
 
 # Force a framework when detection is ambiguous
-/frontend-developer:code-review src/ --framework react
+/frontend-developer:review-code src/ --framework react
 ```
 
 ## Options
@@ -237,7 +236,7 @@ Suggestion: Pass an explicit path, or check that your changes include reviewable
 ### No changes detected (default scope)
 ```
 Note: No staged or unstaged changes to review.
-Suggestion: Name a path, branch, or PR number, e.g. /frontend-developer:code-review src/
+Suggestion: Name a path, branch, or PR number, e.g. /frontend-developer:review-code src/
 ```
 
 ## See Also
@@ -246,8 +245,8 @@ Suggestion: Name a path, branch, or PR number, e.g. /frontend-developer:code-rev
 - `skill: severity-matrix` — P0-P3 definitions used by the synthesis ranking.
 - `skill: secure-coding` — XSS/CSP/secrets patterns the security pass draws on.
 - `skill: accessibility-baseline` — WCAG 2.2 success criteria the a11y pass draws on.
-- `/frontend-developer:lint-fix` — run formatters/linters first to clear P3 noise before review.
+- `/frontend-developer:fix-quick` — run formatters/linters first to clear P3 noise before review.
 - `/frontend-developer:build-test` — confirm the change builds and tests green before or after review.
-- `/frontend-developer:a11y-audit` — escalate an accessibility finding to a full axe-core/Lighthouse audit.
+- `/frontend-developer:analyze-accessibility` — escalate an accessibility finding to a full axe-core/Lighthouse audit.
 
 If there are no material issues, say that directly instead of manufacturing feedback.

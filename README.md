@@ -6,7 +6,7 @@ Claude Code plugin for **web front-end** development — React/Next.js, Vue/Nuxt
 
 | Field | Value |
 |-------|-------|
-| **Version** | 1.1.0 |
+| **Version** | 1.3.0 |
 | **igrsoft Compatibility** | v3.36.0 |
 | **claude-code min version** | 2.1.169 |
 
@@ -59,19 +59,70 @@ Review-only agents carry `disallowed-tools: Write, Edit`; they emit a compressed
 
 ## Commands
 
-9 slash commands. Each declares `description`, `argument-hint`, and a whitelisted `allowed-tools`, and degrades gracefully on a missing optional tool.
+16 slash commands, sharing the cross-plugin naming standard with `apple-developer`. Each declares `description`, `argument-hint`, and a whitelisted `allowed-tools`, and degrades gracefully on a missing optional tool. `analyze-*` commands are read-only.
+
+### Analyze
 
 | Command | Description |
 |---------|-------------|
-| `/code-review` | Framework-aware code review for React, Vue, Svelte, Angular, TypeScript, and CSS — parallel per-framework reviewers plus an accessibility pass and a security pass, synthesized into a P0–P3 report. |
-| `/build-test` | Detect the package manager and framework, install dependencies, build, and run unit/component tests for a web project. |
-| `/generate-tests` | Generate, register, and verify a runnable component/unit/e2e test suite using the project's existing framework (Vitest, Jest, Testing Library, Playwright, Cypress). |
-| `/a11y-audit` | Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triage by severity, and optionally route fixes to the accessibility auditor and code fixer. |
-| `/lint-fix` | Run linters and formatters (ESLint or Biome, Prettier, Stylelint) over a web project — check-only or auto-fix — then re-check. |
-| `/profile-performance` | Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then route findings to the performance engineer for a ranked fix plan. |
-| `/code-modernize` | Migrate a web codebase to a modern idiom (React class→hooks, Vue 2→3 Composition API, Angular NgModule→standalone) one unit at a time, gating each migration on a green build and test run. |
-| `/deps-audit` | Audit, upgrade, or add npm dependencies — outdated report, CVE lookup, license inventory, and safe one-at-a-time upgrades with a build+test gate. |
-| `/component-scaffold` | Scaffold a component (props, state, test, and story) in the project's detected framework, honoring its conventions and file layout. |
+| `/analyze-accessibility` | Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triaged by severity. `--fix` routes remediation to the accessibility auditor and code fixer. |
+| `/analyze-tech-debt` | Identify, quantify, and prioritize frontend tech debt across code, types, CSS, dependencies, tests, and framework majors. |
+
+### Architecture
+
+| Command | Description |
+|---------|-------------|
+| `/arch-select` | Select a frontend architecture — rendering strategy, state management, component boundaries, framework, and repo shape. |
+| `/arch-review` | Review a frontend codebase's architecture — layering, state ownership, data-fetching seams, coupling, bundle split. |
+
+### Build & diagnose
+
+| Command | Description |
+|---------|-------------|
+| `/build-test` | Detect the package manager and framework, install dependencies, build, and run unit/component tests. The build gate every other command calls. |
+| `/debug` | Configure browser and framework debugging workflows, or triage and root-cause a specific web error. |
+| `/deps` | Audit npm dependencies for vulnerabilities and licenses, upgrade safely, or add a new package. First token selects the mode; `audit` is the default. |
+
+### Fix
+
+| Command | Description |
+|---------|-------------|
+| `/fix-quick` | Run linters and formatters (ESLint or Biome, Prettier, Stylelint) — check-only or auto-fix — then re-check. |
+| `/fix-refactor` | Refactor web UI for clean code and SOLID — `frontend-architector` plans, `fe-code-fixer` applies; `--extract` pulls code into a shared package. |
+| `/fix-modernize` | Migrate a web codebase to modern framework idioms (React hooks, Vue 3, Angular standalone, Svelte 5), unit by unit. |
+| `/fix-performance` | Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then optionally apply the fixes. Measure-only by default; `--apply` mutates only after a PHASE CHECKPOINT approval. |
+
+### Generate
+
+| Command | Description |
+|---------|-------------|
+| `/gen-component` | Scaffold a component (props, state, test, and story) in the project's detected framework and conventions. |
+| `/gen-tests` | Generate, register, and verify a runnable unit, component, or e2e test suite using the project's framework. |
+| `/gen-docs` | Generate or update TSDoc comments, typedoc API reference, Storybook docs, and README API sections. |
+
+### Review & deliver
+
+| Command | Description |
+|---------|-------------|
+| `/review-code` | Review code across React, Vue, Svelte, Angular, TypeScript, and CSS, synthesized into a P0-P3 report. |
+| `/develop-feature` | Develop a web feature end-to-end — architecture, framework implementation, tests, and a security pass, build-gated. |
+
+### Migration: old → new names
+
+Every command below was renamed in 1.2.0 to match the `apple-developer` naming standard. The old names are gone, not aliased — update any script, skill, or worktask payload that still calls them.
+
+| Old name (≤ 1.1.0) | New name (1.2.0+) |
+|--------------------|-------------------|
+| `/code-review` | `/review-code` |
+| `/lint-fix` | `/fix-quick` |
+| `/code-modernize` | `/fix-modernize` |
+| `/profile-performance` | `/fix-performance` |
+| `/generate-tests` | `/gen-tests` |
+| `/deps-audit` | `/deps` |
+| `/a11y-audit` | `/analyze-accessibility` |
+| `/component-scaffold` | `/gen-component` |
+
+`/build-test` keeps its name. Two renames change behavior as well as spelling: `/fix-performance` adds an opt-in apply phase (the old `/profile-performance` was measure-only, which is still the default), and `/deps` dispatches on a subcommand token where `/deps-audit` implied the audit.
 
 ## Skills
 

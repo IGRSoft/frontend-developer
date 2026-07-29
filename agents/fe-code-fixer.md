@@ -5,7 +5,7 @@ model: haiku
 effort: medium
 maxTurns: 30
 color: magenta
-tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(npx:*), Bash(node:*), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs
+tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(pnpm:*), Bash(yarn:*), Bash(npx:*), Bash(node:*), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs
 inherits: _base/frontend-agent.md
 ---
 
@@ -13,7 +13,7 @@ Expert code remediation specialist for web front-ends (React, Vue, Svelte, Angul
 
 ## Capabilities
 
-- Apply fixes from code-review, `fe-security-auditor`, `fe-accessibility-auditor`, and `fe-performance-engineer` findings
+- Apply fixes from review-code, `fe-security-auditor`, `fe-accessibility-auditor`, and `fe-performance-engineer` findings
 - Apply linter/formatter auto-fixes (`npx eslint --fix`, `npx biome check --write`, `npx prettier --write`, `npx stylelint --fix`)
 - Group related fixes for atomic commits; process multiple fixes in a single pass
 - Re-run the matching build/test/lint gate after each fix group — one scoped command per call, never `&&`-chained
@@ -34,7 +34,7 @@ Input: a finding from a reviewer/auditor with `file:line`, issue description, se
 - Update related code (parent props, types, tests, stories) only when the fix requires it
 
 ### 4. Verify Fix
-- Confirm no type or build errors introduced: `npx tsc --noEmit` (single scoped command) and the project's `npm run build` where a build is required
+- Confirm no type or build errors introduced: `npx tsc --noEmit` (single scoped command) and the project's build where one is required — `<pm-run> build` for the manager detected from the lockfile (`npm run` / `pnpm run` / `yarn`), never a manager the repo does not use
 - Confirm lint clean: `npx eslint <file>` / `npx biome check <file>`
 - Confirm the fix addresses the reported issue and introduces no new warnings
 - Run the narrowest covering test (`npx vitest run -t <name>`, `npx jest -t <name>`, `npx playwright test -g <name>`)
@@ -71,9 +71,10 @@ Apply these minimal fixes for common findings. Escalate to the owning framework 
 |---------|-------------|
 | Whole-library import for one helper | Switch to a named/deep import; verify tree-shaking |
 | Heavy dep on the critical path | `import()` dynamic split (mechanical cases only; render-architecture changes escalate) |
-| Unstable callback/object prop re-rendering a hot child | `useCallback`/`useMemo` / stable ref **only where the auditor measured it hot** |
+| Unstable callback/object prop re-rendering a hot child (React) | `useCallback`/`useMemo` / stable ref **only where the auditor measured it hot** |
+| Wide reactive dep recomputing on unrelated change (Vue/Svelte/Angular) | Narrow the reactive dependency; `computed`/`$derived`; `OnPush` + signals — **only where the auditor measured it hot** |
 | Unsized image causing CLS | Add `width`/`height` or `aspect-ratio` |
-| `target=_blank` font/render blocking | `loading="lazy"`, `font-display: swap` per the finding |
+| Render-blocking font / eagerly-loaded offscreen image | `loading="lazy"`, `font-display: swap` per the finding |
 
 ### Lint / Types / Format
 

@@ -20,7 +20,7 @@ All code must comply with these skills:
 | `modern-typescript` | `tsc --noEmit` clean; `strict: true`; no `any` without a justifying comment; version-gated TS/ES features carry a marker and a fallback (`_shared/version-feature-matrix.md`) |
 | `accessibility-patterns` | Every interactive element is keyboard-operable and labelled; ARIA used only to fill native gaps; focus order and visible focus preserved; meets WCAG 2.2 AA (`_shared/accessibility-baseline.md`) |
 | `_shared/secure-coding` | No `dangerouslySetInnerHTML`/`v-html`/`{@html}`/`[innerHTML]` on unsanitized input; no secrets in the client bundle; CSP-compatible (no inline-eval); all external/API responses validated before use |
-| `fe-testing` | Changed behavior is covered by a test in the project's framework (Vitest/Jest + Testing Library, Playwright for E2E); tests pass before code is complete |
+| `fe-testing` | Changed behavior is covered by a test in the project's **already-configured** runner — detect it, never add a second (Vitest/Jest/`ng test`; Playwright or Cypress for E2E); tests pass before code is complete |
 
 Violations must be flagged and corrected before code is complete.
 
@@ -122,7 +122,7 @@ Primary stage. Implement features in React/Vue/Svelte/Angular/TypeScript/CSS und
 - Run only the tests covering changed files — `npx vitest run <pattern>`, `npx playwright test <spec>`, `npx jest <path>`. Full-suite regression belongs to QA.
 - Include a security-surface summary in `.context/development-N.md` for DR and SR (XSS sinks touched, CSP impact, new dependencies, any `innerHTML`-family usage).
 - **Screenshot gate (`requires_screenshots: true` by default — UI work).** Web changes default `metadata.requires_screenshots: true` (PL0/dispatcher sets it; DV honors it). For each meaningful screen or UI state, capture evidence **before returning** and write the manifest at `.context/images/<worktask_id>/screenshots.md` using the `workflow-integration/templates/dv-screenshots.md` column contract `| name | path | source | design_ref | notes |`. The `handoff:` frontmatter field `screenshot_count` MUST equal the manifest row count. **Capture procedure:**
-  1. Build/serve the route under test with a single scoped command (`npm run build`, then `npm run preview`, or `npx vite preview`).
+  1. Build/serve the route with single scoped commands, using the lockfile's manager and the framework's own serve verb (Vite `<pm-run> preview`, Next `npx next start`, Angular `npx ng serve`).
   2. Capture each screen via the igrsoft **`web_adapter`** path — Playwright (`npx playwright screenshot <url> <out.png>`) or Chrome MCP rendered DOM — and write the PNG under `.context/images/<worktask_id>/`.
   3. Record one row per screen/state with **`source: web-adapter`**, a `design_ref` (Figma/spec link or `—`), and a `notes` value. Use `source: cli-fallback` **only** when a route cannot be rendered headlessly, and state the reason in `notes`.
   4. Attach **Lighthouse** and **axe** reports as *supporting* rows (`source: web-adapter`, `notes: lighthouse` / `notes: axe`, `path` → the JSON/HTML report under `.context/images/<worktask_id>/`) or reference them from the Build Evidence block — they supplement, never replace, screen captures.

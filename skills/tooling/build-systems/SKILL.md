@@ -25,7 +25,8 @@ Use this skill when:
 
 | Choose | When |
 |--------|------|
-| **Vite** | New apps and libraries (React/Vue/Svelte/Solid). esbuild dev (no bundling = fast HMR) + Rollup production build. Default recommendation. |
+| **Vite** | New React/Vue/Svelte/Solid apps and libraries. esbuild dev (no bundling = fast HMR) + Rollup production build. Default **for these frameworks** — not Angular. |
+| **Angular CLI** (`@angular/build`) | Any Angular app. Wraps esbuild + Vite behind `ng build`/`ng serve`; drive the CLI, don't hand-roll a bundler config. |
 | **Turbopack** | Next.js dev (`next dev --turbopack`). Incremental Rust bundler; production build still uses Next's pipeline. |
 | **Webpack** | Legacy/enterprise codebases, complex Module Federation, or plugins with no Vite/Rollup equivalent. Mature but slower. |
 | **esbuild** (direct) | Build scripts, simple bundling, transpile-only steps. Powers Vite dev under the hood. |
@@ -98,7 +99,8 @@ Watch for CJS-only dependencies and dynamic `require()` that Rollup cannot stati
 |--------------|-----|
 | Secret in `VITE_*`/`NEXT_PUBLIC_*` env | server-only env; never client-exposed |
 | Expecting client env to change without rebuild | rebuild, or fetch a runtime config at boot |
-| `npm install` in CI (non-reproducible) | `npm ci` against the lockfile |
+| A resolving install in CI (non-reproducible) | the detected manager's frozen install against the lockfile (`npm ci`, `pnpm install --frozen-lockfile`, `yarn install --immutable`) |
+| Running a manager the lockfile does not name | detect from the lockfile first; never mix managers |
 | Over-broad `manualChunks` defeating caching | split by stable vendor boundaries; measure |
 | Floating tool versions in prose | pin in the lockfile |
 

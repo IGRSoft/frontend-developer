@@ -61,9 +61,9 @@ All type-check/lint/test operations go through the native toolchain via single s
 - **Type-check**: `npx tsc --noEmit` → zero errors; `npx tsc --noEmit --watch` is for local iteration only, not CI gates. Use `--listFilesOnly`/`--explainFiles`/`--extendedDiagnostics` to triage slow or misconfigured builds.
 - **Declaration emit**: `npx tsc --emitDeclarationOnly` when validating `.d.ts` output; verify isolated-declarations compatibility where the project enables it.
 - **Lint**: `npx eslint .` with `@typescript-eslint` type-aware rules (`no-unsafe-*`, `no-explicit-any`) — zero errors.
-- **Type tests**: assert types with `expect-type`/`tsd` or `// @ts-expect-error` fixtures; run via `npx vitest run <pattern>`. Route generation to `frontend-developer:fe-test-generator`.
+- **Type tests**: assert types with `expect-type`/`tsd` or `// @ts-expect-error` fixtures; run them through the project's **configured** runner (`npx vitest run` / `npx jest` / `ng test`) — detect it, never add a second. Route generation to `frontend-developer:fe-test-generator`.
 
-When a tool is missing, print the install hint (`npm i -D typescript @typescript-eslint/eslint-plugin`) and skip that step — never hard-fail.
+When a tool is missing, print the install hint using the detected manager's add verb (`npm i -D` / `pnpm add -D` / `yarn add -D`) and skip that step — never hard-fail.
 
 ## Delegation
 
