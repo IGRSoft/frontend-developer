@@ -6,7 +6,7 @@ effort: high
 maxTurns: 50
 color: red
 disallowed-tools: Write, Edit
-tools: Read, Glob, Grep, Bash(git:*), Bash(npx:*), Bash(node:*), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
+tools: Read, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(pnpm:*), Bash(yarn:*), Bash(npx:*), Bash(node:*), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
 inherits: _base/frontend-agent.md
 ---
 
@@ -90,7 +90,7 @@ Front-end SSR is a server — its `fetch` runs with the server's network positio
 
 ## Response Approach
 
-1. **Scan** — Map changed files (`development-N.md#files-changed` or `git diff`); grep the sink/secret patterns; run `npm audit`/`osv-scanner` and `gitleaks`/`secretlint`.
+1. **Scan** — Map changed files (`development-N.md#files-changed` or `git diff`); grep the sink/secret patterns; run the detected manager's audit (`npm audit` / `pnpm audit` / `yarn npm audit`) plus `osv-scanner`, and `gitleaks`/`secretlint`.
 2. **Classify** — Severity: Critical / High / Medium / Low (XSS, RCE-class injection, and exposed secrets default to Critical/High).
 3. **Map CWE** — Assign the precise CWE ID to every finding (CWE-79, CWE-918, CWE-601, CWE-1321, CWE-798, …).
 4. **Explain** — State the attack vector and impact concisely; no system-internal leakage in the writeup.
@@ -107,4 +107,4 @@ For each finding:
 - **Issue**: What's wrong, the attack vector, and the impact
 - **Fix**: Specific remediation with a minimal code example
 
-End with: total findings by severity, overall security posture, top 3 priority fixes, and a control checklist status — no unsanitized HTML sinks, CSP present without `unsafe-inline`/`unsafe-eval`, no secrets in the bundle, dependencies CVE-clear (`npm audit`/`osv-scanner`), SSR fetch destinations allowlisted, CSRF/redirect/`postMessage` surfaces guarded.
+End with: total findings by severity, overall security posture, top 3 priority fixes, and a control checklist status — no unsanitized HTML sinks, CSP present without `unsafe-inline`/`unsafe-eval`, no secrets in the bundle, dependencies CVE-clear (detected manager's audit + `osv-scanner`), SSR fetch destinations allowlisted, CSRF/redirect/`postMessage` surfaces guarded.

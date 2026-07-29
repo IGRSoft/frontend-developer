@@ -22,7 +22,7 @@ Three subcommands select the operation from the first argument:
 - **`deps upgrade <package>`** — advance exactly one dependency one step, pinning a concrete version and re-running the build and tests before touching the next. See **Upgrade** below.
 - **`deps add <package>`** — introduce a new pinned dependency into the right manifest. See **Add** below.
 
-**Dispatch**: parse the first token of `$ARGUMENTS`. If it is `audit`, run the Audit workflow with the remaining args as scope. If it is `upgrade`, run the Upgrade workflow with the next token as the target package. If it is `add`, run the Add workflow with the next token as the package to install. If the first token is none of the three (empty, a flag such as `--prod`, or a bare path), default to `audit` and treat the whole argument string as scope — never guess at a mutating mode.
+**Dispatch**: parse the first token of `$ARGUMENTS`. If it is `audit`, run the Audit workflow with the remaining args as scope. If it is `upgrade`, run the Upgrade workflow with the next token as the target package. If it is `add`, run the Add workflow with the next token as the package to install. If the first token is none of the three (empty, a flag such as `--prod`, or a bare path), default to `audit` and treat the whole argument string as scope — never guess at a mutating mode. **Exception**: if `--upgrade` or `--add` appears anywhere in the arguments, do NOT fall through to `audit` — stop and emit the flag-form error (see Error Handling). A caller who named a mutating mode must never be told an audit was what they asked for.
 
 > **Tool discipline:** `audit` is read-only. This command's `allowed-tools` includes `Edit` because `upgrade` and `add` need to write manifests; the audit workflow MUST NOT modify any file — it only reports findings.
 
@@ -238,6 +238,15 @@ A missing native `audit` (e.g. on older Bun) falls back to the osv.dev API via W
 ```
 
 ## Error Handling
+
+### Flag-form subcommand
+
+```
+Error: `--upgrade` / `--add` is not a supported flag. Mutating modes are selected by the
+first token only: `deps upgrade <package>` or `deps add <package>`.
+```
+Emitted instead of falling through to `audit`, so a mutation request is never silently
+answered with a read-only report.
 
 ### No manifest found
 ```

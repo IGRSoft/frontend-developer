@@ -55,7 +55,7 @@ Verify exact framework versions and API surface against your toolchain via Conte
 | Jest | `jest --coverage` | text + `coverage/lcov-report` |
 | Playwright | `playwright test` + V8 coverage / `c8` wrapper for app code | `c8 report`; trace viewer for flow debugging |
 
-Coverage targets and gap reports go through `skill: testing-principles`. When a coverage provider is missing, print the install hint (`npm i -D @vitest/coverage-v8`) and report covered/uncovered scenarios qualitatively rather than hard-failing. Measure coverage of **behavior and branches**, not line percentage alone — a 100%-line test that never asserts is not coverage.
+Coverage targets and gap reports go through `skill: testing-principles`. When a coverage provider is missing, print the install hint for the detected package manager (e.g. `npm i -D @vitest/coverage-v8` / `pnpm add -D @vitest/coverage-v8` / `yarn add -D @vitest/coverage-v8`) and report covered/uncovered scenarios qualitatively rather than hard-failing. Measure coverage of **behavior and branches**, not line percentage alone — a 100%-line test that never asserts is not coverage.
 
 ## Mock / Fake Strategy
 

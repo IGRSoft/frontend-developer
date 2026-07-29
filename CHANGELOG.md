@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] — 2026-07-29
+
+Single-framework and single-toolchain rules that had been stated as universal are now
+scoped to the framework or package manager they are actually true for. This plugin serves
+React, Vue, Svelte, Angular, TypeScript, and plain CSS/HTML; a rule written for one of
+them misfires silently on the other five.
+
+### Fixed
+
+- **Package-manager lockouts in agent `tools:` grants.** `fe-code-fixer` and
+  `frontend-architector` granted only `Bash(npm:*)`, and `fe-security-auditor` granted no
+  manager at all — while all three inherit the base rule to detect the manager from the
+  lockfile. On a pnpm/yarn repo the correct command was silently unrunnable, so the
+  security audit could report "CVE-clear" on `osv-scanner` alone. All three now grant
+  npm/pnpm/yarn.
+- **React hooks prescribed as the cross-framework perf fix.** `fe-code-fixer`'s playbook
+  offered `useCallback`/`useMemo` for an unstable prop re-rendering a hot child with no
+  qualifier, sending a haiku-tier mechanical applier after React hooks in Vue, Svelte, and
+  Angular code. Row is now React-scoped, with the `computed`/`$derived`/`OnPush`+signals
+  counterpart restored from `fe-performance-engineer`.
+- **Single test runners named under "Tooling Mandates".** `css-developer` (Playwright) and
+  `typescript-developer` (Vitest) contradicted the plugin's own "never introduce a second
+  framework" rule on Cypress, Jest, and Angular repos. Both now defer to the project's
+  configured runner, as does the base's "Always Enforce" testing row.
+- **`npm ci` as *the* reproducible CI install** in the neutral-scoped `tooling-skills`
+  domain constraint and the `build-systems` anti-pattern table — despite `build-systems`
+  citing `fe-dependency-manager` as canonical, which forbids cross-manager use. Both now
+  give the per-manager frozen install.
+- **No Angular row in the bundler-selection table**, with Vite as the unqualified default
+  for new apps, leaving an Angular build with no correct answer. Added `@angular/build`
+  and qualified the Vite recommendation.
+- Hardcoded npm commands in manager-detecting docs: the base's **mandatory**
+  screenshot-capture step, and the `npm i -D …` install hints in `fe-test-generator`,
+  `css-developer`, and `typescript-developer`.
+
 ## [1.2.0] — 2026-07-29
 
 Command-surface unification with the `apple-developer` plugin. The command set grows

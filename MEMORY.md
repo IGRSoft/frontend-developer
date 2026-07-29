@@ -116,6 +116,37 @@ hooks/validator/`_base`/handoff from system-developer.
 
 ## Version History
 
+### 1.3.0 — 2026-07-29 Single-framework rules scoped to their framework
+
+Audit for one defect class: **a rule true for one framework or toolchain, stated as
+universal, in a document serving all six stacks**. It never reads as wrong in isolation —
+it only misfires when a different stack hits it.
+
+Decisions worth preserving:
+
+1. **An agent's `tools:` grant is a scope claim.** Three cross-framework agents granted
+   `Bash(npm:*)` only (or, in `fe-security-auditor`, no manager at all) while their bodies
+   mandated lockfile detection. The grant silently vetoed the correct command on pnpm/yarn
+   repos. **When an agent's prose says "detect the manager", its grant must cover every
+   manager it may detect.** Check the grant and the prose together, never separately.
+2. **`fe-dependency-manager` is the reference implementation** for manager handling —
+   lockfile-first detection, a full per-manager matrix, berry-vs-classic disambiguation.
+   Measure other agents against it. It is also cited as canonical by `build-systems`, so
+   `build-systems` must not contradict it.
+3. **"Mandates" headings are where this defect does the most damage.** `css-developer` and
+   `typescript-developer` each named one test runner under **Tooling Mandates**, which reads
+   as binding and overrides the plugin's own "never introduce a second framework" rule.
+   A mandate may name a *category* ("the project's configured runner"), never one product.
+4. **Haiku-tier mechanical appliers need fully-qualified playbook rows.** `fe-code-fixer` is
+   explicitly a work-order applier; an unqualified `useCallback`/`useMemo` row sent it after
+   React hooks in Vue/Svelte/Angular code. Its upstream (`fe-performance-engineer`) had the
+   framework split right and it was lost in transcription — when a table is copied between
+   agents, the qualifiers must be copied with it.
+5. **bun is deliberately command-layer only.** `/deps` and `/build-test` implement bun fully
+   (unrestricted `Bash`); `fe-dependency-manager` honestly scopes its description to
+   npm/pnpm/yarn and is left alone. Do not add `Bash(bun:*)` to agents without also widening
+   the description — inventing support is the mirror image of this defect class.
+
 ### 1.2.0 — 2026-07-29 Cross-plugin command unification
 
 Command surface unified with `apple-developer`: 9 commands → 16. Eight were renamed

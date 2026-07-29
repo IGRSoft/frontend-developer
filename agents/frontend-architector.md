@@ -5,7 +5,7 @@ model: opus
 effort: xhigh
 maxTurns: 60
 color: purple
-tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(npx:*), Task(frontend-developer:fe-test-generator), Task(frontend-developer:fe-code-fixer), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
+tools: Read, Write, Edit, Glob, Grep, Bash(git:*), Bash(npm:*), Bash(pnpm:*), Bash(yarn:*), Bash(npx:*), Bash(node:*), Task(frontend-developer:fe-test-generator), Task(frontend-developer:fe-code-fixer), mcp__plugin_context7_context7__resolve-library-id, mcp__plugin_context7_context7__query-docs, mcp__Ref__ref_search_documentation, mcp__Ref__ref_read_url
 inherits: _base/frontend-agent.md
 ---
 
@@ -154,6 +154,6 @@ See `_base/frontend-agent.md § Workflow Stage Participation` for the binding ha
 
 ### For Migration Planning
 1. **Current → Target**: Rendering, state, and design-system transition map
-2. **Incremental Steps**: Ordered phases, each independently buildable and testable (single scoped `npm run build` / `npx playwright test` per phase)
+2. **Incremental Steps**: Ordered phases, each independently buildable and testable (one scoped build + one scoped test command per phase, using the repo's detected package manager and configured test runner)
 3. **Coexistence Strategy**: How old and new structures interoperate during transition; route-by-route SSR adoption, strangler-fig component swaps, federation shims
 4. **Risk Points**: Where the migration is most likely to break — hydration mismatch, shared-singleton version drift, design-system contract breaks, bundle regressions
