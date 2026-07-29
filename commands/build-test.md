@@ -3,7 +3,6 @@ description: Detect the package manager and framework, install dependencies, bui
 argument-hint: [path (default .)] [--prod] [--no-install] [--no-test]
 allowed-tools: Read, Glob, Grep, Bash
 estimated-cost:
-  band: medium
   min-tokens: 1500
   max-tokens: 12000
   model-distribution:
@@ -227,7 +226,7 @@ Not an error. Report "no `test` script / runner config found — build succeeded
 
 - `skill: language-detection` — canonical marker → framework → agent routing (keep the priority table in sync).
 - `skill: build-systems` — Vite/Next/Angular/Nuxt build idioms, monorepo workspaces, env handling.
-- `/frontend-developer:lint-fix` — run linters before building to cut noise.
-- `/frontend-developer:generate-tests` — add a test suite when detection finds no test target.
-- `/frontend-developer:deps-audit` — when an `install`-stage failure is a missing or conflicting dependency.
-- `/frontend-developer:profile-performance` — once the build is green, profile bundle and Web Vitals.
+- `/frontend-developer:fix-quick` — run linters before building to cut noise.
+- `/frontend-developer:gen-tests` — add a test suite when detection finds no test target.
+- `/frontend-developer:deps` — when an `install`-stage failure is a missing or conflicting dependency.
+- `/frontend-developer:fix-performance` — once the build is green, profile bundle and Web Vitals.

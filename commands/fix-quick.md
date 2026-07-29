@@ -1,9 +1,8 @@
 ---
-description: Run linters and formatters (ESLint or Biome, Prettier, Stylelint) over a web project — check-only or auto-fix — then re-check
+description: Run linters and formatters (ESLint or Biome, Prettier, Stylelint) — check-only or auto-fix — then re-check
 argument-hint: [path (default .)] [--check | --fix] [--only eslint|biome|prettier|stylelint]
 allowed-tools: Read, Edit, Glob, Grep, Bash
 estimated-cost:
-  band: low
   min-tokens: 500
   max-tokens: 6000
   model-distribution:
@@ -11,12 +10,12 @@ estimated-cost:
     sonnet: 10%
 ---
 
-# Lint & Fix
+# Quick Fix
 <!-- Updated: June 2026 -->
 
-Run the project's standard linter and formatters over the target, report violations, and — in `--fix` mode — apply the safe, deterministic auto-fixes, then re-check. Fast, cheap, and reversible: this is the deterministic-cleanup pass, not a review. Deep, judgment-bearing fixes escalate to `/frontend-developer:code-review --fix`.
+Run the project's standard linter and formatters over the target, report violations, and — in `--fix` mode — apply the safe, deterministic auto-fixes, then re-check. Fast, cheap, and reversible: this is the deterministic-cleanup pass, not a review. Deep, judgment-bearing fixes escalate to `/frontend-developer:review-code --fix`.
 
-[Extended thinking: This command is the frontend-developer analogue of a pre-commit hook. It detects which linter/formatter stack the project uses (ESLint *or* Biome — never both as the JS/TS linter; Prettier for formatting unless Biome owns it; Stylelint for CSS), discovers each tool's config so it honors project rules instead of imposing its own, and runs them in a fixed order. `--check` is the CI mode — no edits, exit-code-honest, with a per-rule violation count — and `--fix` applies only the mechanical fixes (`eslint --fix`, `biome check --write`, `prettier --write`, `stylelint --fix`) then re-runs the linters to confirm. Anything a `--fix` rule cannot resolve mechanically (type errors, accessibility-rule violations needing markup changes) is reported, not forced; those land in `code-review --fix`. Keep it on haiku: the work is tool invocation and table assembly, not analysis.]
+[Extended thinking: This command is the frontend-developer analogue of a pre-commit hook. It detects which linter/formatter stack the project uses (ESLint *or* Biome — never both as the JS/TS linter; Prettier for formatting unless Biome owns it; Stylelint for CSS), discovers each tool's config so it honors project rules instead of imposing its own, and runs them in a fixed order. `--check` is the CI mode — no edits, exit-code-honest, with a per-rule violation count — and `--fix` applies only the mechanical fixes (`eslint --fix`, `biome check --write`, `prettier --write`, `stylelint --fix`) then re-runs the linters to confirm. Anything a `--fix` rule cannot resolve mechanically (type errors, accessibility-rule violations needing markup changes) is reported, not forced; those land in `review-code --fix`. Keep it on haiku: the work is tool invocation and table assembly, not analysis.]
 
 ## CRITICAL BEHAVIORAL RULES
 
@@ -28,23 +27,23 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 4. **Never run two JS/TS linters.** ESLint and Biome are mutually exclusive as the JS/TS linter. If both configs exist, prefer the one wired into `package.json` `scripts.lint`; if still ambiguous, prefer ESLint and note the choice. Biome can also own formatting — if `biome.json` formats, do not also run Prettier on the same files.
 5. **Single-command Bash invocations.** Use each tool's own path/recursion flags. Never `cd`-chain or `&&`-chain — scoped Bash patterns do not match compound commands.
 6. **Tool-missing never hard-fails.** If a linter/formatter binary is absent, print the install hint, skip that pass, and continue. Report what was skipped.
-7. **This is the shallow pass.** Do NOT attempt semantic refactors, type fixes, or accessibility-markup changes. When a finding needs judgment, list it under "Needs review" and point to `/frontend-developer:code-review --fix`. Do not route to an agent from this command.
+7. **This is the shallow pass.** Do NOT attempt semantic refactors, type fixes, or accessibility-markup changes. When a finding needs judgment, list it under "Needs review" and point to `/frontend-developer:review-code --fix`. Do not route to an agent from this command.
 8. **Never enter plan mode.** This command IS the procedure — execute it.
 
 ## Usage
 
 ```bash
 # Report violations across all detected tools (CI-safe, no edits)
-/frontend-developer:lint-fix . --check
+/frontend-developer:fix-quick . --check
 
 # Auto-fix everything fixable, then re-check
-/frontend-developer:lint-fix . --fix
+/frontend-developer:fix-quick . --fix
 
 # Fix only the CSS under a subtree
-/frontend-developer:lint-fix src/styles --fix --only stylelint
+/frontend-developer:fix-quick src/styles --fix --only stylelint
 
 # Check just the JS/TS lint (exit non-zero if any violation)
-/frontend-developer:lint-fix src/ --check --only eslint
+/frontend-developer:fix-quick src/ --check --only eslint
 ```
 
 ## Options
@@ -175,7 +174,7 @@ git checkout -- {files}
 <!-- when mechanical fixes cannot resolve everything -->
 ### Needs review ({count})
 - {file}:{line}: {jsx-a11y/alt-text or react-hooks/exhaustive-deps finding that needs judgment}
-- Escalate with: `/frontend-developer:code-review --fix {path}`
+- Escalate with: `/frontend-developer:review-code --fix {path}`
 
 <!-- on skipped tools only -->
 ### Skipped
@@ -189,7 +188,7 @@ In `--check` mode, the "Violations" column doubles as the per-rule summary: each
 ### Path not found
 ```
 Error: Path not found: {path}
-Suggestion: Pass a directory or file that exists, e.g. /frontend-developer:lint-fix . --check
+Suggestion: Pass a directory or file that exists, e.g. /frontend-developer:fix-quick . --check
 ```
 
 ### No lintable config
@@ -216,6 +215,6 @@ Print the install hint, skip that pass, continue. Only when *every* detected too
 ## See Also
 
 - `/frontend-developer:build-test` — run before building to cut warning noise; lint, then build green.
-- `/frontend-developer:code-review --fix` — escalation target for findings that need judgment (type errors, a11y-markup, semantic refactors) beyond mechanical lint fixes.
-- `/frontend-developer:code-modernize` — for framework migrations, which go deeper than this command's mechanical pass.
+- `/frontend-developer:review-code --fix` — escalation target for findings that need judgment (type errors, a11y-markup, semantic refactors) beyond mechanical lint fixes.
+- `/frontend-developer:fix-modernize` — for framework migrations, which go deeper than this command's mechanical pass.
 - `skill: fe-diagnostics` — ESLint/Biome/Stylelint flag reference and the formatter-vs-linter division.

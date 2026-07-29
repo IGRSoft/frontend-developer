@@ -63,15 +63,15 @@ Review-only agents carry `disallowed-tools: Write, Edit`; they emit a compressed
 
 | Command | Description |
 |---------|-------------|
-| `/code-review` | Framework-aware code review for React, Vue, Svelte, Angular, TypeScript, and CSS — parallel per-framework reviewers plus an accessibility pass and a security pass, synthesized into a P0–P3 report. |
+| `/review-code` | Framework-aware code review for React, Vue, Svelte, Angular, TypeScript, and CSS — parallel per-framework reviewers plus an accessibility pass and a security pass, synthesized into a P0–P3 report. |
 | `/build-test` | Detect the package manager and framework, install dependencies, build, and run unit/component tests for a web project. |
-| `/generate-tests` | Generate, register, and verify a runnable component/unit/e2e test suite using the project's existing framework (Vitest, Jest, Testing Library, Playwright, Cypress). |
-| `/a11y-audit` | Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triage by severity, and optionally route fixes to the accessibility auditor and code fixer. |
-| `/lint-fix` | Run linters and formatters (ESLint or Biome, Prettier, Stylelint) over a web project — check-only or auto-fix — then re-check. |
-| `/profile-performance` | Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then route findings to the performance engineer for a ranked fix plan. |
-| `/code-modernize` | Migrate a web codebase to a modern idiom (React class→hooks, Vue 2→3 Composition API, Angular NgModule→standalone) one unit at a time, gating each migration on a green build and test run. |
-| `/deps-audit` | Audit, upgrade, or add npm dependencies — outdated report, CVE lookup, license inventory, and safe one-at-a-time upgrades with a build+test gate. |
-| `/component-scaffold` | Scaffold a component (props, state, test, and story) in the project's detected framework, honoring its conventions and file layout. |
+| `/gen-tests` | Generate, register, and verify a runnable component/unit/e2e test suite using the project's existing framework (Vitest, Jest, Testing Library, Playwright, Cypress). |
+| `/analyze-accessibility` | Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triage by severity, and optionally route fixes to the accessibility auditor and code fixer. |
+| `/fix-quick` | Run linters and formatters (ESLint or Biome, Prettier, Stylelint) over a web project — check-only or auto-fix — then re-check. |
+| `/fix-performance` | Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then route findings to the performance engineer for a ranked fix plan. |
+| `/fix-modernize` | Migrate a web codebase to a modern idiom (React class→hooks, Vue 2→3 Composition API, Angular NgModule→standalone) one unit at a time, gating each migration on a green build and test run. |
+| `/deps` | Audit, upgrade, or add npm dependencies — outdated report, CVE lookup, license inventory, and safe one-at-a-time upgrades with a build+test gate. |
+| `/gen-component` | Scaffold a component (props, state, test, and story) in the project's detected framework, honoring its conventions and file layout. |
 
 ## Skills
 

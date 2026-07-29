@@ -58,7 +58,7 @@ Angular task?
 │   └── subscription lifecycle (takeUntilDestroyed)
 ├── Type/template strictness → typescript/ (modern-typescript)
 ├── a11y / testing / perf → quality/ domain
-└── Migrating off NgModules → /frontend-developer:code-modernize
+└── Migrating off NgModules → /frontend-developer:fix-modernize
 ```
 
 ## Domain Constraints (Angular delta)

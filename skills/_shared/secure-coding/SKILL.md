@@ -118,7 +118,7 @@ Your dependency tree is attacker surface — typosquats, compromised maintainers
 | Known CVEs | `npm audit` / `pnpm audit` in CI; fail on high/critical; route fixes to `frontend-developer:fe-dependency-manager` |
 | Tampered registry artifact | Lockfile integrity hashes (`integrity:` `sha512-…`); enable npm provenance/attestation where available |
 
-- One upgrade at a time, gated on a green build + test run (the deps-audit flow). Never bulk-bump across a major boundary blindly.
+- One upgrade at a time, gated on a green build + test run (the deps flow). Never bulk-bump across a major boundary blindly.
 - Treat a transitive dependency the same as a direct one — `npm audit` reports the whole tree; a CVE three levels deep still ships to the user.
 
 ## SSRF via SSR / Server-Component Fetch

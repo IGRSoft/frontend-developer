@@ -1,9 +1,8 @@
 ---
-description: Migrate a web codebase to a modern framework idiom (React class->hooks, Vue 2->3 Composition API, Angular NgModule->standalone) one component or class at a time, gating each migration on a green build and test run
+description: Migrate a web codebase to modern framework idioms (React hooks, Vue 3, Angular standalone, Svelte 5), unit by unit
 argument-hint: [path (default .)] --target react-hooks|vue3|angular-standalone|svelte5 [--dry-run]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 estimated-cost:
-  band: high
   min-tokens: 4000
   max-tokens: 30000
   model-distribution:
@@ -12,7 +11,7 @@ estimated-cost:
     opus: 15%
 ---
 
-# Code Modernize
+# Code Modernization
 <!-- Updated: June 2026 -->
 
 Move a web codebase to a modern framework idiom incrementally and safely. Modernization is sequenced as a ledger of discrete *migration units* (one component, one class, one module at a time), and every unit is verified by a full build + test run before its commit and before the next unit begins. Mechanical rewrites are routed to `frontend-developer:fe-code-fixer`; semantic migrations that need judgment go to the owning framework agent (`react`/`vue`/`svelte`/`angular`-developer).
@@ -38,16 +37,16 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Preview the React class->hooks migration ledger without touching source
-/frontend-developer:code-modernize src/ --target react-hooks --dry-run
+/frontend-developer:fix-modernize src/ --target react-hooks --dry-run
 
 # Convert Vue 2 Options API components to Vue 3 Composition API, one at a time
-/frontend-developer:code-modernize src/components --target vue3
+/frontend-developer:fix-modernize src/components --target vue3
 
 # Migrate Angular NgModule app to standalone components
-/frontend-developer:code-modernize . --target angular-standalone
+/frontend-developer:fix-modernize . --target angular-standalone
 
 # Migrate Svelte 4 reactive statements to Svelte 5 runes
-/frontend-developer:code-modernize src/ --target svelte5
+/frontend-developer:fix-modernize src/ --target svelte5
 ```
 
 ## Options
@@ -246,20 +245,20 @@ When a codemod is unavailable, print the hint and fall back to a hand migration 
 ### Path not found
 ```
 Error: Path not found: {path}
-Suggestion: Pass a directory or file that exists, e.g. /frontend-developer:code-modernize src/ --target react-hooks --dry-run
+Suggestion: Pass a directory or file that exists, e.g. /frontend-developer:fix-modernize src/ --target react-hooks --dry-run
 ```
 
 ### Missing or invalid --target
 ```
 Error: --target is required and must be one of: react-hooks, vue3, angular-standalone, svelte5.
-Suggestion: /frontend-developer:code-modernize . --target react-hooks --dry-run
+Suggestion: /frontend-developer:fix-modernize . --target react-hooks --dry-run
 ```
 
 ### Version gate failure
 ```
 Error: The installed framework version cannot run the {target} idiom.
 {framework} {detected} < required {min} (see skill: version-feature-matrix).
-Suggestion: upgrade the framework first (e.g. /frontend-developer:deps-audit upgrade {framework}), then modernize.
+Suggestion: upgrade the framework first (e.g. /frontend-developer:deps upgrade {framework}), then modernize.
 ```
 Stop — do not write code the framework version cannot run (Rule 6).
 
@@ -281,6 +280,6 @@ Print the install hint, fall back to a hand migration (skip the mechanical pass)
 - `skill: language-detection` — marker → framework → agent routing (keep per-file detection in sync).
 - `skill: modern-react`, `skill: modern-css`, `skill: svelte-runes`, `skill: angular-signals` — the target-idiom playbooks the framework agents follow.
 - `/frontend-developer:build-test` — the build + test gate run after every migration unit.
-- `/frontend-developer:lint-fix` — the shallow mechanical pass; this command sequences codemods plus semantic migrations across units.
-- `/frontend-developer:code-review` — review the modernized diff for behavioral drift once the ledger is complete.
-- `/frontend-developer:deps-audit` — upgrade the framework version first when the version gate is a GAP.
+- `/frontend-developer:fix-quick` — the shallow mechanical pass; this command sequences codemods plus semantic migrations across units.
+- `/frontend-developer:review-code` — review the modernized diff for behavioral drift once the ledger is complete.
+- `/frontend-developer:deps` — upgrade the framework version first when the version gate is a GAP.

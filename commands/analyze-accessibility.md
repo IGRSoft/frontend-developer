@@ -1,9 +1,8 @@
 ---
-description: Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triage findings by severity, and optionally route fixes to the accessibility auditor and code fixer
+description: Audit web UI for WCAG 2.2 conformance with axe-core and Lighthouse, triaged by severity
 argument-hint: [path or URL (default: detect dev server)] [--fix] [--level A|AA|AAA]
 allowed-tools: Read, Glob, Grep, Bash, WebSearch, WebFetch
 estimated-cost:
-  band: high
   min-tokens: 4000
   max-tokens: 30000
   model-distribution:
@@ -12,7 +11,7 @@ estimated-cost:
     opus: 20%
 ---
 
-# Accessibility Audit (WCAG 2.2)
+# Accessibility Audit
 <!-- Updated: June 2026 -->
 
 Audit a web UI against WCAG 2.2 using automated tooling (axe-core, the Lighthouse accessibility category), triage every finding by severity against the success criteria, and produce a prioritized P0-P3 report. With `--fix`, route the findings to `frontend-developer:fe-accessibility-auditor` for a review-grade triage, then to `frontend-developer:fe-code-fixer` for minimal, gated patches.
@@ -37,16 +36,16 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Audit the detected dev server (or prompt for a URL)
-/frontend-developer:a11y-audit
+/frontend-developer:analyze-accessibility
 
 # Audit a specific route
-/frontend-developer:a11y-audit http://localhost:5173/checkout
+/frontend-developer:analyze-accessibility http://localhost:5173/checkout
 
 # Audit a component directory (static source analysis + render if possible)
-/frontend-developer:a11y-audit src/components/Modal
+/frontend-developer:analyze-accessibility src/components/Modal
 
 # Audit AA and route fixes through the auditor + code fixer
-/frontend-developer:a11y-audit http://localhost:3000 --level AA --fix
+/frontend-developer:analyze-accessibility http://localhost:3000 --level AA --fix
 ```
 
 ## Options
@@ -163,7 +162,7 @@ If both scanners are missing, fall back to Phase 2b static source analysis and c
 ```
 Note: No running dev server detected and no URL given.
 Suggestion: Start your dev server (npm run dev) and pass its URL, e.g.
-/frontend-developer:a11y-audit http://localhost:5173
+/frontend-developer:analyze-accessibility http://localhost:5173
 Proceeding with static source analysis (reduced coverage).
 ```
 
@@ -182,6 +181,6 @@ Fall back to static source analysis; mark the report "static-only." Print both i
 - `skill: accessibility-baseline` — WCAG 2.2 success-criteria reference the triage maps to.
 - `skill: accessibility-patterns` — ARIA patterns, focus management, keyboard-nav recipes the fixes draw on.
 - `skill: severity-matrix` — P0-P3 definitions used by the triage.
-- `/frontend-developer:code-review` — the a11y pass there is a lighter, source-level check; this command is the full rendered audit.
-- `/frontend-developer:generate-tests --type e2e` — add a Playwright + axe assertion to lock the fix in.
+- `/frontend-developer:review-code` — the a11y pass there is a lighter, source-level check; this command is the full rendered audit.
+- `/frontend-developer:gen-tests --type e2e` — add a Playwright + axe assertion to lock the fix in.
 - `frontend-developer:fe-accessibility-auditor` — the review-only agent the `--fix` path routes to first.

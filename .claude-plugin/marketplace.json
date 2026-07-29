@@ -82,15 +82,15 @@
         "./agents/fe-dependency-manager.md"
       ],
       "commands": [
-        "./commands/code-review.md",
+        "./commands/review-code.md",
         "./commands/build-test.md",
-        "./commands/generate-tests.md",
-        "./commands/a11y-audit.md",
-        "./commands/lint-fix.md",
-        "./commands/profile-performance.md",
-        "./commands/code-modernize.md",
-        "./commands/deps-audit.md",
-        "./commands/component-scaffold.md"
+        "./commands/gen-tests.md",
+        "./commands/analyze-accessibility.md",
+        "./commands/fix-quick.md",
+        "./commands/fix-performance.md",
+        "./commands/fix-modernize.md",
+        "./commands/deps.md",
+        "./commands/gen-component.md"
       ]
     }
   ]

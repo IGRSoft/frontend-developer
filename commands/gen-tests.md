@@ -1,9 +1,8 @@
 ---
-description: Generate, register, and verify a runnable component/unit/e2e test suite for a web project using its existing framework (Vitest, Jest, Testing Library, Playwright, Cypress)
+description: Generate, register, and verify a runnable unit, component, or e2e test suite using the project's framework
 argument-hint: [path (default .)] [--type unit|component|e2e] [--coverage-gaps]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 estimated-cost:
-  band: medium
   min-tokens: 3000
   max-tokens: 22000
   model-distribution:
@@ -36,16 +35,16 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Detect the framework and generate + register + verify tests for the current dir
-/frontend-developer:generate-tests .
+/frontend-developer:gen-tests .
 
 # Component tests for one component directory
-/frontend-developer:generate-tests src/components/Checkout --type component
+/frontend-developer:gen-tests src/components/Checkout --type component
 
 # An end-to-end flow test
-/frontend-developer:generate-tests src/routes/checkout --type e2e
+/frontend-developer:gen-tests src/routes/checkout --type e2e
 
 # Target untested branches surfaced by a coverage run
-/frontend-developer:generate-tests . --coverage-gaps
+/frontend-developer:gen-tests . --coverage-gaps
 ```
 
 ## Options
@@ -118,7 +117,7 @@ For empty-project scaffolding, also pin the dev dependency (`npm install -D vite
 
 ### Phase 5: Verification Gate (Bash) — MANDATORY
 
-Reuse `/frontend-developer:build-test`'s detect → run logic. Tee to `.context/logs/generate-tests-<timestamp>.log`.
+Reuse `/frontend-developer:build-test`'s detect → run logic. Tee to `.context/logs/gen-tests-<timestamp>.log`.
 
 1. **Type-check (TS):** `npx tsc --noEmit` over the touched files. A type error in a test is a gate FAIL (stage `compile`). Route back per Gate Failure.
 2. **Discover:** run the runner's list command (Phase 4 column). If the new tests are NOT discovered → gate FAIL (registration defect). Fix registration and re-list.
@@ -174,7 +173,7 @@ If a runner is missing, print the hint, skip that test type, and continue with t
 **Runner / renderer:** {Vitest + Testing Library | Jest | Playwright | Cypress} ({in-use | matrix default})
 **Type:** {unit | component | e2e}
 **Coverage mode:** {broad | --coverage-gaps targeting N gaps}
-**Log:** .context/logs/generate-tests-{timestamp}.log
+**Log:** .context/logs/gen-tests-{timestamp}.log
 
 ### Tests Generated ({count})
 | File | Cases | Coverage focus |
@@ -215,7 +214,7 @@ If a runner is missing, print the hint, skip that test type, and continue with t
 ### Path not found
 ```
 Error: Path not found: {path}
-Suggestion: Pass a file or directory that exists, e.g. /frontend-developer:generate-tests src/components
+Suggestion: Pass a file or directory that exists, e.g. /frontend-developer:gen-tests src/components
 ```
 
 ### Framework conflict
@@ -228,15 +227,15 @@ Suggestion: Use {detected}, or migrate the whole suite first (out of scope for t
 ### --coverage-gaps with no runnable suite
 ```
 Warning: --coverage-gaps needs an existing suite that already runs to measure.
-None found — falling back to broad generation. Run generate-tests once, then re-run
+None found — falling back to broad generation. Run gen-tests once, then re-run
 with --coverage-gaps to target the remaining gaps.
 ```
 
 ## See Also
 
 - `/frontend-developer:build-test` — the detect/build/test logic the verification gate reuses; run it first to confirm the project builds.
-- `/frontend-developer:code-review` — review the code before adding tests; `--coverage-gaps` pairs well after a review.
-- `/frontend-developer:a11y-audit` — deeper accessibility coverage than the role-based assertions generated here.
+- `/frontend-developer:review-code` — review the code before adding tests; `--coverage-gaps` pairs well after a review.
+- `/frontend-developer:analyze-accessibility` — deeper accessibility coverage than the role-based assertions generated here.
 - `skill: fe-testing` — Vitest/Playwright/Testing Library patterns, framework detection, AAA/naming conventions.
 - `skill: testing-principles` — test pyramid, framework matrix, coverage targets.
 - `skill: language-detection` — canonical marker → framework → agent routing (keep the renderer table in sync).

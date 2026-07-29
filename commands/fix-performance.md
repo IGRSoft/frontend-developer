@@ -1,9 +1,8 @@
 ---
-description: Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then route findings to the performance engineer for a ranked fix plan
-argument-hint: [path or URL (default: detect dev server)] [--mode lighthouse|vitals|bundle] [--budget]
-allowed-tools: Read, Glob, Grep, Bash, WebSearch, WebFetch
+description: Profile web performance with Lighthouse, Core Web Vitals, and bundle analysis, then optionally apply the fixes
+argument-hint: [path or URL (default: detect dev server)] [--mode lighthouse|vitals|bundle] [--budget] [--apply]
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, WebFetch
 estimated-cost:
-  band: high
   min-tokens: 2000
   max-tokens: 18000
   model-distribution:
@@ -12,10 +11,12 @@ estimated-cost:
     opus: 15%
 ---
 
-# Profile Performance
+# Performance Optimization
 <!-- Updated: June 2026 -->
 
 Collect a Lighthouse report, Core Web Vitals measurements, and a bundle analysis of a web app, then hand the raw artifacts to `frontend-developer:fe-performance-engineer` for interpretation and a ranked fix plan. Data collection is pure shell; the agent is engaged only to read the reports and rank hot paths. The command never guesses at the bottleneck itself.
+
+**Measure-only is the default.** The command profiles, interprets, and reports — it does not touch code. `--apply` unlocks an optional remediation phase that hands the engineer's ranked plan to `frontend-developer:fe-code-fixer`, and even then nothing is written until you approve the plan at an explicit PHASE CHECKPOINT.
 
 [Extended thinking: Web performance is a measure-first discipline, so this command's job is to produce *trustworthy* measurements against a representative build and then defer judgment. The single most common way front-end profiling lies is a wrong build: a dev server with HMR and unminified modules has nothing to do with production LCP, so the prerequisite check refuses to profile a dev server for `lighthouse`/`bundle` modes and tells the user to build + preview production. It collects three complementary signals — Lighthouse (lab CWV + opportunities), field/lab Web Vitals (LCP, INP, CLS, TTFB), and a bundle analysis (treemap, per-chunk size, duplicate deps) — saves every artifact under `.context/images/<worktask_id>/perf-<timestamp>/`, then lets the performance engineer produce the ranked findings. `--budget` turns the run into a pass/fail gate against the Core Web Vitals thresholds. Interpretation — top hotspots, the LCP element, the INP-blocking long task, the bundle bloat source, a fix plan ranked by effort/impact — is the agent's deliverable, not this command's.]
 
@@ -28,25 +29,31 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 3. **Save every artifact under `.context/images/<worktask_id>/perf-<timestamp>/`.** Write the Lighthouse JSON/HTML, the vitals JSON, the bundle treemap/stats, and a `meta.txt` (target, mode, build, tool) there — this is the source of truth and supporting evidence for the DV screenshot manifest.
 4. **Single-command Bash invocations.** Use each tool's own output flags. Never `cd`-chain or `&&`-chain — scoped Bash patterns do not match compound commands.
 5. **Pick the tool, do not invent flags.** Run the matching tool from the Tool Matrix exactly as written. If a flag is rejected, consult `--help` or `skill: fe-diagnostics` — never guess flag spellings.
-6. **`--budget` records a pass/fail gate, never auto-edits.** Budget mode compares measured CWV against the thresholds and reports PASS/FAIL. It does not change code. The optimization is the agent's plan plus a follow-up `code-review`/`code-modernize` run.
-7. **Tool-missing never hard-fails.** If a tool is absent, print the install hint, skip that collection, and report what was skipped. If no tool is available at all, report the aggregated hints and stop without erroring out the session.
-8. **Commands route, they do not orchestrate.** This command names `frontend-developer:fe-performance-engineer` so Claude routes the interpretation; it does not call `Task`.
-9. **Never enter plan mode.** This command IS the procedure — execute it.
+6. **`--budget` records a pass/fail gate, never auto-edits.** Budget mode compares measured CWV against the thresholds and reports PASS/FAIL. It does not change code. Remediation is `--apply` (below) or a follow-up `review-code`/`fix-modernize` run.
+7. **No mutation before the checkpoint — ever.** Phases 1–3 are strictly read-and-measure. Write and Edit exist in `allowed-tools` solely for the Phase 5 apply step, and Phase 5 is unreachable without `--apply` AND explicit user approval at the PHASE CHECKPOINT. Without `--apply` the command ends at Phase 4 having changed nothing. Never edit source, config, or dependencies while collecting or interpreting.
+8. **Tool-missing never hard-fails.** If a tool is absent, print the install hint, skip that collection, and report what was skipped. If no tool is available at all, report the aggregated hints and stop without erroring out the session.
+9. **Commands route, they do not orchestrate.** This command names `frontend-developer:fe-performance-engineer` (interpretation) and `frontend-developer:fe-code-fixer` (remediation) so Claude routes to them; it does not call `Task`.
+10. **Stop at the PHASE CHECKPOINT.** When `--apply` is set and you reach the checkpoint, STOP and wait for explicit user approval. Present the ranked plan and use the AskUserQuestion tool. A returning agent's output is not approval.
+11. **Re-measure after applying.** Every applied fix is followed by `/frontend-developer:build-test` and a re-profile, so the report carries real before/after numbers rather than claimed ones. A red build halts the apply loop.
+12. **Never enter plan mode.** This command IS the procedure — execute it.
 
 ## Usage
 
 ```bash
 # Lighthouse + vitals + bundle on the detected production preview
-/frontend-developer:profile-performance
+/frontend-developer:fix-performance
 
 # Lighthouse against a production URL
-/frontend-developer:profile-performance https://staging.example.com --mode lighthouse
+/frontend-developer:fix-performance https://staging.example.com --mode lighthouse
 
 # Bundle analysis only
-/frontend-developer:profile-performance . --mode bundle
+/frontend-developer:fix-performance . --mode bundle
 
 # Web Vitals against a route, gated on the CWV budget
-/frontend-developer:profile-performance http://localhost:4173/ --mode vitals --budget
+/frontend-developer:fix-performance http://localhost:4173/ --mode vitals --budget
+
+# Measure, then offer to apply the ranked fixes (stops for approval first)
+/frontend-developer:fix-performance . --apply
 ```
 
 ## Options
@@ -56,6 +63,7 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 | `path or URL` | detect preview | A production URL to profile, or a project dir (the command builds + previews it). If omitted, detect/start a production preview server. |
 | `--mode lighthouse\|vitals\|bundle` | all three | `lighthouse` = full lab report (perf score + opportunities); `vitals` = LCP/INP/CLS/TTFB measurement; `bundle` = treemap + per-chunk size + duplicate deps. Default runs all three. |
 | `--budget` | off | Compare measured Core Web Vitals against the thresholds and report PASS/FAIL as a gate (LCP < 2.5s, INP < 200ms, CLS < 0.1, TTFB < 800ms). |
+| `--apply` | off | Unlock the optional remediation phase. After the ranked plan is produced, STOP at the PHASE CHECKPOINT for approval, then route the approved items to `frontend-developer:fe-code-fixer` and re-measure. Without this flag the run is measure-only and no file is written. |
 
 ## Build Prerequisite Check (lighthouse / bundle)
 
@@ -73,7 +81,7 @@ Build+preview instruction to print on failure:
 npm run build
 npm run preview   # serves the optimized build on a local port
 # Next.js: npm run build && npm run start
-# Then re-run profile-performance against the preview URL.
+# Then re-run fix-performance against the preview URL.
 ```
 
 `vitals` mode can run against any reachable URL (field measurement is meaningful on staging/prod), but for a *representative* lab measurement, prefer the production preview too.
@@ -135,6 +143,39 @@ Model note: `fe-performance-engineer` defaults to sonnet/high; a caller may rais
 
 Emit the Output Format summary, pointing at `{OUT}` and folding in the engineer's ranked findings (or the skip note when collection did not run). For `--budget`, lead with the PASS/FAIL gate.
 
+**Without `--apply`, the run ends here.** The deliverable is the measurement plus the ranked plan; not a single file has been modified. Close by naming `--apply` (or `/frontend-developer:fix-modernize`) as the way to act on the plan.
+
+---
+
+### PHASE CHECKPOINT
+
+*Reached only when `--apply` is set.*
+
+**Completed:** Phases 1–4 — profiling, collection, interpretation, and the ranked fix plan. **Nothing has been modified.**
+
+**Next:** Phase 5 will edit source files to apply the fixes you approve.
+
+Stop here. Present the ranked plan as a numbered list with each item's file/chunk, expected saving, and risk, then use the AskUserQuestion tool to ask which items to apply — offering "all", "high-impact / low-effort only", a specific subset, or "none". Do NOT proceed on an implied yes, and do NOT treat the performance engineer's returned plan as approval. If the user declines, emit the Phase 4 report and stop.
+
+---
+
+### Phase 5: Apply (`--apply`, post-approval only)
+
+Route each approved item, one at a time and smallest-diff-first, to `frontend-developer:fe-code-fixer`:
+
+"Apply this ranked web-performance fix from the profile of `{target}`: {item — file/chunk, the engineer's diagnosis, and the recommended change}. Evidence is in `{OUT}`. Make the minimal change that realizes the fix; do not refactor beyond it, do not reformat untouched lines, and do not bump dependency versions unless the item explicitly calls for it. Report the diff you applied."
+
+After each item:
+
+1. Run `/frontend-developer:build-test` as the gate. **A red build halts the loop** — revert that item, report it as FAILED, and stop; do not continue to the next item on a broken build.
+2. Record the item, its diff summary, and the gate result in the applied ledger.
+
+Items that need framework-idiom migration rather than a local edit (e.g. moving off a heavy library) are out of scope for the fixer: mark them DEFERRED and point at `/frontend-developer:fix-modernize`.
+
+### Phase 6: Re-measure (`--apply` only)
+
+Re-run the same collection from Phase 2 into a fresh `perf-<timestamp>` dir and diff the Core Web Vitals and bundle sizes against the baseline. Report measured before/after per metric — never a claimed improvement. If a metric regressed, say so plainly and name the item that most likely caused it.
+
 ## Graceful Degradation
 
 If a tool is not installed: print the install hint and skip this step. Never exit non-zero from a missing optional tool.
@@ -193,6 +234,23 @@ If a tool is missing, degrade to the remaining signals (e.g. report raw `dist/` 
 1. {high-impact / low-effort fix} — implement via frontend-developer:{agent}
 2. {next} — ...
 
+<!-- measure-only (default): the run ends above -->
+_Measure-only run — no files were modified. Re-run with `--apply` to act on this plan._
+
+<!-- --apply only, after approval -->
+### Applied Fixes
+| # | Item | Files changed | Build gate | Result |
+|--:|------|---------------|------------|--------|
+| 1 | dynamic-import vendor-charts | src/routes/Dashboard.tsx | ✅ green | applied |
+| 2 | drop duplicate date lib | package.json, src/lib/date.ts | ✅ green | applied |
+| 3 | migrate off heavy chart lib | — | — | DEFERRED → /frontend-developer:fix-modernize |
+
+### Before / After
+| Metric | Before | After | Δ |
+|--------|-------:|------:|--:|
+| LCP | 3.1 s | 2.2 s | −0.9 s ✅ |
+| Bundle (gzip) | 430 KB | 265 KB | −165 KB ✅ |
+
 <!-- on skip only -->
 ### Skipped
 - {tool}: {missing — install hint above} | {dev-server only — build production first}
@@ -204,7 +262,7 @@ If a tool is missing, degrade to the remaining signals (e.g. report raw `dist/` 
 ```
 Error: Target not found / unreachable: {target}
 Suggestion: Pass a reachable URL or a project directory, e.g.
-/frontend-developer:profile-performance http://localhost:4173 --mode lighthouse
+/frontend-developer:fix-performance http://localhost:4173 --mode lighthouse
 ```
 
 ### Dev server given for lighthouse/bundle
@@ -232,6 +290,7 @@ Print the install hint, skip that collection, continue. Only when *every* reques
 - `skill: fe-diagnostics` — Lighthouse/bundle-analyzer/source-map-explorer flag reference and the symptom→tool table. Keep the Tool Matrix in sync with it.
 - `skill: web-performance` — Core Web Vitals budgets (LCP < 2.5s, INP < 200ms, CLS < 0.1), the optimization playbook.
 - `skill: bundling-optimization` — code-splitting, tree-shaking, dynamic imports, dependency de-duplication.
-- `/frontend-developer:build-test` — produce the production build first, then profile it.
-- `/frontend-developer:code-modernize` — apply the ranked fixes (e.g. migrate to a lighter library) the engineer recommends.
+- `/frontend-developer:build-test` — produce the production build first, then profile it; also the gate after every applied fix.
+- `/frontend-developer:fix-modernize` — for ranked items that need a framework-idiom migration (e.g. moving to a lighter library) rather than a local edit.
 - `frontend-developer:fe-performance-engineer` — the review-only agent the interpretation routes to.
+- `frontend-developer:fe-code-fixer` — the agent that applies the approved plan in Phase 5 (`--apply` only).

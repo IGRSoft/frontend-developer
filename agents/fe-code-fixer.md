@@ -13,7 +13,7 @@ Expert code remediation specialist for web front-ends (React, Vue, Svelte, Angul
 
 ## Capabilities
 
-- Apply fixes from code-review, `fe-security-auditor`, `fe-accessibility-auditor`, and `fe-performance-engineer` findings
+- Apply fixes from review-code, `fe-security-auditor`, `fe-accessibility-auditor`, and `fe-performance-engineer` findings
 - Apply linter/formatter auto-fixes (`npx eslint --fix`, `npx biome check --write`, `npx prettier --write`, `npx stylelint --fix`)
 - Group related fixes for atomic commits; process multiple fixes in a single pass
 - Re-run the matching build/test/lint gate after each fix group — one scoped command per call, never `&&`-chained

@@ -1,9 +1,8 @@
 ---
-description: Scaffold a component (props, state, test, and story) in the project's detected framework, honoring its conventions and file layout
+description: Scaffold a component (props, state, test, and story) in the project's detected framework and conventions
 argument-hint: [ComponentName] [path (default: detected components dir)] [--with-story] [--no-test]
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash
 estimated-cost:
-  band: low
   min-tokens: 500
   max-tokens: 6000
   model-distribution:
@@ -35,16 +34,16 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 
 ```bash
 # Scaffold a component in the detected components directory
-/frontend-developer:component-scaffold UserCard
+/frontend-developer:gen-component UserCard
 
 # Scaffold into a specific path
-/frontend-developer:component-scaffold PriceTag src/features/pricing
+/frontend-developer:gen-component PriceTag src/features/pricing
 
 # Scaffold with a Storybook story
-/frontend-developer:component-scaffold Badge --with-story
+/frontend-developer:gen-component Badge --with-story
 
 # Scaffold without a test (rare; prefer keeping the test)
-/frontend-developer:component-scaffold Spinner --no-test
+/frontend-developer:gen-component Spinner --no-test
 ```
 
 ## Options
@@ -64,7 +63,7 @@ Read `package.json` and one sample existing component to learn the conventions. 
 |--------|-----------|--------|
 | Framework | `react`/`vue`/`svelte`/`@angular/core` in `package.json` | file extension + component syntax |
 | Styling | `*.module.css` siblings (CSS Modules), `tailwind.config` (Tailwind), `styled-components`/`@emotion` in deps, plain `*.css` imports | how the root element is styled in the stub |
-| Test runner/renderer | `vitest`/`jest` + `@testing-library/*` (see `/frontend-developer:generate-tests` detection) | the test file's imports + render call |
+| Test runner/renderer | `vitest`/`jest` + `@testing-library/*` (see `/frontend-developer:gen-tests` detection) | the test file's imports + render call |
 | Directory layout | sample component path: `Comp/index.tsx` vs `Comp.tsx` vs `comp.vue` | the generated file path |
 | Storybook | `@storybook/*` in deps; `.storybook/` dir | whether `--with-story` uses the project config |
 
@@ -212,7 +211,7 @@ If the framework CLI is missing, print the hint and **always** fall back to writ
 ### Next Step
 Implement behavior and styling:
 - Logic/state → route to frontend-developer:{framework}-developer
-- Tests → /frontend-developer:generate-tests src/components/{Comp} --type component
+- Tests → /frontend-developer:gen-tests src/components/{Comp} --type component
 - Verify it builds → /frontend-developer:build-test .
 
 <!-- on a degraded run -->
@@ -248,8 +247,8 @@ Print the install hint, fall back to the built-in template, continue. Scaffoldin
 ## See Also
 
 - `skill: language-detection` — framework detection that drives the file extension and syntax.
-- `/frontend-developer:generate-tests` — flesh out the colocated test into a full suite once the component has behavior.
+- `/frontend-developer:gen-tests` — flesh out the colocated test into a full suite once the component has behavior.
 - `/frontend-developer:build-test` — confirm the scaffold builds and type-checks.
-- `/frontend-developer:code-review` — review the component once behavior is implemented.
+- `/frontend-developer:review-code` — review the component once behavior is implemented.
 - `frontend-developer:react-developer` / `vue-developer` / `svelte-developer` / `angular-developer` — implement the component's behavior after scaffolding.
 - `skill: accessibility-patterns` — make the accessible root element correct for the component's interaction model.
