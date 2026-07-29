@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Web front-end development toolkit with specialized agents for React, Vue, Svelte, Angular, TypeScript, and modern CSS.",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {

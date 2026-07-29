@@ -116,6 +116,42 @@ hooks/validator/`_base`/handoff from system-developer.
 
 ## Version History
 
+### 1.2.0 — 2026-07-29 Cross-plugin command unification
+
+Command surface unified with `apple-developer`: 9 commands → 16. Eight were renamed
+(`code-review`→`review-code`, `lint-fix`→`fix-quick`, `code-modernize`→`fix-modernize`,
+`profile-performance`→`fix-performance`, `generate-tests`→`gen-tests`, `deps-audit`→`deps`,
+`a11y-audit`→`analyze-accessibility`, `component-scaffold`→`gen-component`); `build-test` kept
+its name. Seven were added by porting apple's skeletons and swapping the stack: `arch-select`,
+`arch-review`, `analyze-tech-debt`, `gen-docs`, `debug`, `fix-refactor`, `develop-feature`.
+Old names are **not aliased** — this is a breaking change for callers, which is why the rename
+landed with the minor bump and a full migration table in `CHANGELOG.md` and `README.md`.
+
+Decisions worth preserving:
+
+1. **`band:` is gone.** The frontend-only `band:` sub-key under `estimated-cost` was dropped
+   from all 9 pre-existing commands. It was a local invention; the shared standard is
+   `min-tokens` / `max-tokens` / `model-distribution` (summing to 100) and nothing else.
+   Do not reintroduce it. `name:` remains forbidden in command frontmatter.
+2. **Descriptions are capped at 120 characters, verb-first.** Seven of the nine originals were
+   over (the worst was `code-modernize` at 213) because they had been written as prose summaries.
+   The cap is a standard, not a formatting preference — the descriptions are what the command
+   picker shows.
+3. **`fix-performance` is measure-only by default.** The old `profile-performance` was
+   read-only, and the unified command must not silently become a mutating one. The apply phase
+   requires BOTH `--apply` and explicit approval at a `PHASE CHECKPOINT`; `Write`/`Edit` exist in
+   its `allowed-tools` for that step alone, and behavioral rule 7 says so in the file so a future
+   editor does not read the tool grant as license to edit during collection.
+4. **`analyze-*` is read-only.** `analyze-tech-debt` omits `Write`/`Edit` entirely.
+   `analyze-accessibility` keeps its `--fix` routing flag as a documented platform extension,
+   but its base run stays read-only in `allowed-tools`.
+5. **`scripts/validate.sh` needed no change.** It is name-agnostic — it derives the command list
+   from `marketplace.json` and the `commands/` tree rather than hardcoding names. It caught every
+   orphan and stale manifest path during the rename, which is the reason the rename was safe.
+   Preserve that property: never hardcode a command name in the validator.
+6. **`## See Also`, not "Related commands".** Every command closes with `## See Also`; the seven
+   new files follow the existing files rather than the porting brief.
+
 ### 1.1.0 — 2026-07-22 igrsoft v3.36.0 Port
 
 Compatibility ported v3.17.0 → v3.36.0 (~13 refs across README, the agent stage-participation
