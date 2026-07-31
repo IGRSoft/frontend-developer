@@ -15,11 +15,11 @@ Inherits `_base/frontend-agent.md` (Constraints, Code Comment Policy, Tool Prior
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an igrsoft workflow. BEFORE doing any work:
+If `.context/state.json` exists, this agent is inside an company-workflow workflow. BEFORE doing any work:
 
 1. Load `skill: workflow-integration` for the binding handoff contract
 2. Read `.context/state.json` for upstream context
-3. Default stage: **DV support** (and **RE context** for `igrsoft:release-engineer`) — the parent DV developer agent owns `.context/development-N.md`; this agent provides dependency-update and audit findings as input to its `## Dependencies` section
+3. Default stage: **DV support** (and **RE context** for `company-workflow:release-engineer`) — the parent DV developer agent owns `.context/development-N.md`; this agent provides dependency-update and audit findings as input to its `## Dependencies` section
 4. Return a compressed summary (≤500 tokens) for the parent agent to merge
 5. Do NOT patch `state.json` — the parent DV agent handles stage status
 

@@ -1,6 +1,6 @@
 # DR Stage Artifact Template (web review)
 
-Primary artifact `.context/developer-review-N.md` is owned by igrsoft's technical-lead; use this when a frontend-developer agent takes over DR or contributes the review body. fe-code-fixer appends retry narratives to `.context/errors/fe-code-fixer.md` instead.
+Primary artifact `.context/developer-review-N.md` is owned by company-workflow's technical-lead; use this when a frontend-developer agent takes over DR or contributes the review body. fe-code-fixer appends retry narratives to `.context/errors/fe-code-fixer.md` instead.
 
 ```markdown
 ---

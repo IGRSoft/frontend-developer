@@ -1,13 +1,13 @@
 # Companion Patch — `developer.md` (web platform specialization)
 
-**Status (2026-07-22): applied upstream** — company-workflow's `agents/developer.md` now carries the frontend-developer Task grants and routing (see igrsoft v3.36.0). This document is retained as the historical patch spec.
+**Status (2026-07-22): applied upstream** — company-workflow's `agents/developer.md` now carries the frontend-developer Task grants and routing (see company-workflow v4.0.0). This document is retained as the historical patch spec.
 
 **Status:** self-contained patch artifact. This document is **not** an edit to any installed
 plugin cache. It describes the exact additions to apply to the **editable company-workflow
-source** of `agents/developer.md` so the igrsoft `developer` router recognizes web work and
+source** of `agents/developer.md` so the company-workflow `developer` router recognizes web work and
 delegates it to the `frontend-developer` plugin.
 
-> **Do not edit the read-only cache** (`/Users/korich/.claude/plugins/cache/igrsoft/...`). Apply
+> **Do not edit the read-only cache** (`/Users/korich/.claude/plugins/cache/company-workflow/...`). Apply
 > these changes only in the canonical editable company-workflow repository (see §7 *Apply
 > instructions*).
 
@@ -133,7 +133,7 @@ ambiguous pure-JS/TS web work.
 
 ## 6. Screenshot Capture table — no change needed
 
-The igrsoft `web_adapter` row is **already present** in `developer.md`'s Screenshot Capture table
+The company-workflow `web_adapter` row is **already present** in `developer.md`'s Screenshot Capture table
 (Playwright `npx playwright screenshot` / Chrome MCP). The `frontend-developer` evidence model
 (§D3: `requires_screenshots: true` default, `source: web-adapter`, manifest at
 `.context/images/<worktask_id>/screenshots.md`, Lighthouse/axe as supporting rows) **reuses that
@@ -145,7 +145,7 @@ existing `web_adapter` capture path** — so no edit to the Screenshot Capture t
 
 1. **Target file (editable source, not the cache).** Locate the canonical editable
    company-workflow repository — the source that *builds* the read-only
-   `~/.claude/plugins/cache/igrsoft/...` cache (commonly a `company-workflow/` checkout, path
+   `~/.claude/plugins/cache/company-workflow/...` cache (commonly a `company-workflow/` checkout, path
    `agents/developer.md`). **Do not edit the cache directory.**
 2. **Git context.** Work on a feature branch in the company-workflow repo (e.g.
    `feat/web-platform-routing`). Apply sections §1–§5 as additive edits to `agents/developer.md`;
@@ -162,5 +162,5 @@ existing `web_adapter` capture path** — so no edit to the Screenshot Capture t
 ---
 
 *This artifact is emitted by the `frontend-developer` plugin (DV/B9). It documents the companion
-change required in the igrsoft company-workflow `developer.md` router; the `frontend-developer`
-plugin itself depends on none of it (the patch is additive on the igrsoft side).*
+change required in the company-workflow company-workflow `developer.md` router; the `frontend-developer`
+plugin itself depends on none of it (the patch is additive on the company-workflow side).*

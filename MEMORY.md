@@ -22,7 +22,7 @@ choice, open-question resolutions, and the conventions every future change must 
 - **SR (security review) skipped — rationale:** the artifacts are docs/JSON/shell authoring,
   not executable web code with a runtime attack surface. Web *secure-coding guidance* still ships
   as a skill (`skills/_shared/secure-coding/` + `fe-security-auditor`), but no SR *stage* runs over
-  the plugin's own authored files. (The plugin still *participates* in the igrsoft 11-stage SR when
+  the plugin's own authored files. (The plugin still *participates* in the company-workflow 11-stage SR when
   invoked on a real web codebase — see `_base` §8 SR context note.)
 - **DR gates code quality before QA** — `technical-lead` reviews the authored tree; `fe-code-fixer`
   applies minimal-diff remediation; `frontend-architector` consults on structural questions.
@@ -44,7 +44,7 @@ choice, open-question resolutions, and the conventions every future change must 
   `maxTurns: 60`). `xhigh` is honored only on opus, so the architector must be opus.
 - **D3 — Evidence-model reconciliation (the one divergence from system-developer).** Keep
   system-developer's hooks / `validate.sh` / `_base` shape / handoff contract unchanged; swap the
-  evidence model to apple-developer's UI/screenshot path routed through igrsoft's `web_adapter`.
+  evidence model to apple-developer's UI/screenshot path routed through company-workflow's `web_adapter`.
   Concretely: `requires_screenshots` default flips to **true**; DV writes
   `.context/images/<worktask_id>/screenshots.md` with columns `| name | path | source | design_ref |
   notes |`; `source` value is **`web-adapter`** (where apple uses `apple-canvas`, system uses
@@ -77,7 +77,7 @@ choice, open-question resolutions, and the conventions every future change must 
 ## Evidence-model choice (summary)
 
 Front-end work is UI work → DV defaults `requires_screenshots: true` (apple-developer path), captured
-via the igrsoft `web_adapter` (Playwright / Chrome MCP), `source: web-adapter`, with Lighthouse and
+via the company-workflow `web_adapter` (Playwright / Chrome MCP), `source: web-adapter`, with Lighthouse and
 axe attached as supporting evidence. This is the single intentional divergence from system-developer
 (which defaults `false`, CLI). Risk R3 is closed by sourcing screenshots from apple-developer and
 hooks/validator/`_base`/handoff from system-developer.
@@ -183,7 +183,7 @@ Decisions worth preserving:
 6. **`## See Also`, not "Related commands".** Every command closes with `## See Also`; the seven
    new files follow the existing files rather than the porting brief.
 
-### 1.1.0 — 2026-07-22 igrsoft v3.36.0 Port
+### 1.1.0 — 2026-07-22 company-workflow v3.36.0 Port
 
 Compatibility ported v3.17.0 → v3.36.0 (~13 refs across README, the agent stage-participation
 headers, the `workflow-integration` skill, and `stage-recipes.md`). The Dynamic Worktask Sizing
@@ -193,11 +193,11 @@ table was already current (DR0 at every tier); the PL0 stamp note now also names
 (`v3.12.0` screenshot gate, `3.11.4` RMSE) are preserved, and the pre-existing architector
 anchor-cite drift (`§ Output Frontmatter Schema` → `§ Handoff Frontmatter`) is fixed.
 
-Native web port of igrsoft's ov151 visual track (the part the CLI siblings skip): a **live-drive
+Native web port of company-workflow's ov151 visual track (the part the CLI siblings skip): a **live-drive
 provenance gate** (`ui_visual_check`) — when true, statically produced evidence does not satisfy DV
 exit; each substate the acceptance criteria name must be reached through real Playwright / Chrome-MCP
 interactions (not state injection or deep-linking) before capture, and every capture is taken this
-run (evidence freshness — igrsoft QA direct-reads each image and flags stale, duplicated, blank, or
+run (evidence freshness — company-workflow QA direct-reads each image and flags stale, duplicated, blank, or
 wrong-route frames, re-opening DV). Its E2E-side twin, the **Visible-Enabled Control Sweep**, asserts
 every primary control `toBeVisible()` AND `toBeEnabled()` in each substate and that transition
 controls round-trip (the inverse restores the prior state).

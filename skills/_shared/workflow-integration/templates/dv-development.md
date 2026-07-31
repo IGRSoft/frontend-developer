@@ -1,6 +1,6 @@
 # DV Stage Artifact Template (web work)
 
-Copy this to `.context/development-N.md` (`N` from `task.metadata.run_index`; e.g. `development-0.md`). H2 anchors are fixed by igrsoft's anchor allow-list — keep them exactly as written (kebab-case, H2); web sections nest as H3.
+Copy this to `.context/development-N.md` (`N` from `task.metadata.run_index`; e.g. `development-0.md`). H2 anchors are fixed by company-workflow's anchor allow-list — keep them exactly as written (kebab-case, H2); web sections nest as H3.
 
 ```markdown
 ---
@@ -69,5 +69,5 @@ handoff:
 - **Screenshots**: web/UI work defaults `metadata.requires_screenshots: true` — a manifest is **required**. Write it at `.context/images/<worktask_id>/screenshots.md` (rows with `source: web-adapter` from `npx playwright screenshot` / Chrome MCP; `screenshot_count` = row count) before returning, or `dv-screenshot-gate.sh` blocks `SubagentStop`. Use `source: cli-fallback` only when a route cannot render headlessly. Opt out only when `metadata.requires_screenshots: false` (non-UI change). See `workflow-integration/SKILL.md § DV Screenshot Gate` and [templates/dv-screenshots.md](dv-screenshots.md).
 - `remediation_consumed:` is populated only on a rework re-dispatch — list the `metadata.gate_blockers[]` strings (from the DR/QA gate) this run fixed. See `workflow-integration/SKILL.md § Gate-Feedback Contract`.
 - Frontmatter budget: ≤200 tokens, ≤30 lines. Emit it unconditionally — it is the state.json merge input regardless of filename.
-- **state.json patch**: on completion run `state-patch.sh --stage DV --prev <PREV>` when its path is supplied (`task.metadata.state_patch_script`; ships under igrsoft `skills/worktask/scripts/`) to merge `stages.DV` + the `<PREV>→DV` edge from this frontmatter; if the script/`jq`/`state.json` is absent, skip — never hand-roll the merge; Layers 2/3 repair from the frontmatter. See `workflow-integration/SKILL.md § Artifact Filename Contract`.
+- **state.json patch**: on completion run `state-patch.sh --stage DV --prev <PREV>` when its path is supplied (`task.metadata.state_patch_script`; ships under company-workflow `skills/worktask/scripts/`) to merge `stages.DV` + the `<PREV>→DV` edge from this frontmatter; if the script/`jq`/`state.json` is absent, skip — never hand-roll the merge; Layers 2/3 repair from the frontmatter. See `workflow-integration/SKILL.md § Artifact Filename Contract`.
 - Tee raw build/test output to `.context/logs/` — the Build Evidence transcript path must exist on disk.

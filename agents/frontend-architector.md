@@ -24,13 +24,13 @@ Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment
 
 ### Complexity Triage (0–50 scale)
 
-Read `metadata.complexity_score` when supplied. igrsoft's AR runs only at **Medium+** (≥ 11) — its Low-Complexity Gate answers Low-band picks itself. Called directly without a score, infer the band (single feature, screen, or component with clear constraints and no migration = Low).
+Read `metadata.complexity_score` when supplied. company-workflow's AR runs only at **Medium+** (≥ 11) — its Low-Complexity Gate answers Low-band picks itself. Called directly without a score, infer the band (single feature, screen, or component with clear constraints and no migration = Low).
 
 - **Low (0–10)**: Quick Recommendation Mode is MANDATORY — fit result + selected pattern + scoped guidance, ≤120 lines. NO Deep-Refactor artifacts (no migration plan, coexistence strategy, or transition-risk set).
 - **11–30 (Medium / Moderate)**: Quick Recommendation by default; enter Deep Refactor only on its own triggers (framework migrations, mixed rendering strategies, state-architecture overhauls, design-system-boundary changes).
 - **31+ (High / Critical)**: Deep Refactor deliverables warranted.
 
-Bands (igrsoft): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50 Critical. The mode triggers always outrank an inferred low score.
+Bands (company-workflow): 0–10 Low / 11–20 Medium / 21–30 Moderate / 31–40 High / 41–50 Critical. The mode triggers always outrank an inferred low score.
 
 ## Rendering Strategy Selection
 
@@ -113,7 +113,7 @@ When analyzing an existing app, look for:
 | Server/API contract behind the rendering boundary | `backend-developer:*` (if installed); otherwise surface the API boundary to the orchestrator |
 | Framework / library / SSR documentation | Context7 or Ref MCP tools |
 
-## Workflow Stage Participation (igrsoft v3.36.0)
+## Workflow Stage Participation (company-workflow v4.0.0)
 
 See `_base/frontend-agent.md § Workflow Stage Participation` for the binding handoff contract.
 
@@ -121,7 +121,7 @@ See `_base/frontend-agent.md § Workflow Stage Participation` for the binding ha
 |-------|------|-------------|
 | **AR** | Primary | Architecture design, rendering-strategy selection, state + design-system blueprint, technical decisions |
 | **DV** | Support | Architecture guidance during implementation |
-| **DR** | Consultant | Structural review when `igrsoft:technical-lead` flags systemic concerns (wrong rendering mode, hydration boundary leaks, server-data-in-client-store, federation singleton mismatch) |
+| **DR** | Consultant | Structural review when `company-workflow:technical-lead` flags systemic concerns (wrong rendering mode, hydration boundary leaks, server-data-in-client-store, federation singleton mismatch) |
 | **QA** | Context | Architecture-driven test strategy and boundary test guidance |
 
 ### AR Stage Quick Steps
@@ -129,7 +129,7 @@ See `_base/frontend-agent.md § Workflow Stage Participation` for the binding ha
 1. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and the active stage from `.context/state.json`.
 2. Run the Core Workflow (Fast Path → Quick Recommendation or Deep Refactor → Guardrails → Verification) to select the rendering strategy, state pattern, and design-system contract.
 3. Write the canonical AR artifact `analyzing-N.md` (`N = run_index` from `task.metadata.run_index`; e.g., `analyzing-0.md`) with `handoff:` frontmatter conforming to `skill: workflow-integration § Handoff Frontmatter` — emit the frontmatter **unconditionally**, it is the merge input regardless of filename. Readers fall back to newest-glob (`analyzing-*.md`).
-4. Patch `state.json` (`stages.AR` + the `PL→AR` handoff edge): run `state-patch.sh --stage AR --prev PL` when its path is supplied (`task.metadata.state_patch_script`; ships under igrsoft `skills/worktask/scripts/`), else skip — do not hand-roll the merge; the SubagentStop hook repairs from frontmatter.
+4. Patch `state.json` (`stages.AR` + the `PL→AR` handoff edge): run `state-patch.sh --stage AR --prev PL` when its path is supplied (`task.metadata.state_patch_script`; ships under company-workflow `skills/worktask/scripts/`), else skip — do not hand-roll the merge; the SubagentStop hook repairs from frontmatter.
 
 ### Output Budget (AR)
 

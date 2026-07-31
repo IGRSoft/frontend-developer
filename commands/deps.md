@@ -26,7 +26,7 @@ Three subcommands select the operation from the first argument:
 
 > **Tool discipline:** `audit` is read-only. This command's `allowed-tools` includes `Edit` because `upgrade` and `add` need to write manifests; the audit workflow MUST NOT modify any file — it only reports findings.
 
-[Extended thinking: Dependency changes are the highest-blast-radius edits in a web project — one transitive bump can break the build, drop a type, ship a CVE, or pull a tree-shake regression into the bundle. This command separates read-only assessment (audit) from mutation (upgrade/add) and forces upgrades through a one-dependency, pin, build-and-test-gated loop. Manager discovery is shared with `skill: language-detection`; CVE lookup uses the manager's native `audit` and cross-checks the osv.dev API; license inventory is best-effort and never blocks. Security findings are phrased in `igrsoft:security-review-process` vocabulary so they flow cleanly into an SR stage. The heavy reasoning — version-jump risk, breaking-change analysis, peer-dep resolution — is routed to `frontend-developer:fe-dependency-manager`; this command owns discovery, the gate loop, and reporting.]
+[Extended thinking: Dependency changes are the highest-blast-radius edits in a web project — one transitive bump can break the build, drop a type, ship a CVE, or pull a tree-shake regression into the bundle. This command separates read-only assessment (audit) from mutation (upgrade/add) and forces upgrades through a one-dependency, pin, build-and-test-gated loop. Manager discovery is shared with `skill: language-detection`; CVE lookup uses the manager's native `audit` and cross-checks the osv.dev API; license inventory is best-effort and never blocks. Security findings are phrased in `company-workflow:security-review-process` vocabulary so they flow cleanly into an SR stage. The heavy reasoning — version-jump risk, breaking-change analysis, peer-dep resolution — is routed to `frontend-developer:fe-dependency-manager`; this command owns discovery, the gate loop, and reporting.]
 
 ## CRITICAL BEHAVIORAL RULES
 
@@ -38,7 +38,7 @@ You MUST follow these rules exactly. Violating any of them is a failure.
 4. **Single-command Bash invocations.** Use each manager's own flags (`npm --prefix <path>`, `pnpm --dir <path>`, `yarn --cwd <path>`). Never `cd`-chain or `&&`-chain — scoped Bash patterns do not match compound commands.
 5. **Tool-missing never hard-fails.** If a manager or scanner binary is absent, print the install hint, skip that pass, and continue. Report what was skipped. A missing native scanner falls back to the manager's own `audit` plus the osv.dev API — never skip the CVE pass silently.
 6. **Route the reasoning, own the loop.** Hand version-jump risk, breaking-change analysis, and peer-dependency resolution to `frontend-developer:fe-dependency-manager`. This command performs discovery, runs the build+test gate, and synthesizes the report.
-7. **Security findings use SR vocabulary.** Phrase every CVE/advisory in `igrsoft:security-review-process` terms (severity, advisory id, affected range, fixed-in version, remediation) so the output is consumable by an SR stage.
+7. **Security findings use SR vocabulary.** Phrase every CVE/advisory in `company-workflow:security-review-process` terms (severity, advisory id, affected range, fixed-in version, remediation) so the output is consumable by an SR stage.
 8. **Commands route, they do not orchestrate.** This command names `frontend-developer:fe-dependency-manager` so Claude routes the analysis; it does not call `Task`.
 9. **Never enter plan mode.** This command IS the procedure — execute it.
 
@@ -103,7 +103,7 @@ Use the manager's native audit, then cross-check osv.dev. **Never skip this pass
 2. **Cross-check** each flagged `(name, version)` against the osv.dev API via WebFetch when the native audit is sparse or the manager lacks audit:
    - URL: `https://api.osv.dev/v1/query`
    - Body: `{"package": {"ecosystem": "npm", "name": "<name>"}, "version": "<version>"}`
-3. **Normalize into SR vocabulary** (per `igrsoft:security-review-process`): `severity` (Critical/High/Medium/Low), `advisory id`, `affected range`, `fixed-in version`, `remediation` (upgrade target). Group Critical/High at the top.
+3. **Normalize into SR vocabulary** (per `company-workflow:security-review-process`): `severity` (Critical/High/Medium/Low), `advisory id`, `affected range`, `fixed-in version`, `remediation` (upgrade target). Group Critical/High at the top.
 
 ### Phase 4: License Inventory (best-effort)
 
@@ -116,7 +116,7 @@ Best-effort; never blocks.
 Route the raw discovery + queries to the dependency manager for risk framing:
 
 Route to `frontend-developer:fe-dependency-manager`:
-"Audit-mode dependency analysis for the project at `{path}` ({manager}). Outdated report:\n```\n{outdated_output}\n```\nCVE findings (raw):\n```\n{cve_output}\n```\nLicenses:\n```\n{license_output}\n```\nFor each outdated dependency, classify the jump (patch/minor/major), note documented breaking changes and peer-dep constraints, and assess upgrade risk. Normalize every vulnerability into `igrsoft:security-review-process` vocabulary. Produce a prioritized upgrade plan (security patches first, then patch/minor, then majors individually). Do NOT edit files — read-only audit."
+"Audit-mode dependency analysis for the project at `{path}` ({manager}). Outdated report:\n```\n{outdated_output}\n```\nCVE findings (raw):\n```\n{cve_output}\n```\nLicenses:\n```\n{license_output}\n```\nFor each outdated dependency, classify the jump (patch/minor/major), note documented breaking changes and peer-dep constraints, and assess upgrade risk. Normalize every vulnerability into `company-workflow:security-review-process` vocabulary. Produce a prioritized upgrade plan (security patches first, then patch/minor, then majors individually). Do NOT edit files — read-only audit."
 Synthesize the agent's analysis into the Output Format report.
 
 ## Mode 2: Upgrade (one dependency, gated)
@@ -276,4 +276,4 @@ Print the install hint, skip that pass, continue. A missing native audit falls b
 - `skill: secure-coding` — npm supply-chain and dependency-trust rules that gate a diff.
 - `/frontend-developer:build-test` — the build+test gate this command invokes after every upgrade/add.
 - `/frontend-developer:fix-modernize` — when a major upgrade needs a framework-idiom migration (e.g. React 18→19 patterns).
-- `igrsoft:security-review-process` — SR-stage vocabulary used for every vulnerability finding here.
+- `company-workflow:security-review-process` — SR-stage vocabulary used for every vulnerability finding here.
