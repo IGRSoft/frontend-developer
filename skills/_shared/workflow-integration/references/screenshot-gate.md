@@ -4,7 +4,7 @@ Use this when you are a frontend-developer DV agent producing the screenshot man
 
 ## web_adapter Capture Procedure
 
-Web DV produces the manifest through igrsoft's **`web_adapter`** capture path (Playwright / Chrome MCP rendered DOM) — already wired in `company-workflow/agents/developer.md`'s Screenshot Capture table:
+Web DV produces the manifest through company-workflow's **`web_adapter`** capture path (Playwright / Chrome MCP rendered DOM) — already wired in `company-workflow/agents/developer.md`'s Screenshot Capture table:
 
 1. Build the app and serve it (or run the dev server) — `npm run build` then a static preview, or `npm run dev`. One command per scoped-Bash call; no `&&` chains.
 2. Capture each meaningful route/state with the `web_adapter` — Playwright `npx playwright screenshot <url> <out.png>` (headless Chromium) or the Chrome MCP screenshot tool. These rows take **`source: web-adapter`**.
@@ -28,8 +28,8 @@ Attach **Lighthouse** and **axe** reports as supporting rows in the same manifes
 
 ## RMSE Design-Diff Join Key
 
-The manifest is also the join key for QA's RMSE design-diff (igrsoft 3.11.4): `design_ref` links a screenshot to its `designs/` mockup so QA can compare pixel deltas — leave it blank for net-new screens with no mockup. Opt out only when `metadata.requires_screenshots: false` (non-UI changes, e.g. a pure tooling/config edit) — then no manifest is required and the gate is skipped; flag it in your return summary if the metadata says otherwise. **Never** fabricate image files or return without either the `false` flag or a real manifest — the gate re-dispatches DV until one exists.
+The manifest is also the join key for QA's RMSE design-diff (company-workflow 3.11.4): `design_ref` links a screenshot to its `designs/` mockup so QA can compare pixel deltas — leave it blank for net-new screens with no mockup. Opt out only when `metadata.requires_screenshots: false` (non-UI changes, e.g. a pure tooling/config edit) — then no manifest is required and the gate is skipped; flag it in your return summary if the metadata says otherwise. **Never** fabricate image files or return without either the `false` flag or a real manifest — the gate re-dispatches DV until one exists.
 
 ## Manifest Row Format
 
-Manifest row format mirrors igrsoft's `dv-screenshot-capture` output: `| name | path | source | design_ref | notes |` with `source` ∈ {`web-adapter`, `cli-fallback`}.
+Manifest row format mirrors company-workflow's `dv-screenshot-capture` output: `| name | path | source | design_ref | notes |` with `source` ∈ {`web-adapter`, `cli-fallback`}.

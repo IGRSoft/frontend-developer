@@ -46,7 +46,7 @@ them misfires silently on the other five.
 
 Command-surface unification with the `apple-developer` plugin. The command set grows
 from 9 to 16 and adopts the shared cross-plugin naming standard, so the same verb
-means the same thing in every igrsoft platform plugin.
+means the same thing in every company-workflow platform plugin.
 
 ### Added
 
@@ -125,7 +125,7 @@ spelling:
 
 ## [1.1.0] — 2026-07-22
 
-Compatibility ported from igrsoft v3.17.0 to v3.36.0 across the README, the agent
+Compatibility ported from company-workflow v3.17.0 to v3.36.0 across the README, the agent
 stage-participation headers, the `workflow-integration` skill, and `stage-recipes.md`.
 Added the native web port of the visual track: a live-drive provenance gate
 (`ui_visual_check`) and its E2E-side twin, the Visible-Enabled Control Sweep.

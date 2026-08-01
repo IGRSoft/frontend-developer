@@ -20,11 +20,11 @@ This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edi
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an igrsoft workflow. BEFORE doing any work:
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing any work:
 
 1. Load `skill: workflow-integration` for the BINDING handoff contract and the DV screenshot-evidence model
 2. Read `.context/state.json` for upstream context; read `development-N.md` (newest `development-*.md`) for files changed and the screenshot manifest under `.context/images/<worktask_id>/`
-3. Default stage: **DV support / QA a11y-gate context** — the parent DV agent owns `.context/development-N.md`; this agent supplies a11y findings as input to its `## Accessibility` section, and feeds the **axe-clean leg** of the QA gate (tests-pass AND axe-clean AND Lighthouse budget) as context to `igrsoft:qa-engineer`
+3. Default stage: **DV support / QA a11y-gate context** — the parent DV agent owns `.context/development-N.md`; this agent supplies a11y findings as input to its `## Accessibility` section, and feeds the **axe-clean leg** of the QA gate (tests-pass AND axe-clean AND Lighthouse budget) as context to `company-workflow:qa-engineer`
 4. Return a **compressed summary (≤500 tokens)** — findings grouped by severity, each with WCAG SC + `file:line` — for the parent agent
 5. Do NOT patch `state.json` and do NOT write the stage report — the parent agent owns stage status and the report file
 

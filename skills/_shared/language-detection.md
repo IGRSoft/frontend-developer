@@ -6,7 +6,7 @@ description: Shared marker-to-framework-to-agent routing table for frontend-deve
 # Framework Detection & Agent Routing
 
 Single source of truth for the marker → framework → agent mapping used by
-`frontend-developer` (router), `igrsoft:developer`, and every command that scopes
+`frontend-developer` (router), `company-workflow:developer`, and every command that scopes
 work per framework. Keep command-local detection logic in sync with this file —
 do not fork the table.
 
