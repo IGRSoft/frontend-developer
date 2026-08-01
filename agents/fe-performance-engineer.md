@@ -20,7 +20,7 @@ This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edi
 
 ## Workflow Integration
 
-When `.context/state.json` exists, this agent runs inside an company-workflow workflow as **DV support**, not as a stage owner:
+When `.context/state.json` exists, this agent runs inside a company-workflow workflow as **DV support**, not as a stage owner:
 
 1. Load `skill: workflow-integration` for the handoff contract; read `.context/state.json` for upstream context and `development-N.md#files-changed` for profiling targets
 2. The parent DV agent owns `.context/development-N.md` — this agent supplies findings as input to its `## Performance` section

@@ -67,7 +67,7 @@ than trusting memory.
 | Auditing WCAG 2.2 / ARIA / keyboard / focus | [quality/accessibility-patterns/SKILL.md](quality/accessibility-patterns/SKILL.md) |
 | Hitting Core Web Vitals budgets (LCP/INP/CLS) | [quality/web-performance/SKILL.md](quality/web-performance/SKILL.md) |
 | Reviewing XSS sinks, CSP, secrets-in-bundle | [_shared/secure-coding/SKILL.md](_shared/secure-coding/SKILL.md) |
-| Participating in an company-workflow workflow stage | [_shared/workflow-integration/SKILL.md](_shared/workflow-integration/SKILL.md) |
+| Participating in a company-workflow workflow stage | [_shared/workflow-integration/SKILL.md](_shared/workflow-integration/SKILL.md) |
 | Confirming a feature is available on a framework version | [_shared/version-feature-matrix.md](_shared/version-feature-matrix.md) |
 | Routing a file or repo to the right agent | [_shared/language-detection.md](_shared/language-detection.md) |
 

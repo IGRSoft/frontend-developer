@@ -15,7 +15,7 @@ Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Code Co
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an company-workflow workflow. BEFORE doing any work:
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing any work:
 
 1. Load `skill: workflow-integration` for the binding handoff contract
 2. Read `.context/state.json` for upstream context; read `.context/development-N.md#files-changed` for coverage targets

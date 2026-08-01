@@ -20,7 +20,7 @@ This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edi
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside an company-workflow workflow. BEFORE doing any work:
+If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing any work:
 
 1. Load `skill: workflow-integration` for the BINDING handoff contract
 2. Read `.context/state.json` for upstream context; read `development-N.md` (newest `development-*.md`) for the security-surface table and files changed
