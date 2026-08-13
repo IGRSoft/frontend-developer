@@ -26,7 +26,7 @@ Angular, Styling, Tooling, Quality, and shared cross-cutting patterns).
 | Skill | Path | Description |
 |-------|------|-------------|
 | **secure-coding** | [`_shared/secure-coding/SKILL.md`](_shared/secure-coding/SKILL.md) | Web security rules and bug-class defenses — XSS sinks, CSP, CSRF, clickjacking, secrets-in-bundle, `dangerouslySetInnerHTML`, npm supply chain |
-| **workflow-integration** | [`_shared/workflow-integration/SKILL.md`](_shared/workflow-integration/SKILL.md) | Integrating with the company-workflow workflow system; DV screenshot gate via web_adapter, Lighthouse/axe supporting evidence |
+| **workflow-integration** | [`_shared/workflow-integration/SKILL.md`](_shared/workflow-integration/SKILL.md) | Integrating with corpflow; DV screenshot gate via web_adapter, Lighthouse/axe supporting evidence |
 | version-feature-matrix | [`_shared/version-feature-matrix.md`](_shared/version-feature-matrix.md) | Framework/language versions → minimum versions and fallbacks (canonical lookup) |
 | language-detection | [`_shared/language-detection.md`](_shared/language-detection.md) | Marker → framework → agent routing table, detection priority, tie-breaking |
 | model-selection | [`_shared/model-selection.md`](_shared/model-selection.md) | Per-agent model/effort/maxTurns assignments and opus+xhigh override paths |

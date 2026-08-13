@@ -6,7 +6,7 @@ effort: low
 
 # Model & Effort Selection (frontend-developer)
 
-Companion to company-workflow's `skills/shared/model-selection.md`. This file pins the
+Companion to corpflow's `skills/shared/model-selection.md`. This file pins the
 **frontend-developer** per-agent assignments and the override paths the framework
 agents expose. Frontmatter in `agents/*.md` is the source of truth — keep this
 table in sync with it.

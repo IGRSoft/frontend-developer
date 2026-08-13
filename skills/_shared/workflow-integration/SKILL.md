@@ -1,11 +1,11 @@
 ---
 name: workflow-integration
-description: Guide for integrating with the company-workflow 11-stage workflow system (v4.0.0) from frontend-developer agents. Use when participating in structured workflow stages — DV, DR, SR, QA, RE — or producing handoff artifacts.
+description: Guide for integrating with the corpflow 11-stage pipeline (v4.0.13) from frontend-developer agents. Use when participating in structured workflow stages — DV, DR, SR, QA, RE — or producing handoff artifacts.
 ---
 
 # Workflow Integration Guide
 
-When invoked from the company-workflow workflow system, follow these guidelines. frontend-developer agents author web UI, so the **DV evidence model is screenshot-first** (see § DV Screenshot Gate) — the one place the contract diverges from a CLI plugin.
+When invoked from corpflow, follow these guidelines. frontend-developer agents author web UI, so the **DV evidence model is screenshot-first** (see § DV Screenshot Gate) — the one place the contract diverges from a CLI plugin.
 
 ## 11-Stage Pipeline (Default)
 
@@ -15,7 +15,7 @@ PL → AR → TL → DV → DR → SR → QA → DC → RE → FN → ST
    frontend-developer agents contribute to AR, DV, DR, SR, QA, and RE
 ```
 
-| Code | Stage | company-workflow Agent | frontend-developer Contribution |
+| Code | Stage | corpflow Agent | frontend-developer Contribution |
 |------|-------|---------------|---------------------------------|
 | PL | Planning | product-manager | — |
 | AR | Architecture | software-architector | frontend-architector (rendering strategy, micro-frontend boundaries, client-state & design-system architecture) |
@@ -41,11 +41,11 @@ Full field tables, the artifact-filename map, the handoff-frontmatter schema, er
 
 ## DV Screenshot Gate (v3.12.0 — HIGHEST INTEGRATION RISK, read this)
 
-`metadata.requires_screenshots` defaults **TRUE** (`requires_screenshots: true`) for frontend-developer DV stages — web work is UI work, so the screenshot manifest is the **default** expectation (opposite of a CLI plugin). Before a DV agent returns, it MUST write a manifest at `.context/images/<worktask_id>/screenshots.md`. If it is absent on `SubagentStop`, company-workflow's `dv-screenshot-gate.sh` **blocks** the stop and returns `hookSpecificOutput.additionalContext` telling the run to capture via `dv-screenshot-capture` — the DV agent is **re-dispatched** until the manifest exists.
+`metadata.requires_screenshots` defaults **TRUE** (`requires_screenshots: true`) for frontend-developer DV stages — web work is UI work, so the screenshot manifest is the **default** expectation (opposite of a CLI plugin). Before a DV agent returns, it MUST write a manifest at `.context/images/<worktask_id>/screenshots.md`. If it is absent on `SubagentStop`, corpflow's `dv-screenshot-gate.sh` **blocks** the stop and returns `hookSpecificOutput.additionalContext` telling the run to capture via `dv-screenshot-capture` — the DV agent is **re-dispatched** until the manifest exists.
 
 Binding rules (the contract — keep these in mind even when the detail is externalized):
 
-- Captures come through company-workflow's **`web_adapter`** path (Playwright / Chrome MCP rendered DOM). Each rendered route/state row takes **`source: web-adapter`**; a route that cannot render headlessly falls back to `source: cli-fallback` with the reason in `notes`.
+- Captures come through corpflow's **`web_adapter`** path (Playwright / Chrome MCP rendered DOM). Each rendered route/state row takes **`source: web-adapter`**; a route that cannot render headlessly falls back to `source: cli-fallback` with the reason in `notes`.
 - **Lighthouse** and **axe** reports are **supporting evidence**, not a substitute — attach them as supporting rows (`source: web-adapter`, `notes: lighthouse` / `notes: axe`) or reference them from Build Evidence. They corroborate the captures; they never replace a rendered screenshot of the changed UI.
 - Opt out only when `metadata.requires_screenshots: false` (non-UI changes) — then no manifest is required and the gate is skipped; flag it in your return summary if metadata says otherwise. **Never** fabricate image files — the gate re-dispatches DV until a real manifest (or the `false` flag) exists.
 
@@ -53,7 +53,7 @@ The capture procedure, the manifest row format, and the RMSE design-diff join ke
 
 **Existence vs. provenance (`ui_visual_check`, v4.0.0).** Two flags gate visual evidence independently. `requires_screenshots` gates manifest **existence** — a `screenshots.md` must be present, and a `web-adapter` route capture remains a valid `source` for it. `ui_visual_check` gates evidence **provenance**: when true, an un-interacted route capture or a Storybook/isolated-component render is *incomplete* evidence — recapture from a live-driven session (drive each substate through real interactions, then capture) per `_base/frontend-agent.md § Live-drive verification`.
 
-**Evidence freshness.** Every manifest capture for a `ui_visual_check` row must be taken this run from the live-driven app. company-workflow QA direct-reads each image and flags byte-identical pairs, blank/error pages, wrong-route frames, and stale reused captures — a flagged capture re-opens DV.
+**Evidence freshness.** Every manifest capture for a `ui_visual_check` row must be taken this run from the live-driven app. corpflow QA direct-reads each image and flags byte-identical pairs, blank/error pages, wrong-route frames, and stale reused captures — a flagged capture re-opens DV.
 
 ## Stage Participation Overview
 
@@ -73,9 +73,9 @@ When DR returns `fail` or QA returns `no-go`, the orchestrator re-dispatches DV 
 
 If no workflow context is detected (no `.context/`, no task metadata), proceed with standard implementation: follow the framework skills, run the same build/type-check/lint/test discipline, capture screenshots of changed UI when practical, and report results directly — no artifacts or frontmatter required.
 
-## Related Skills (company-workflow plugin)
+## Related Skills (corpflow plugin)
 
-`company-workflow:worktask` (worktask system), `company-workflow:cross-plugin-handoff` (handoff protocol), `company-workflow:agent-coordination` (multi-agent patterns), `company-workflow:context-compression` (token budgets), `company-workflow:security-review-process` (SR OWASP checklists), `company-workflow:release-engineering` (RE versioning).
+`corpflow:worktask` (worktask system), `corpflow:cross-plugin-handoff` (handoff protocol), `corpflow:agent-coordination` (multi-agent patterns), `corpflow:context-compression` (token budgets), `corpflow:security-review-process` (SR OWASP checklists), `corpflow:release-engineering` (RE versioning).
 
 ## Related Skills (frontend-developer plugin)
 

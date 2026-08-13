@@ -15,7 +15,7 @@ Use this when you need the field-level detail behind a specific workflow stage. 
 
 ## DV Contract for Web Work
 
-The DV agent writes `.context/development-N.md`. Mandatory H2 anchors are fixed by company-workflow's anchor allow-list (`handoff-protocol.md#anchor-allow-list`): `## files-changed`, `## tests-added`, `## deviations`, `## follow-ups`. Web-specific sections nest as H3 under them:
+The DV agent writes `.context/development-N.md`. Mandatory H2 anchors are fixed by corpflow's anchor allow-list (`handoff-protocol.md#anchor-allow-list`): `## files-changed`, `## tests-added`, `## deviations`, `## follow-ups`. Web-specific sections nest as H3 under them:
 
 | Section | Anchor level | Content |
 |---------|--------------|---------|
@@ -73,12 +73,12 @@ fe-test-generator supports QA with framework-native generation (Vitest/Jest + Te
 
 ## SR and RE Contributions
 
-- **SR** — fe-security-auditor provides web platform context to company-workflow's security-reviewer: XSS sink review (`dangerouslySetInnerHTML`, `v-html`, `{@html}`, `innerHTML`, `bypassSecurityTrust*`), Content-Security-Policy and Trusted Types posture, CSRF/clickjacking, secrets-in-bundle scan (no API keys shipped to the client), SSRF via SSR/RSC fetch, and npm supply-chain audit (`npm audit`, `osv-scanner`). Review-only: findings route to `frontend-developer:fe-code-fixer` for application. See `_shared/secure-coding/SKILL.md`.
+- **SR** — fe-security-auditor provides web platform context to corpflow's security-reviewer: XSS sink review (`dangerouslySetInnerHTML`, `v-html`, `{@html}`, `innerHTML`, `bypassSecurityTrust*`), Content-Security-Policy and Trusted Types posture, CSRF/clickjacking, secrets-in-bundle scan (no API keys shipped to the client), SSRF via SSR/RSC fetch, and npm supply-chain audit (`npm audit`, `osv-scanner`). Review-only: findings route to `frontend-developer:fe-code-fixer` for application. See `_shared/secure-coding/SKILL.md`.
 - **RE** — release-engineer owns the stage; frontend-developer contributes packaging: fe-dependency-manager freezes lockfiles/pins (`package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`), and the framework agents produce release artifacts (built bundles, version bumps, changelog entries) recorded in `release-N.md`.
 
 ## Artifact Filename Contract (v4.0.0)
 
-**Numbered `<stage>-N.md` names are canonical** per company-workflow's authoritative `handoff-protocol.md#stage-artifact-map`. N is allocated by PL0 (same value as `planning-N.md`), shared across all stages within a run, and propagated via `task.metadata.run_index`; it bumps on gate loop-back re-dispatch. Readers fall back to newest-glob (`<basename>-*.md`).
+**Numbered `<stage>-N.md` names are canonical** per corpflow's authoritative `handoff-protocol.md#stage-artifact-map`. N is allocated by PL0 (same value as `planning-N.md`), shared across all stages within a run, and propagated via `task.metadata.run_index`; it bumps on gate loop-back re-dispatch. Readers fall back to newest-glob (`<basename>-*.md`).
 
 | Stage | Artifact | Owner |
 |-------|----------|-------|
@@ -112,7 +112,7 @@ Every stage artifact MUST start with a YAML block between `---` markers. Budgets
 
 ## Gate-Feedback Contract (v4.0.0)
 
-When DR returns `verdict: fail` or QA returns `verdict: no-go`, the orchestrator re-dispatches DV (`run_index` bumped, `retry_count`++) and carries the upstream remediation **verbatim** into the retry prompt (company-workflow `worktask/SKILL.md` step 4.6). frontend-developer agents **consume** this contract; the injection is orchestrator-owned.
+When DR returns `verdict: fail` or QA returns `verdict: no-go`, the orchestrator re-dispatches DV (`run_index` bumped, `retry_count`++) and carries the upstream remediation **verbatim** into the retry prompt (corpflow `worktask/SKILL.md` step 4.6). frontend-developer agents **consume** this contract; the injection is orchestrator-owned.
 
 | Surface | Mechanism | frontend-developer action |
 |---------|-----------|---------------------------|
@@ -132,8 +132,8 @@ All Task delegations MUST use the fully-qualified `plugin:agent` form:
 | Form | Status |
 |------|--------|
 | `frontend-developer:react-developer` | Required |
-| `company-workflow:technical-lead` | Required |
-| `react-developer` (bare) | Deprecated — back-compat shim prepends `company-workflow:` and logs a warning (would resolve to the wrong plugin) |
+| `corpflow:technical-lead` | Required |
+| `react-developer` (bare) | Deprecated — back-compat shim prepends `corpflow:` and logs a warning (would resolve to the wrong plugin) |
 | `backend-developer:*` | Forward-reference handoff only (HTTP/GraphQL server, DB, auth) — **never** placed in a `tools:` `Task(...)` list; route "if installed", otherwise surface the boundary to the orchestrator |
 | `apple-developer:*` | Forward-reference handoff for native-module work — same rule (see `_base/frontend-agent.md § Delegation Routing` web/native precedence) |
 
@@ -154,10 +154,10 @@ Task metadata carries qualified names:
 
 ## Token Budgets
 
-- **Incoming compressed context** (from company-workflow): 300-500 tokens (planning summary 300, architecture summary 300, development handoff 500)
+- **Incoming compressed context** (from corpflow): 300-500 tokens (planning summary 300, architecture summary 300, development handoff 500)
 - **Full stage output**: write to `.context/<stage>-N.md` (no token cap)
 - **Outgoing return summary**: 500 tokens max (for the orchestrator)
-- **Inter-stage handoffs**: DV→DR 300, DR→QA 300 (`company-workflow:context-compression § Context Budget by Handoff`)
+- **Inter-stage handoffs**: DV→DR 300, DR→QA 300 (`corpflow:context-compression § Context Budget by Handoff`)
 
 ## Detecting Workflow Context
 
@@ -181,7 +181,7 @@ PL0 assesses complexity (0-50) and creates only the stages needed:
 
 Security-sensitive features (authentication, payment, PII, cryptography, secrets, file uploads, untrusted HTML rendering) auto-include SR0 regardless of score.
 
-PL0 stamps `metadata.skipped_stages = [{stage, reason}]` for every stage dropped from the full 9-stage pipeline (PL→AR→TL→DV→DR→QA→DC→FN→ST), so `state.json` self-documents the drops. It also stamps `metadata.test_mode` (`build-only` / `scoped` / `full` — defaulted by score and marker coverage) and `metadata.ui_visual_check`. Unlike the CLI-oriented sibling plugins, `ui_visual_check` **is applicable here** — web work is UI work: when PL0 sets it `true` it gates screenshot-evidence provenance (live-driven capture before comparison; the full contract lands in a later phase). The stage table above, the `test_mode` defaults, and these stamps are all defined by company-workflow `estimation-methodology § PL0 Stage-Set` (the source of truth) — keep them in lockstep with it so the next sync is a mechanical copy.
+PL0 stamps `metadata.skipped_stages = [{stage, reason}]` for every stage dropped from the full 9-stage pipeline (PL→AR→TL→DV→DR→QA→DC→FN→ST), so `state.json` self-documents the drops. It also stamps `metadata.test_mode` (`build-only` / `scoped` / `full` — defaulted by score and marker coverage) and `metadata.ui_visual_check`. Unlike the CLI-oriented sibling plugins, `ui_visual_check` **is applicable here** — web work is UI work: when PL0 sets it `true` it gates screenshot-evidence provenance (live-driven capture before comparison; the full contract lands in a later phase). The stage table above, the `test_mode` defaults, and these stamps are all defined by corpflow `estimation-methodology § PL0 Stage-Set` (the source of truth) — keep them in lockstep with it so the next sync is a mechanical copy.
 
 ## MCP Dynamic Inheritance
 

@@ -1,21 +1,21 @@
-# DV Screenshot Manifest Template (company-workflow v3.12.0)
+# DV Screenshot Manifest Template (corpflow v3.12.0)
 
 Format for the screenshot manifest a DV agent MUST write at
 `.context/images/<worktask_id>/screenshots.md` when `metadata.requires_screenshots != false`
-(default **TRUE** for web UI changes). If this file is absent at `SubagentStop`, company-workflow's
+(default **TRUE** for web UI changes). If this file is absent at `SubagentStop`, corpflow's
 `dv-screenshot-gate.sh` blocks the stop and returns `hookSpecificOutput.additionalContext`
 telling the run to capture screenshots (`dv-screenshot-capture`) — DV is re-dispatched until
 the manifest exists.
 
-This mirrors company-workflow's `dv-screenshot-capture` skill output so the gate finds it, and the
-`design_ref` column is the join key for QA's RMSE design-diff (company-workflow 3.11.4).
+This mirrors corpflow's `dv-screenshot-capture` skill output so the gate finds it, and the
+`design_ref` column is the join key for QA's RMSE design-diff (corpflow 3.11.4).
 
 ## How web DV produces it
 
 1. Build the app and serve it: `npm run build` then a static preview (`npx vite preview`,
    `npx serve dist`, framework equivalent), or run the dev server `npm run dev`. One command
    per scoped-Bash call — no `&&` chains.
-2. Capture each meaningful **route/state** via company-workflow's `web_adapter`:
+2. Capture each meaningful **route/state** via corpflow's `web_adapter`:
    - Playwright headless: `npx playwright screenshot <url> .context/images/<worktask_id>/<name>.png`
      (per viewport when responsive states matter) → `source: web-adapter`.
    - Or the Chrome MCP screenshot tool against the same URL → `source: web-adapter`.

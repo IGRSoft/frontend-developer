@@ -1,6 +1,6 @@
 # QA Stage Artifact Template (web testing)
 
-Primary artifact `.context/testing-N.md` is owned by company-workflow's qa-engineer; use this when fe-test-generator or a frontend-developer agent takes over QA or supplies the evidence body.
+Primary artifact `.context/testing-N.md` is owned by corpflow's qa-engineer; use this when fe-test-generator or a frontend-developer agent takes over QA or supplies the evidence body.
 
 ```markdown
 ---

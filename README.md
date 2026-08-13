@@ -1,13 +1,13 @@
 # Frontend Developer Plugin
 
-Claude Code plugin for **web front-end** development — React/Next.js, Vue/Nuxt, Svelte/SvelteKit, Angular, TypeScript, and modern CSS/Tailwind — with specialized agents, commands, and skills. Collaborates with the company-workflow plugin for full 11-stage workflow orchestration (PL→AR→TL→DV→**DR**→SR→QA→DC→RE→FN→ST). UI work defaults to `requires_screenshots: true`; DV evidence is captured via the company-workflow `web_adapter` (Playwright / Chrome MCP) as screenshots, with Lighthouse and axe reports attached as supporting evidence.
+Claude Code plugin for **web front-end** development — React/Next.js, Vue/Nuxt, Svelte/SvelteKit, Angular, TypeScript, and modern CSS/Tailwind — with specialized agents, commands, and skills. Collaborates with the corpflow plugin for full 11-stage workflow orchestration (PL→AR→TL→DV→**DR**→SR→QA→DC→RE→FN→ST). UI work defaults to `requires_screenshots: true`; DV evidence is captured via the corpflow `web_adapter` (Playwright / Chrome MCP) as screenshots, with Lighthouse and axe reports attached as supporting evidence.
 
 ## Compatibility
 
 | Field | Value |
 |-------|-------|
 | **Version** | 1.3.0 |
-| **company-workflow Compatibility** | v4.0.0 |
+| **corpflow Compatibility** | v4.0.13 |
 | **claude-code min version** | 2.1.169 |
 
 ## Installation
@@ -25,7 +25,7 @@ Or, if developing locally from a checkout:
 /plugin install frontend-developer
 ```
 
-After installation, restart the session so hooks (`PostToolUse`, `SubagentStop`, `PreCompact`) and the `frontend-developer:*` agents register. The plugin auto-collaborates with `company-workflow` when present; agents and commands degrade gracefully when an optional toolchain (eslint, axe-core, Lighthouse, Playwright) is missing — they print an install hint and skip, never hard-failing.
+After installation, restart the session so hooks (`PostToolUse`, `SubagentStop`, `PreCompact`) and the `frontend-developer:*` agents register. The plugin auto-collaborates with `corpflow` when present; agents and commands degrade gracefully when an optional toolchain (eslint, axe-core, Lighthouse, Playwright) is missing — they print an install hint and skip, never hard-failing.
 
 Validate a local checkout before release:
 
@@ -145,11 +145,11 @@ Shared (`skills/_shared/`): `workflow-integration` (DV screenshot gate, stage te
 
 Front-end work is UI work, so DV defaults to **`requires_screenshots: true`** (matching apple-developer, unlike system-developer's CLI default of `false`). The DV stage:
 
-1. Captures one screenshot per meaningful screen/state via the company-workflow **`web_adapter`** (Playwright `npx playwright screenshot` / Chrome MCP rendered DOM) and writes a manifest at `.context/images/<worktask_id>/screenshots.md` with columns `| name | path | source | design_ref | notes |`. The `source` value is **`web-adapter`** (`cli-fallback` only when a route cannot render headlessly).
+1. Captures one screenshot per meaningful screen/state via the corpflow **`web_adapter`** (Playwright `npx playwright screenshot` / Chrome MCP rendered DOM) and writes a manifest at `.context/images/<worktask_id>/screenshots.md` with columns `| name | path | source | design_ref | notes |`. The `source` value is **`web-adapter`** (`cli-fallback` only when a route cannot render headlessly).
 2. Attaches **Lighthouse** and **axe** reports as *supporting* evidence (additional `source: web-adapter` rows with `notes: lighthouse`/`notes: axe`, or referenced from the DV Build Evidence block) — never a substitute for screen captures.
 3. Records Build Evidence: toolchain + versions, `tsc --noEmit` → 0 errors, eslint/biome clean, bundle-size delta, and a test transcript path under `.context/logs/`.
 
-If the manifest is absent at `SubagentStop`, the company-workflow DV screenshot gate blocks and re-dispatches.
+If the manifest is absent at `SubagentStop`, the corpflow DV screenshot gate blocks and re-dispatches.
 
 ## License
 

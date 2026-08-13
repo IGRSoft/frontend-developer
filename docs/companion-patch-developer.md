@@ -1,14 +1,14 @@
 # Companion Patch — `developer.md` (web platform specialization)
 
-**Status (2026-07-22): applied upstream** — company-workflow's `agents/developer.md` now carries the frontend-developer Task grants and routing (see igrsoft v3.36.0). This document is retained as the historical patch spec.
+**Status (2026-07-22): applied upstream** — corpflow's `agents/developer.md` now carries the frontend-developer Task grants and routing (see igrsoft v3.36.0). This document is retained as the historical patch spec.
 
 **Status:** self-contained patch artifact. This document is **not** an edit to any installed
-plugin cache. It describes the exact additions to apply to the **editable company-workflow
-source** of `agents/developer.md` so the company-workflow `developer` router recognizes web work and
+plugin cache. It describes the exact additions to apply to the **editable corpflow
+source** of `agents/developer.md` so the corpflow `developer` router recognizes web work and
 delegates it to the `frontend-developer` plugin.
 
-> **Do not edit the read-only cache** (`/Users/korich/.claude/plugins/cache/igrsoft/company-workflow/...`). Apply
-> these changes only in the canonical editable company-workflow repository (see §7 *Apply
+> **Do not edit the read-only cache** (`/Users/korich/.claude/plugins/cache/igrsoft/corpflow/...`). Apply
+> these changes only in the canonical editable corpflow repository (see §7 *Apply
 > instructions*).
 
 The patch has 7 sections:
@@ -133,7 +133,7 @@ ambiguous pure-JS/TS web work.
 
 ## 6. Screenshot Capture table — no change needed
 
-The company-workflow `web_adapter` row is **already present** in `developer.md`'s Screenshot Capture table
+The corpflow `web_adapter` row is **already present** in `developer.md`'s Screenshot Capture table
 (Playwright `npx playwright screenshot` / Chrome MCP). The `frontend-developer` evidence model
 (§D3: `requires_screenshots: true` default, `source: web-adapter`, manifest at
 `.context/images/<worktask_id>/screenshots.md`, Lighthouse/axe as supporting rows) **reuses that
@@ -144,23 +144,23 @@ existing `web_adapter` capture path** — so no edit to the Screenshot Capture t
 ## 7. Apply instructions
 
 1. **Target file (editable source, not the cache).** Locate the canonical editable
-   company-workflow repository — the source that *builds* the read-only
-   `~/.claude/plugins/cache/igrsoft/company-workflow/...` cache (commonly a `company-workflow/` checkout, path
+   corpflow repository — the source that *builds* the read-only
+   `~/.claude/plugins/cache/igrsoft/corpflow/...` cache (commonly a `corpflow/` checkout, path
    `agents/developer.md`). **Do not edit the cache directory.**
-2. **Git context.** Work on a feature branch in the company-workflow repo (e.g.
+2. **Git context.** Work on a feature branch in the corpflow repo (e.g.
    `feat/web-platform-routing`). Apply sections §1–§5 as additive edits to `agents/developer.md`;
    §6 is verify-only.
-3. **Validate.** Re-run the company-workflow agent linter / `validate.sh` to confirm: every added
+3. **Validate.** Re-run the corpflow agent linter / `validate.sh` to confirm: every added
    `Task(...)` is fully qualified; no `backend-developer:*`/`apple-developer:*` entry leaked into a
    `tools:` scope; the new tables parse.
-4. **Version bump.** Bump the company-workflow plugin version (this is an additive routing feature
+4. **Version bump.** Bump the corpflow plugin version (this is an additive routing feature
    — minor bump, e.g. `3.17.0 → 3.18.0`) and add a changelog entry: "developer router: web platform
    specialization → `frontend-developer:*`."
-5. **Rebuild the cache** from source per the company-workflow release process; do not hand-edit the
+5. **Rebuild the cache** from source per the corpflow release process; do not hand-edit the
    installed cache copy.
 
 ---
 
 *This artifact is emitted by the `frontend-developer` plugin (DV/B9). It documents the companion
-change required in the company-workflow `developer.md` router; the `frontend-developer`
-plugin itself depends on none of it (the patch is additive on the company-workflow side).*
+change required in the corpflow `developer.md` router; the `frontend-developer`
+plugin itself depends on none of it (the patch is additive on the corpflow side).*

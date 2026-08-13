@@ -57,7 +57,7 @@ Use this table for immediate routing based on file marker or keyword — skip fu
 - **Plain HTML / CSS / TypeScript**: a static page, a vanilla-TS module, a Web Component, or a build/config file with no framework binding — implement directly under the inherited Constraints without delegating.
 - **Framework selection and tooling happy path**: choosing a framework for greenfield work, package-manager detection (lockfile → npm/pnpm/yarn), and single scoped build/test commands (`npm run build`, `npx vite build`, `npx tsc --noEmit`, `npx playwright test`) — run directly when no framework-specific design judgment is needed.
 
-## Workflow Collaboration (company-workflow v4.0.0)
+## Workflow Collaboration (corpflow v4.0.13)
 
 See `skill: workflow-integration` for the complete 11-stage workflow guide and the binding handoff contract (also summarized in `_base/frontend-agent.md`).
 
@@ -73,7 +73,7 @@ See `skill: workflow-integration` for the complete 11-stage workflow guide and t
 
 ### DV Stage Quick Steps
 
-When `.context/state.json` exists, this agent is inside a company-workflow workflow. Follow `_base/frontend-agent.md § Workflow Stage Participation § DV Stage` for the contract; the router-specific steps:
+When `.context/state.json` exists, this agent is inside corpflow. Follow `_base/frontend-agent.md § Workflow Stage Participation § DV Stage` for the contract; the router-specific steps:
 
 1. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and the active stage from `state.json`.
 2. Detect framework(s) and build tooling per the Quick Route Decision Tree above (`skill: language-detection` for ambiguous mixes).
@@ -82,7 +82,7 @@ When `.context/state.json` exists, this agent is inside a company-workflow workf
 
 **Pass-through metadata.** When routing DV to a specialist, forward the gate/screenshot and rework metadata unchanged — the router relays, it does not consume or rewrite:
 
-- `metadata.requires_screenshots` (web/UI work defaults **`true`**) — PL0/dispatcher sets it. The specialist captures each meaningful screen via the `web_adapter` path and writes `.context/images/<worktask_id>/screenshots.md` (rows `source: web-adapter`, Lighthouse/axe as supporting rows) before returning, or company-workflow's `dv-screenshot-gate.sh` blocks `SubagentStop` and re-dispatches.
+- `metadata.requires_screenshots` (web/UI work defaults **`true`**) — PL0/dispatcher sets it. The specialist captures each meaningful screen via the `web_adapter` path and writes `.context/images/<worktask_id>/screenshots.md` (rows `source: web-adapter`, Lighthouse/axe as supporting rows) before returning, or corpflow's `dv-screenshot-gate.sh` blocks `SubagentStop` and re-dispatches.
 - On a rework re-dispatch (`metadata.retry_count > 0`): `metadata.gate_from_stage` + `metadata.gate_blockers[]`, plus the prepended `REMEDIATION (from <DR|QA> gate…)` block — the specialist fixes those exact findings first, minimal diff, no re-scoping.
 
 See `skill: workflow-integration § DV Screenshot Gate` and `§ Gate-Feedback Contract`.
@@ -94,7 +94,7 @@ After a routed sub-agent returns, verify before returning to the orchestrator:
 1. The sub-agent's artifact starts with `---\nhandoff:\n` YAML conforming to `skill: workflow-integration § Handoff Frontmatter` (unconditional — this is the Layer-1/Layer-2 merge input regardless of filename).
 2. `state.json` has been patched (or the sub-agent logged that the patch failed — acceptable, the SubagentStop hook repairs from frontmatter).
 3. The artifact uses the numbered `<stage>-N.md` name from `skill: workflow-integration § Artifact Filename Contract` (e.g., `development-0.md`); the canonical basenames hold, only the `-N` suffix varies.
-4. For DV with `requires_screenshots != false`, the evidence manifest `.context/images/<worktask_id>/screenshots.md` exists with `source: web-adapter` rows and `screenshot_count` matching the row count (else company-workflow's `dv-screenshot-gate.sh` blocks the specialist's `SubagentStop`).
+4. For DV with `requires_screenshots != false`, the evidence manifest `.context/images/<worktask_id>/screenshots.md` exists with `source: web-adapter` rows and `screenshot_count` matching the row count (else corpflow's `dv-screenshot-gate.sh` blocks the specialist's `SubagentStop`).
 5. On a rework re-dispatch, confirm the specialist addressed each `metadata.gate_blockers[]` item and recorded per-blocker resolution.
 
 If verification fails, log WARN and attempt repair: parse the sub-agent's return summary and emit minimal frontmatter. Never return to the orchestrator without `handoff:` frontmatter on the artifact. **Review-only sub-agents** (`fe-performance-engineer`, `fe-accessibility-auditor`, `fe-security-auditor`) do **not** patch `state.json` and do **not** write the stage report — accept their ≤500-token compressed findings summary and route fixes to `frontend-developer:fe-code-fixer`.
@@ -106,7 +106,7 @@ If verification fails, log WARN and attempt repair: parse the sub-agent's return
 | `workflow-integration` | Complete 11-stage workflow guide and handoff contract |
 | `language-detection` | Framework/marker → agent routing, web/native precedence |
 | `_shared/secure-coding` | XSS/CSP/secrets-in-bundle review (SR context) |
-| `company-workflow:cross-plugin-handoff` | Cross-plugin protocol |
+| `corpflow:cross-plugin-handoff` | Cross-plugin protocol |
 
 ## Cross-Plugin Boundaries
 

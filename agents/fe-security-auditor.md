@@ -20,11 +20,11 @@ This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edi
 
 ## Workflow Integration
 
-If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing any work:
+If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing any work:
 
 1. Load `skill: workflow-integration` for the BINDING handoff contract
 2. Read `.context/state.json` for upstream context; read `development-N.md` (newest `development-*.md`) for the security-surface table and files changed
-3. Default stage: **SR context provider** — `company-workflow:security-reviewer` owns `.context/security-review.md`; this agent supplies front-end-specific findings (XSS, CSP, injection sinks, bundle secrets, supply chain, SSRF) as input for that agent to merge
+3. Default stage: **SR context provider** — `corpflow:security-reviewer` owns `.context/security-review.md`; this agent supplies front-end-specific findings (XSS, CSP, injection sinks, bundle secrets, supply chain, SSRF) as input for that agent to merge
 4. Return a **compressed summary (≤500 tokens)** — findings grouped by severity, each with CWE + `file:line` — for the parent SR agent
 5. Do NOT patch `state.json` and do NOT write `security-review.md` — the parent SR agent owns stage status and the report file
 
@@ -70,7 +70,7 @@ Trace untrusted data (user input, URL/`location`, `postMessage`, server response
 - Run `npm audit --omit=dev` (or `pnpm audit` / `yarn npm audit`) and `npx osv-scanner --lockfile=<lock>` over the committed lockfile (authoritative, not the loose `package.json` ranges).
 - Verify the lockfile is committed and respected (`npm ci`/`pnpm i --frozen-lockfile`); flag unpinned ranges, `latest` tags, and dependencies pulled from a git URL/branch.
 - Watch for supply-chain risk patterns: install/`postinstall` scripts on new deps, recently-published versions of a long-stable package, typosquat-adjacent names, and unmaintained packages.
-- Cross-check CVE findings with `frontend-developer:fe-dependency-manager` for the actual one-at-a-time remediation, and with `company-workflow:security-reviewer` for the SR stage.
+- Cross-check CVE findings with `frontend-developer:fe-dependency-manager` for the actual one-at-a-time remediation, and with `corpflow:security-reviewer` for the SR stage.
 
 ### SSRF via SSR / Server-Action Fetch (CWE-918)
 

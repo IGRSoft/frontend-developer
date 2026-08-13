@@ -20,7 +20,7 @@ This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edi
 
 ## Workflow Integration
 
-When `.context/state.json` exists, this agent runs inside a company-workflow workflow as **DV support**, not as a stage owner:
+When `.context/state.json` exists, this agent runs inside corpflow as **DV support**, not as a stage owner:
 
 1. Load `skill: workflow-integration` for the handoff contract; read `.context/state.json` for upstream context and `development-N.md#files-changed` for profiling targets
 2. The parent DV agent owns `.context/development-N.md` — this agent supplies findings as input to its `## Performance` section
@@ -28,7 +28,7 @@ When `.context/state.json` exists, this agent runs inside a company-workflow wor
 4. Do **not** patch `state.json` — the parent DV agent owns stage status and handoff frontmatter
 5. Because this agent is review-only, it emits no artifact file and applies no fix; recommendations are handed back as text
 
-Also feeds the **QA** Lighthouse-budget leg of the gate (tests-pass AND axe-clean AND Lighthouse budget) — supplies the budget verdict as context to `company-workflow:qa-engineer`.
+Also feeds the **QA** Lighthouse-budget leg of the gate (tests-pass AND axe-clean AND Lighthouse budget) — supplies the budget verdict as context to `corpflow:qa-engineer`.
 
 ## Model Notes
 
