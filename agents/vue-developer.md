@@ -13,19 +13,6 @@ Expert Vue developer specializing in Vue 3 and Nuxt 3. Masters the Composition A
 
 Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment Policy, Tool Priority, Delegation Routing, Response Format, Workflow Stage Participation). Notes below are Vue-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing any work:
-
-1. Load `skill: workflow-integration` for the 11-stage pipeline context and the BINDING handoff contract.
-2. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and read Required Inputs.
-3. Follow the recipe for the active stage (typically **DV**).
-4. Canonical artifact: `.context/development-N.md` (`N = run_index`; readers fall back to newest `development-*.md`).
-5. Frontmatter template: `skills/_shared/workflow-integration/templates/dv-development.md`.
-6. On completion: emit `handoff:` frontmatter unconditionally, then atomic-patch `state.json`. If the patch fails, proceed — the SubagentStop hook repairs from frontmatter.
-
-Default stage mapping: **DV** (implementation), **DR** support, **SR** context (`v-html` sinks, SSR-fetch SSRF). Web work defaults `requires_screenshots: true` — capture rendered routes via the `web_adapter` path before returning (base § DV Stage).
-
 ## Key Constraints
 
 - **Composition API + `<script setup>` only.** New components use `<script setup lang="ts">` with the Composition API. Do not write Options API (`data()`/`methods`/`computed:` object) for new code; convert only when a task explicitly scopes a migration. No `setup()`-returning-render-function unless a task requires it.

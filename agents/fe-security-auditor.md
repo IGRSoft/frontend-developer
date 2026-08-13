@@ -18,16 +18,6 @@ Inherits `_base/frontend-agent.md` (Constraints, Tool Priority, Delegation Routi
 
 This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edit code, does NOT patch `state.json`, and does NOT write the stage report. Findings route to `frontend-developer:fe-code-fixer` for remediation. The agent supplies a **≤500-token compressed findings summary grouped by severity (P0–P3) with `file:line`** (each finding tagged with its CWE) that the parent DV/DR/SR agent merges — no artifact file is emitted by this agent.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing any work:
-
-1. Load `skill: workflow-integration` for the BINDING handoff contract
-2. Read `.context/state.json` for upstream context; read `development-N.md` (newest `development-*.md`) for the security-surface table and files changed
-3. Default stage: **SR context provider** — `corpflow:security-reviewer` owns `.context/security-review.md`; this agent supplies front-end-specific findings (XSS, CSP, injection sinks, bundle secrets, supply chain, SSRF) as input for that agent to merge
-4. Return a **compressed summary (≤500 tokens)** — findings grouped by severity, each with CWE + `file:line` — for the parent SR agent
-5. Do NOT patch `state.json` and do NOT write `security-review.md` — the parent SR agent owns stage status and the report file
-
 ## Model Notes
 
 Default frontmatter: `model: sonnet`, `effort: high`. Sonnet suffices for standard XSS, CSP, secrets, and dependency-CVE reviews. For **deep threat modeling** (taint analysis across SSR/server-action boundaries, trust-zone modeling for an SSR proxy, novel sink discovery, large-codebase data-flow audits), callers may override to `model: opus` with `effort: xhigh` — `xhigh` is honored **only on Opus**; Sonnet silently falls back to `high`. See `skills/_shared/model-selection.md`.

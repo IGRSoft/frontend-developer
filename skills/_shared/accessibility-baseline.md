@@ -122,4 +122,4 @@ Enhanced (AAA). (4.1.1 Parsing was removed in 2.2.)
 - `severity-matrix.md` — how WCAG levels map to P0–P3 priorities
 - `testing-principles.md` — the axe assertions and Testing-Library accessible-query doctrine
 - `secure-coding/SKILL.md` — the parallel security gate every UI change also clears
-- `workflow-integration/SKILL.md` — the QA gate definition (axe-clean + Lighthouse budget)
+- `CORPFLOW.md` — the QA gate definition (axe-clean + Lighthouse budget)

@@ -7,7 +7,6 @@ Claude Code plugin for **web front-end** development — React/Next.js, Vue/Nuxt
 | Field | Value |
 |-------|-------|
 | **Version** | 1.3.0 |
-| **corpflow Compatibility** | v4.0.13 |
 | **claude-code min version** | 2.1.169 |
 
 ## Installation
@@ -139,7 +138,6 @@ Every command below was renamed in 1.2.0 to match the `apple-developer` naming s
 | Tooling | `tooling/tooling-skills` | `build-systems`, `fe-diagnostics`, `bundling-optimization` |
 | Quality | `quality/quality-skills` | `accessibility-patterns`, `web-performance`, `fe-testing` |
 
-Shared (`skills/_shared/`): `workflow-integration` (DV screenshot gate, stage templates), `secure-coding` (XSS/injection + CSP/secrets references), `model-selection`, `version-feature-matrix`, `language-detection`, `severity-matrix`, `testing-principles`, `accessibility-baseline`.
 
 ## Evidence model
 

@@ -13,19 +13,6 @@ Expert React developer specializing in React 19 and the Next.js App Router. Mast
 
 Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment Policy, Tool Priority, Delegation Routing, Response Format, Workflow Stage Participation). Notes below are React-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing any work:
-
-1. Load `skill: workflow-integration` for the 11-stage pipeline context and the BINDING handoff contract.
-2. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and read Required Inputs.
-3. Follow the recipe for the active stage (typically **DV**).
-4. Canonical artifact: `.context/development-N.md` (`N = run_index`; readers fall back to newest `development-*.md`).
-5. Frontmatter template: `skills/_shared/workflow-integration/templates/dv-development.md`.
-6. On completion: emit `handoff:` frontmatter unconditionally, then atomic-patch `state.json`. If the patch fails, proceed — the SubagentStop hook repairs from frontmatter.
-
-Default stage mapping: **DV** (implementation), **DR** support (respond to technical-lead findings), **SR** context (XSS sinks, `dangerouslySetInnerHTML`, SSR-fetch SSRF). Web work defaults `requires_screenshots: true` — capture rendered routes via the `web_adapter` path before returning (base § DV Stage).
-
 ## Key Constraints
 
 - **Rules of Hooks are non-negotiable.** Hooks run only at the top level of a component or another hook — never in conditions, loops, or after an early `return`. The `eslint-plugin-react-hooks` `rules-of-hooks` and `exhaustive-deps` rules are build breaks, not advisories. Do not silence `exhaustive-deps` to hide a stale-closure bug — fix the dependency.

@@ -13,19 +13,6 @@ Expert CSS engineer specializing in modern layout, design-token systems, Tailwin
 
 Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment Policy, Tool Priority, Delegation Routing, Response Format, Workflow Stage Participation). Notes below are CSS-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside corpflow. BEFORE doing any work:
-
-1. Load `skill: workflow-integration` for the 11-stage pipeline context and the BINDING handoff contract.
-2. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and read Required Inputs.
-3. Follow the recipe for the active stage (typically **DV**).
-4. Canonical artifact: `.context/development-N.md` (`N = run_index`; readers fall back to newest `development-*.md`).
-5. Frontmatter template: `skills/_shared/workflow-integration/templates/dv-development.md`.
-6. On completion: emit `handoff:` frontmatter unconditionally, then atomic-patch `state.json`. If the patch fails, proceed — the SubagentStop hook repairs from frontmatter.
-
-Default stage mapping: **DV** (styling implementation), **DR** support, **SR** context (no untrusted values in `url()`/CSS injection sinks). Web work defaults `requires_screenshots: true` — styling changes are inherently visual, so capture each affected breakpoint/theme/state via the `web_adapter` path before returning (base § DV Stage). Capture both light and dark themes and at least the mobile + desktop breakpoints touched.
-
 ## Key Constraints
 
 - **Design tokens are the source of truth.** Colors, spacing, type scale, radii, shadows, and motion live as CSS custom properties (or the Tailwind theme config) — never hard-coded magic numbers in component styles. Theming (light/dark, brand) flips token values, not selectors. In Tailwind, extend the theme; avoid arbitrary-value bracket syntax (`w-[437px]`) except for genuine one-offs.

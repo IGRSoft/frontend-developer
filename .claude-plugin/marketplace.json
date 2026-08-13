@@ -28,13 +28,11 @@
         "vitest",
         "wcag",
         "accessibility",
-        "core-web-vitals",
-        "workflow-integration"
+        "core-web-vitals"
       ],
       "skills": [
         "./skills",
         "./skills/_shared/secure-coding",
-        "./skills/_shared/workflow-integration",
         "./skills/typescript/typescript-skills",
         "./skills/typescript/modern-typescript",
         "./skills/typescript/ts-typing",

@@ -18,18 +18,6 @@ Inherits `_base/frontend-agent.md` (Constraints, Tool Priority, Delegation Routi
 
 This agent is **review-only** (`disallowed-tools: Write, Edit`). It does NOT edit code, does NOT patch `state.json`, and does NOT write the stage report. Findings route to `frontend-developer:fe-code-fixer` for mechanical changes or to the owning framework developer for algorithmic/render-architecture ones. The agent supplies a **≤500-token compressed findings summary grouped by severity (P0–P3) with `file:line`** that the parent DV/DR agent merges — no artifact file is emitted by this agent.
 
-## Workflow Integration
-
-When `.context/state.json` exists, this agent runs inside corpflow as **DV support**, not as a stage owner:
-
-1. Load `skill: workflow-integration` for the handoff contract; read `.context/state.json` for upstream context and `development-N.md#files-changed` for profiling targets
-2. The parent DV agent owns `.context/development-N.md` — this agent supplies findings as input to its `## Performance` section
-3. Return the compressed ≤500-token summary (severity-grouped, `file:line`) for the parent to merge
-4. Do **not** patch `state.json` — the parent DV agent owns stage status and handoff frontmatter
-5. Because this agent is review-only, it emits no artifact file and applies no fix; recommendations are handed back as text
-
-Also feeds the **QA** Lighthouse-budget leg of the gate (tests-pass AND axe-clean AND Lighthouse budget) — supplies the budget verdict as context to `corpflow:qa-engineer`.
-
 ## Model Notes
 
 Default frontmatter: `model: sonnet`, `effort: high`. Sonnet is sufficient for routine Lighthouse review, render-cost analysis, and bundle reporting. For **deep trace analysis** (large flame charts, hard-to-reproduce INP regressions spanning event handler + layout + paint, hydration-storm root cause), callers may override to `model: opus` with `effort: xhigh` — `xhigh` is honored **only on Opus**; Sonnet silently falls back to `high`. See `skills/_shared/model-selection.md`.

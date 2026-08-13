@@ -111,7 +111,7 @@ Preserve keyboard navigation and ARIA roles (`role="listbox"`/`option`) — see
 
 Re-profile after the change; compare commit counts / flame-graph durations. For
 load-time work, check the bundle delta and Lighthouse — record both in the DV
-Build Evidence (per [workflow-integration](../../_shared/workflow-integration/SKILL.md)).
+Build Evidence (per [CORPFLOW.md](../../../CORPFLOW.md)).
 
 ## Related Skills
 
