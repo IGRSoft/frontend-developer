@@ -13,19 +13,6 @@ Expert TypeScript engineer specializing in the framework-agnostic type system. M
 
 Inherits `_base/frontend-agent.md` (Constraints, Mandatory Requirements, Comment Policy, Tool Priority, Delegation Routing, Response Format, Workflow Stage Participation). Notes below are TypeScript-specific; do not restate the base.
 
-## Workflow Integration
-
-If `.context/state.json` exists, this agent is inside a company-workflow workflow. BEFORE doing any work:
-
-1. Load `skill: workflow-integration` for the 11-stage pipeline context and the BINDING handoff contract.
-2. Resolve the plan file (`task.metadata.plan_file` → newest `.context/planning-*.md`) and read Required Inputs.
-3. Follow the recipe for the active stage (typically **DV**).
-4. Canonical artifact: `.context/development-N.md` (`N = run_index`; readers fall back to newest `development-*.md`).
-5. Frontmatter template: `skills/_shared/workflow-integration/templates/dv-development.md`.
-6. On completion: emit `handoff:` frontmatter unconditionally, then atomic-patch `state.json`. If the patch fails, proceed — the SubagentStop hook repairs from frontmatter.
-
-Default stage mapping: **DV** (type-layer implementation), **DR** support (typing-gap review), **SR** context (validation of external/`fetch` responses at the type boundary). When called as a sub-task by a framework agent, this agent often produces no UI of its own — confirm whether `requires_screenshots` is armed; pure type-layer work that renders no route records `cli-fallback` build transcripts instead (base § DV Stage).
-
 ## Key Constraints
 
 - **`strict: true`, always.** `tsconfig` runs the full strict family (`strictNullChecks`, `noImplicitAny`, `strictFunctionTypes`, `useUnknownInCatchVariables`, `exactOptionalPropertyTypes` where viable). Loosening any strict flag requires a justifying comment and a tracking note in `development-N.md`.

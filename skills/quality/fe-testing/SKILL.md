@@ -114,7 +114,7 @@ Screens that cycle one view through substates (form → submitting → error →
 1. Assert every primary control — queried by role (`getByRole`, per the query-priority ladder above) — is BOTH `toBeVisible()` AND `toBeEnabled()`, not merely present in the DOM.
 2. Assert every substate-transition control performs its transition AND its inverse returns the prior state — e.g. "Back"/"Retry" from the error substate returns the form substate.
 
-One sweep test or one per substate — every primary control asserted visible+enabled in every substate it appears. The E2E-side twin of the DV live-drive gate (`_shared/workflow-integration/SKILL.md § DV Screenshot Gate`).
+One sweep test or one per substate — every primary control asserted visible+enabled in every substate it appears. The E2E-side twin of the DV live-drive gate (`_shared/CORPFLOW.md/SKILL.md § DV Screenshot Gate`).
 
 ## Coverage and the gate
 

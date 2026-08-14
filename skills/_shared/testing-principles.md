@@ -166,4 +166,4 @@ test("LoginForm invalid email shows an error", async () => {
 - `accessibility-baseline.md` — the WCAG baseline and a11y-gate the axe assertions enforce
 - `severity-matrix.md` — coverage requirements and the P0–P3 finding scale
 - `version-feature-matrix.md` — Vitest/Playwright version floors
-- `workflow-integration/SKILL.md` — the QA gate definition for worktask runs
+- `CORPFLOW.md` — the QA gate definition for worktask runs

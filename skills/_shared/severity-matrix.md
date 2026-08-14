@@ -104,4 +104,4 @@ See: skills/_shared/severity-matrix.md for severity definitions
 - `accessibility-baseline.md` — WCAG 2.2 baseline and the a11y-gate definition (P1 findings)
 - `secure-coding/SKILL.md` — the security findings that map to P0/P1
 - `testing-principles.md` — coverage thresholds and the QA gate
-- `workflow-integration/SKILL.md` — DR/QA gate definitions for worktask runs
+- `CORPFLOW.md` — DR/QA gate definitions for worktask runs

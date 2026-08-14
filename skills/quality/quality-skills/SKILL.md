@@ -65,7 +65,7 @@ do not restate or weaken them.
   config/deps before writing or running tests — do not introduce a second framework.
 - **Quality evidence is screenshot + report.** DV captures screens via the
   `web_adapter` path and attaches Lighthouse/axe as *supporting* rows — see
-  [workflow-integration](${CLAUDE_SKILL_DIR}/_shared/workflow-integration/SKILL.md).
+  [CORPFLOW.md](../../../CORPFLOW.md).
 
 ## File Overview
 

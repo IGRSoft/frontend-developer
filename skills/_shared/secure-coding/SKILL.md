@@ -28,7 +28,7 @@ These mirror the global security rules and never have exceptions without a docum
 4. **No secret in the client bundle** — API keys, signing secrets, and service tokens never reach browser-shipped code. Only `NEXT_PUBLIC_*` / `VITE_*` / `PUBLIC_*` prefixed values are client-safe by design, and those must contain nothing confidential.
 5. **Never disable a security control without documented justification** — a removed CSP directive, a `// eslint-disable-next-line no-danger`, a relaxed `sanitize: false`, a dropped `SameSite`, or `dangerouslyAllowBrowser`: each needs an inline comment with the reason and a tracking reference.
 
-> A change that breaks any of these does not pass DR/SR review. See [workflow-integration](../workflow-integration/SKILL.md) for stage gates.
+> A change that breaks any of these does not pass DR/SR review. See [CORPFLOW.md](../../../CORPFLOW.md) for stage gates.
 
 ## XSS — the dominant web bug class → which sink, which defense
 
@@ -168,5 +168,5 @@ const data = await fetch(url);
 - [csp-and-secrets.md](references/csp-and-secrets.md) — CSP directives and nonces, Trusted Types, SRI, env-var leakage, bundle-secret detection
 - [accessibility-baseline.md](../accessibility-baseline.md) — the parallel non-security gate every UI change clears
 - [severity-matrix.md](../severity-matrix.md) — P0–P3 mapping (XSS → P0, missing CSP → P1)
-- [workflow-integration/SKILL.md](../workflow-integration/SKILL.md) — SR/DR security gates and handoff contract
+- [CORPFLOW.md](../../../CORPFLOW.md) — SR/DR security gates and handoff contract
 - [version-feature-matrix.md](../version-feature-matrix.md) — browser-feature floors (Trusted Types, CSP level) and framework versions

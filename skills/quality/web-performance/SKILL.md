@@ -54,7 +54,7 @@ npx lighthouse https://example.com --output=json --output-path=./.context/images
 ```
 
 Attach the report as a supporting evidence row (`source: web-adapter`,
-`notes: lighthouse`) per [workflow-integration](${CLAUDE_SKILL_DIR}/_shared/workflow-integration/SKILL.md).
+`notes: lighthouse`) per [CORPFLOW.md](../../../CORPFLOW.md).
 
 ## Levers per metric
 
@@ -114,5 +114,5 @@ Attach the report as a supporting evidence row (`source: web-adapter`,
 - [bundling-optimization](${CLAUDE_SKILL_DIR}/tooling/bundling-optimization/SKILL.md) — bundle size is the main INP/LCP lever
 - [responsive-accessible-css](${CLAUDE_SKILL_DIR}/styling/responsive-accessible-css/SKILL.md) — CLS from late styles/fonts
 - [quality-skills/SKILL.md](../quality-skills/SKILL.md) — canonical domain selection table
-- [workflow-integration](${CLAUDE_SKILL_DIR}/_shared/workflow-integration/SKILL.md) — attaching Lighthouse as supporting evidence
+- [CORPFLOW.md](../../../CORPFLOW.md) — attaching Lighthouse as supporting evidence
 - [version-feature-matrix](${CLAUDE_SKILL_DIR}/_shared/version-feature-matrix.md) — `scheduler.yield`/`fetchpriority` support notes

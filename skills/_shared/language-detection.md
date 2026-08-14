@@ -6,7 +6,7 @@ description: Shared marker-to-framework-to-agent routing table for frontend-deve
 # Framework Detection & Agent Routing
 
 Single source of truth for the marker → framework → agent mapping used by
-`frontend-developer` (router), `company-workflow:developer`, and every command that scopes
+`frontend-developer` (router), and every command that scopes
 work per framework. Keep command-local detection logic in sync with this file —
 do not fork the table.
 
@@ -92,11 +92,11 @@ that plugin is absent. Neither `apple-developer:*` nor `backend-developer:*` eve
 appears in a `tools: Task(...)` list; they are documented handoffs only.
 
 The full precedence paragraph and the developer.md companion patch live in
-`docs/companion-patch-developer.md`.
+`CORPFLOW.md`.
 
 ## Related Skills
 
-- `workflow-integration/SKILL.md` — how the routed agent participates in DV (screenshot evidence)
+- `CORPFLOW.md` — how the routed agent participates in DV (screenshot evidence)
 - `model-selection.md` — model/effort to pass with the routed `Task()` call
 - `version-feature-matrix.md` — framework/feature floors once the framework is known
 - `severity-matrix.md` — the P0–P3 scale a routed review uses

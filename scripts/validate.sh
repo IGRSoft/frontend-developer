@@ -363,11 +363,6 @@ shopt -s nullglob
 for f in "${HOME}"/.claude/plugins/cache/*/*/*/agents/*.md; do
 	collect_external "${f}"
 done
-if [[ -n "${COMPANY_WORKFLOW_DIR:-}" && -d "${COMPANY_WORKFLOW_DIR}/agents" ]]; then
-	for f in "${COMPANY_WORKFLOW_DIR}/agents"/*.md; do
-		collect_external "${f}"
-	done
-fi
 shopt -u nullglob
 
 # Walk this plugin's agents, checking completeness, in-repo uniqueness, and
@@ -407,7 +402,7 @@ if [[ -d agents ]]; then
 			SEEN_NAMES="${SEEN_NAMES}${aname}	${rel}"$'\n'
 		fi
 
-		# External collision against installed plugins + company-workflow.
+		# External collision against installed plugins and the orchestrator.
 		ext="$(printf '%s' "${EXTERNAL_NAMES}" | awk -F'\t' -v n="${aname}" '$1 == n {print $2; exit}')"
 		[[ -n "${ext}" ]] && err "${rel}" "agent name '${aname}' collides with ${ext}" "rename to an fe-prefixed or otherwise unique name"
 	done < <(find agents -type f -name '*.md')
@@ -419,7 +414,7 @@ fi
 
 # Allowed plugin prefixes for subagent_type values. backend-developer and
 # apple-developer are permitted as documented forward-reference handoffs.
-ALLOWED_PREFIX_RE='^(frontend-developer|backend-developer|apple-developer|company-workflow|security-scanning|debugging-toolkit|general-purpose)'
+ALLOWED_PREFIX_RE='^(frontend-developer|backend-developer|apple-developer|corpflow|security-scanning|debugging-toolkit|general-purpose)'
 
 check_subagent_refs() {
 	# check_subagent_refs <dir>
@@ -437,7 +432,7 @@ check_subagent_refs() {
 			esac
 			# Prefix whitelist.
 			if [[ ! "${st}" =~ ${ALLOWED_PREFIX_RE} ]]; then
-				err "${rel}" "subagent_type '${st}' has a disallowed plugin prefix" "use frontend-developer:/backend-developer:/apple-developer:/company-workflow:/security-scanning:/debugging-toolkit:/general-purpose:"
+				err "${rel}" "subagent_type '${st}' has a disallowed plugin prefix" "use frontend-developer:/backend-developer:/apple-developer:/corpflow:/security-scanning:/debugging-toolkit:/general-purpose:"
 				continue
 			fi
 			# Own-plugin targets must exist as agent files.
