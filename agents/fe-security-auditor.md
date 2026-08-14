@@ -60,7 +60,7 @@ Trace untrusted data (user input, URL/`location`, `postMessage`, server response
 - Run `npm audit --omit=dev` (or `pnpm audit` / `yarn npm audit`) and `npx osv-scanner --lockfile=<lock>` over the committed lockfile (authoritative, not the loose `package.json` ranges).
 - Verify the lockfile is committed and respected (`npm ci`/`pnpm i --frozen-lockfile`); flag unpinned ranges, `latest` tags, and dependencies pulled from a git URL/branch.
 - Watch for supply-chain risk patterns: install/`postinstall` scripts on new deps, recently-published versions of a long-stable package, typosquat-adjacent names, and unmaintained packages.
-- Cross-check CVE findings with `frontend-developer:fe-dependency-manager` for the actual one-at-a-time remediation, and with `corpflow:security-reviewer` for the SR stage.
+- Cross-check CVE findings with `frontend-developer:fe-dependency-manager` for the actual one-at-a-time remediation, and with the orchestrator's security reviewer for the SR stage.
 
 ### SSRF via SSR / Server-Action Fetch (CWE-918)
 
