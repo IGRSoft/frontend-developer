@@ -1,7 +1,7 @@
 {
   "name": "frontend-developer",
   "description": "Web front-end toolkit: React/Next, Vue/Nuxt, Svelte, Angular, TypeScript, modern CSS/Tailwind.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "author": {
     "name": "IGRSoft",
     "email": "support@igrsoft.com"
